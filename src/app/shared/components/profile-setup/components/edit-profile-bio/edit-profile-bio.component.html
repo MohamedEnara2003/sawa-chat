@@ -1,0 +1,33 @@
+<section class="relative w-full  flex flex-col justify-center  gap-4">
+
+    <app-edit-header  EditTypeName="bio" />
+    <div class="w-full flex justify-center items-center">
+    @if(editType() !== 'bio' && userStore.user()?.bio){
+    <h2 class="title-h1  text-base xs:text-lg text-center font-[400]">{{userStore.user()?.bio}}</h2>
+    }@else if(editType() === 'bio'){
+    <div class="w-[95%] md:w-[70%] flex flex-col justify-center items-center gap-5">
+        
+    <input #inputRef type="text"  name="fullName"
+    [ngModel]="bio()" (ngModelChange)="onChangeValue($event)"
+    class="w-full input input-lg input-neutral bg-tint text-white text-center">
+    <ul class="w-full flex  justify-end items-center gap-5 capitalize text-sm">
+
+    <li [routerLink]="['/',{outlets : {'profile-setup' : 'user'}}]"[queryParams]="{editType :  null }">
+    <a  class="w-24 btn btn-sm btn-active bg-white text-background">
+    cancel
+    </a>
+    </li>
+    <li (click)="userStore.editBio(bio())"
+    [routerLink]="['/',{outlets : {'profile-setup' : 'user'}}]"[queryParams]="{editType :  null }">
+    <a 
+    class="w-24 btn btn-sm btn-neutral bg-sawa-primary text-tint capitalize   btn-hover">
+    save
+    </a>
+    </li>
+
+    </ul>
+    </div>
+    }
+    </div>
+</section>
+    

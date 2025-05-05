@@ -1,0 +1,44 @@
+<section class=" w-full flex flex-col justify-center   gap-2">
+
+    <app-edit-header EditTypeName="image" [isCancelUpload]="userStore.previewUrl() !== '' ? false : true">
+        <button cancel-upload type="button" (click)="userStore.removeUploadedImage()"
+        class=" btn-hover size-8 bg-tint rounded-full flex justify-center items-center">
+        <i class="fa-solid fa-trash-can  text-sawa-primary text-lg  "></i>
+        </button>
+    </app-edit-header>
+    <div class="w-full flex flex-col justify-center items-center gap-4">
+    <picture class="size-70 rounded-full flex justify-center  items-center"> 
+    @if(!userStore.isLoading()){
+        @let previewUrl = userStore.previewUrl()?.toString();
+        <app-user-image [avatarUrl]="previewUrl || userStore.user()?.avatar_url!" 
+        [imageClass]=" editType() === 'image' ?
+        'size-70 object-cover rounded-full shadow-lg shadow-background duration-500'  :
+        'size-50 object-cover rounded-full shadow-lg shadow-background duration-500'
+        "/>
+    }@else {
+    <span class="loading loading-spinner  text-sawa-primary size-40"></span>
+    }
+    </picture>
+    @if(editType() === 'image'){ 
+    <div class="w-full flex flex-col justify-center items-center px-5 lg:px-20">
+    @if(userStore.previewUrl() === ''){ 
+        <button type="button" class="w-full text-center capitalize">
+            <label for="upload" class="w-full  btn-neutral  btn bg-tint text-sawa-primary 
+            btn-hover duration-300">
+            <i class="fa-solid fa-plus"></i> Upload photo
+            <input (change)="onFileSelected($event)" type="file" name="upload" accept="image/*" id="upload" 
+            class="hidden">
+            </label>
+        </button>
+    }@else {
+    <button (click)="userStore.saveImage()" 
+            [routerLink]="['/',{outlets : {'profile-setup' : 'user'}}]" [queryParams]="{editType : null}" 
+            type="button" class="w-full  btn-neutral btn bg-tint text-sawa-primary capitalize
+            btn-hover duration-300">
+            save image
+    </button>
+    }
+</div>
+}
+    </div>
+</section>

@@ -1,1 +1,90 @@
-/* You can add global styles to this file, and also import other style files */
+@import "tailwindcss";
+@plugin "daisyui";
+
+
+* {
+  font-family: "Cairo", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  font-variation-settings: "slnt" 0;
+  scroll-behavior: smooth;
+}
+
+@theme {
+    --color-sawa-primary: #FFFD02;
+    --color-background: #1A1A1A;
+    --color-tint: #282828;
+    --color-overlay: #8E8E8E;
+    --breakpoint-xs: 22.5rem;
+  }
+  @custom-variant dark (&:where(.dark, .dark *));
+  @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
+  @keyframes iconliked {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-2px); }
+  50% { transform: translateX(2px); }
+  75% { transform: translateX(-2px); }
+  }
+  
+  @keyframes sideLeft {
+  0% { transform: translateX(-200%); }
+  100% { transform: translateX(0%); }
+  }
+
+  @keyframes up {
+  0% { transform: translateY(500%); }
+  100% { transform: translateY(0%); }
+  }
+  @keyframes opacity-up {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+  }
+  @keyframes opacity-down{
+  0% { opacity: 1; }
+  100% { opacity: 0; }
+  }
+  
+
+
+@layer components {
+  body {
+  @apply bg-background
+  }
+  body::-webkit-scrollbar {
+    @apply w-[12px] h-[12px] bg-sawa-primary;
+  }
+  body::-webkit-scrollbar-thumb {
+    @apply bg-tint dark:bg-background;
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+  }
+  .title-h1 {
+  @apply text-lg xs:text-xl text-background dark:text-white font-semibold  capitalize; 
+  }
+  .btn-hover {
+  @apply cursor-pointer hover:opacity-60 duration-300
+  }
+  .linkActive {
+  @apply text-sawa-primary before:size-1.5 before:absolute before:bg-sawa-primary before:rounded-full before:bottom-0
+  }
+  .btn-sawa {
+  @apply btn btn-neutral bg-sawa-primary text-background capitalize hover:opacity-70 duration-300;
+  }
+  .btn-sawa-2 {
+  @apply btn btn-neutral bg-tint text-sawa-primary capitalize hover:opacity-70 duration-300;
+  }
+  .animate-iconliked {
+    animation: iconliked 0.5s  ease-in-out;
+  }
+  .animate-sideLeft {
+    animation: sideLeft 0.2s  ease-in-out;
+  }
+  .animate-up {
+    animation: up 0.4s  ease-in-out;
+  }
+  .animate-opacity-up {
+    animation: opacity-up 0.5s  ease-in-out;
+  }
+}
+

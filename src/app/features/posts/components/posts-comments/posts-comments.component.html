@@ -1,0 +1,58 @@
+
+<section class="w-full h-screen  fixed  top-0 left-0 flex justify-center items-end z-50">
+<nav class="w-full lg:w-1/2 h-[70vh] bg-tint rounded-t-4xl shadow-md shadow-background z-50 
+border-t-1 border-t-overlay flex flex-col justify-start items-center p-4 gap-2 animate-up">
+<button type="button" role="button" class="w-10 h-1 rounded-box  bg-overlay btn-hover"></button>
+<h1 class="title-h1">{{commentsStore.comments().length}} comments</h1>
+
+<ul #commentsRef
+class=" w-full h-full overflow-y-auto " style="scrollbar-width: none;">
+@for (comment of commentsStore.comments(); track comment) {
+@defer (on viewport) {
+<li class="w-full flex flex-wrap justify-start items-center  p-2  gap-2 border-b-1 border-b-background" >
+    <div class="w-full flex justify-between items-center">
+    <div class="flex justify-center items-center gap-2">
+        <div class="size-8  rounded-full">
+            @let userImage = comment.user.avatar_url ;
+            <app-user-image [avatarUrl]="userImage" [isDefault]="userImage ? false : true"
+            imageClass="size-full  object-cover rounded-full"/>
+        </div>
+        <h1 class="title-h1 text-sm">{{comment.user.fullName}}</h1>
+        <span class="text-xs text-sawa-primary">{{dayJs.formatTime(comment.created_at!)}}</span>
+    </div>
+    <app-comment-edit-menu [commentId]="comment.id!" />
+    </div>
+    <p class="w-full text-left text-sm text-overlay font-[400]  px-1">
+    {{comment.value}}
+    </p>
+    <div class="w-full flex justify-end capitalize ">
+    <app-btn-like [likesCount]="0" />
+    </div>
+</li>
+}@placeholder {
+    <li class="w-full h-24 flex flex-wrap justify-start items-center  p-2  gap-2 border-b-1 border-b-background">
+    <div class="size-8 bg-overlay animate-pulse rounded-full"></div>
+    <div class="w-20 h-2 bg-overlay animate-pulse rounded-box"></div>
+    <div class="w-full h-4 bg-overlay animate-pulse rounded-box"></div>
+    </li>
+}
+}
+</ul>
+<form class="w-full flex justify-center items-center gap-2" (ngSubmit)="addComment()">
+<div class="size-8  rounded-full">
+<app-user-image imageClass="size-full  object-cover rounded-full"/>
+</div>
+<input type="text" name="comment" id="comment" placeholder="Start the conversation"
+[ngModel]="commentValue()" (ngModelChange)="onChangeValue($event)"
+class="w-[90%] input focus:outline-none bg-background placeholder:text-overlay rounded-box
+focus:border-1 focus:border-overlay">
+<button type="submit" [disabled]="commentValue().length < 1"
+class="btn btn-xs bg-sawa-primary btn-hover shadow shadow-background ">
+<i class="fa-solid fa-arrow-up  text-background "></i>
+</button>
+</form>
+</nav>
+
+<div (click)="commentsStore.closeContainerComments()"
+class="w-full h-full fixed left-0 top-0 bg-background opacity-50 z-40 "></div>
+</section>

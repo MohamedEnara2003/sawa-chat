@@ -1,0 +1,38 @@
+<section class="relative w-full flex flex-col justify-center  gap-2  ">
+    <app-edit-header EditTypeName="skills"/>
+    @if (editType() === 'skills') {
+    <div class="w-full flex justify-start items-center gap-4 my-1">
+    <button type="button" 
+    (click)="addSkill()"class="w-24 btn btn-sm btn-neutral bg-tint text-white capitalize btn-hover">
+    <i class="fa-solid fa-plus"></i>
+    add skill
+    </button>
+
+    <button (click)="onSave()"  type="button"  
+    [routerLink]="['/',{outlets : {'profile-setup' : 'user'}}]" 
+    [queryParams]="{editType :  null }"
+    class="w-24 btn btn-sm btn-neutral bg-sawa-primary text-tint capitalize  btn-hover">
+    save
+    </button>
+    </div>
+    <form [formGroup]="form" class="w-full my-1">
+    <div formGroupName="skills" class="w-full grid grid-cols-1 sm:grid-cols-2 justify-items-center-safe gap-4">
+    @for (skill of skillsValues.controls; track skill ; let index = $index) {
+    <div class="w-full text-white" [formArrayName]="index">
+    <label class="input bg-tint ">
+    <span class="badge badge-neutral badge-xs bg-sawa-primary text-background">{{index + 1}}</span>
+    <input type="text" class="grow focus:border-b-1 focus:border-b-background capitalize"
+    formControlName="skill" placeholder="What are your skills?"/>
+    <span (click)="removeSkill(index)">
+    <i class="fa-solid fa-trash-can cursor-pointer text-overlay  btn-hover"></i>
+    </span>
+    </label>
+    </div>
+    }
+    </div>
+    </form>
+}@else {
+    <app-profile-skills class="w-full" [skills]="userStore.user()?.skills!"/>
+}
+</section>
+    

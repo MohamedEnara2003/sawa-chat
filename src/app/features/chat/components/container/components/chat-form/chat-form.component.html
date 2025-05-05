@@ -1,0 +1,54 @@
+<section class="w-full">
+
+@if(messageStore.previewUrl()){ 
+    <div class="relative w-full flex justify-start items-end px-2 gap-4">
+    <picture class="absolute bottom-0 size-22 rounded-box border-1 border-sawa-primary">
+    @if(messageStore.isLoadingUpload() === false){ 
+        <img [src]="messageStore.previewUrl()" alt="previewUrl" 
+        class="size-full  object-cover  rounded-box">
+        <button type="button" (click)="messageStore.removeUploadedImage()"
+        class="absolute top-1 right-1 btn-hover size-6 bg-tint rounded-full flex justify-center items-center">
+        <i class="fa-solid fa-trash-can  text-sawa-primary text-sm  "></i>
+        </button>
+    }@else {
+    <div class="size-full bg-overlay animate-pulse"></div>
+    }
+    </picture> 
+    </div>
+}
+<form aria-label="chat-form" 
+class="bg-[#212121] w-full h-[10vh] rounded-b-box  text-white
+flex justify-evenly items-center px-3 sm:px-6" (ngSubmit)="addMessage()">
+    
+    <div class="flex justify-center items-center gap-2 sm:gap-5">
+        <label for="upload" aria-label="upload" class="btn-hover">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" 
+            stroke="currentColor" class="size-6 text-sawa-primary">
+            <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
+        </svg>
+        <input type="file" name="upload" id="upload" (change)="onUpLoadFile($event)" accept="image/*"
+        class="hidden">
+        </label>
+    </div>
+
+    <input type="text" [ngModel]="value()" (ngModelChange)="onChangeValue($event)" name="chatValue"  id="chatValue" 
+    class="w-[70%] sm:w-[80%] input  bg-[#333333] rounded-2xl placeholder:text-overlay
+    focus:outline-none focus:border focus:border-sawa-primary" 
+    placeholder="Start the conversation"  accept="image/*"/>
+
+    <button type="submit">
+    @if(value().length < 1 && !messageStore.previewUrl() ){
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" 
+    stroke="currentColor" class="size-6 ">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5" />
+    </svg> 
+    }@else { 
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" 
+    class="size-6 text-sawa-primary btn-hover">
+        <path d="M3.478 2.404a.75.75 0 0 0-.926.941l2.432 7.905H13.5a.75.75 0 0 1 0 1.5H4.984l-2.432 7.905a.75.75 0 0 0 .926.94 60.519 60.519 0 0 0 18.445-8.986.75.75 0 0 0 0-1.218A60.517 60.517 0 0 0 3.478 2.404Z" />
+    </svg>
+    }
+    </button>
+    
+</form>
+</section>
