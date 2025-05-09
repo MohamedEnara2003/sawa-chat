@@ -15,7 +15,9 @@ import { Router } from '@angular/router';
   <a forgotPassword aria-label="forgot-password-linke" class="capitalize link link-hover">
   Forgot Password
   </a>
-  <button (click)="signIn()" type="submit" class="btn btn-neutral btn-lg font-[300] bg-black opacity-80 capitalize w-full">
+  <button (click)="signIn()" type="submit" 
+  class="w-full btn btn-neutral btn-lg font-[300] bg-black text-white opacity-80 capitalize
+  hover:bg-background duration-200">
   sign in
   </button>
   </app-auth-feild>

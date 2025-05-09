@@ -2,6 +2,7 @@ import { Routes } from "@angular/router";
 import { ProfileSetupComponent } from "../shared/components/profile-setup/ui/profile-setup.component";
 import { ContainerAddPostComponent } from "../features/posts/components/container/container-add-post.component";
 import { SearchComponent } from "../features/search/ui/search.component";
+import { PostViewerComponent } from "../features/posts/components/post-viewer/post-viewer.component";
 
 
 
@@ -27,7 +28,7 @@ export const mainRoutes: Routes = [
     },
 
     {path : 'create-post' , component : ContainerAddPostComponent, outlet : 'container'},
-    
+
     {path : 'settings' , loadComponent : () => 
     import('../features/settings/page/settings.component').then(c => c.SettingsComponent),
     },

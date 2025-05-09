@@ -7,6 +7,7 @@ import { UsersService } from "../../core/services/users.service";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import { NotificationsStore } from "../notifications/notifications.signal";
 import { UserStore } from "../users/users.signal";
+import { PostsStore } from "../posts/posts.signal";
 
 
 interface FriendState  {
@@ -32,13 +33,15 @@ export const CommentsStore = signalStore(
     withMethods((store, 
     commentsService = inject(CommentsService) ,
     usersService = inject(UsersService) ,
-    userStore = inject(UserStore) ,
+    userStore = inject(UserStore),
+    postsStore = inject(PostsStore),
     notificationsStore = inject(NotificationsStore),
     ) => ({
         
-    openContainerComments(postId : number) : void {
+    openContainerComments(postId : number , isLoadComments : boolean) : void {
     this.getComments(postId);
-    patchState(store , ({postId ,isLoadComments : true}));
+    patchState(store , ({postId ,isLoadComments}));
+    if(isLoadComments)postsStore.openPostViewer(undefined) ;
     },
 
     closeContainerComments() : void {
@@ -56,7 +59,6 @@ export const CommentsStore = signalStore(
     notificationsStore.addNotification('comment' , post_user_id , store.postId());
     }
     },
-
 
     getComments(postId : number) : void {
         if(postId !== store.postId()){ 

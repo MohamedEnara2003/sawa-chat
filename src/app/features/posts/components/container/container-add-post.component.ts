@@ -66,7 +66,7 @@ import { postStatus } from '../../../../core/interface/posts';
   </textarea>
   </div>
 
-  @if(postsStore.file_url() === ''){ 
+  @if(postsStore.previewUrl() === ''){ 
   <div class="w-full h-30 bg-[#333] rounded-t-2xl">
   <button type="button" class="w-full text-center capitalize">
             <label for="upload" class="w-[90%] mt-5  btn-ghost  btn bg-tint text-sawa-primary">

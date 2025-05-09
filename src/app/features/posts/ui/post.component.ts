@@ -10,24 +10,35 @@ import { CommentsStore } from '../../../store/comments/comments.signal';
 import { BtnLikeComponent } from "../components/btn-like/btn-like.component";
 import { PostsLikesStore } from '../../../store/posts/likes.signal';
 import { SharedModule } from '../../../shared/modules/shared.module';
+import { PostsStore } from '../../../store/posts/posts.signal';
+import { PostLoadingComponent } from "../components/post-loading/post-loading.component";
+
 
 @Component({
   selector: 'app-post',
   imports: [
-    SharedModule ,
+    SharedModule,
     UserImageComponent,
     PostsInteractionComponent,
     PostEditMenuComponent,
+    BtnLikeComponent,
     PostsCommentsComponent,
-    BtnLikeComponent],
+    PostLoadingComponent
+],
   template : `
   <ul class="w-full h-full flex flex-col gap-5 overflow-y-auto" style="scrollbar-width: none;"> 
+  @if(postsStore.isLoading()){
+    <app-post-loading />
+  }
   @for (post of posts(); track post) {
   @defer (on viewport) {
-  <li class="relative w-full bg-tint flex flex-col justify-center items-center rounded-2xl ">
+  <li 
+  class="relative w-full bg-tint flex flex-col justify-center items-center rounded-2xl ">
     <div class="w-full flex flex-col justify-start items-center  gap-2 my-5 px-4">
     <div class="w-full flex justify-between items-center ">
+
     <div class="flex flex-wrap justify-start items-center gap-3">
+    <ng-content select="[link-close-post]" />
     <picture class="size-10 rounded-full shadow shadow-background">
     @let userImage = post.user.avatar_url;
     <app-user-image [avatarUrl]="userImage" [isDefault]="userImage ? false : true" 
@@ -48,7 +59,7 @@ import { SharedModule } from '../../../shared/modules/shared.module';
     </div>
     </div>
     @if(post.user_id === userStore.user_id()){
-    <app-post-edit-menu  [postId]="post.id!"/>
+    <app-post-edit-menu  [postId]="post.id!" [file_name]="post.file_name!"/>
     }
     </div>
 
@@ -56,7 +67,10 @@ import { SharedModule } from '../../../shared/modules/shared.module';
     <p class="text-overlay ">{{post.value}}</p>
     </div>
     @if(post.file_url){
-    <picture class="w-full rounded-box" (dblclick)="onClickBtnLike(post)">
+    <picture (click)="
+    postsStore.openPostViewer(post.id!); 
+    commentsStore.openContainerComments(post.id! , false)"
+    class="w-full rounded-box" >
     <img [src]="post.file_url"
     alt="image-post" class="w-full object-cover rounded-box shadow-background shadow-sm">
     </picture>
@@ -65,35 +79,38 @@ import { SharedModule } from '../../../shared/modules/shared.module';
   <app-posts-interaction class="w-full" 
   [postId]="post.id!"
   [commentsCount]="post.comments_count?.count!">
-  <app-btn-like btn-like [likesCount]="post.likes?.count!" [getIsLiked]="post.isLiked "
+  <app-btn-like btn-like [likesCount]="post.likes?.count || 0" [getIsLiked]="post.isLiked "
   (click)="onClickBtnLike(post)"/>
   </app-posts-interaction>
   
   </div>
   @if(commentsStore.isLoadComments()){
-  <app-posts-comments [post_user_id]="post.user_id!"/>
+  <section class="w-full h-screen  fixed top-0 left-0  z-100 flex justify-center items-end ">
+  <app-posts-comments [post_user_id]="post.user_id!" class="w-1/2  z-100"/>
+  <div (click)="commentsStore.closeContainerComments()"
+  class="w-full h-full fixed top-0 left-0 z-50 bg-background opacity-60">
+  </div>
+  </section>
   }
   </li>
   }@placeholder {
-    <li class="w-full  flex flex-col justify-center items-start gap-2 ">
-    <div class="w-full flex gap-2 items-center">
-    <div class="size-10  bg-tint animate-pulse rounded-full"></div>
-    <div class="w-30 h-2 bg-tint animate-pulse rounded-full"></div>
-    </div>
-    <div class="w-full h-80 bg-tint animate-pulse rounded-box"></div>
-    </li>
+  <app-post-loading />
   }
+}@empty {
+  <div class="w-full h-[50vh] text-center flex justify-center items-center text-xl text-white ">
+  No posts available yet. Stay tuned for updates!
+  </div>
 }
 </ul>
   `
 })
 export class PostComponent {
   posts = input.required<UserPostData[]>();
-  
   readonly dayJs = inject(DayJsService);
   readonly userStore = inject(UserStore);
   readonly commentsStore = inject(CommentsStore);
   readonly postsLikesStore = inject(PostsLikesStore);
+  readonly postsStore = inject(PostsStore);
 
   constructor(){
   this.commentsStore.initRealTimeForPostComment();

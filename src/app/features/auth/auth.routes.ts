@@ -7,5 +7,8 @@ export const authRoutes: Routes = [
     {path : 'sign-up' , data: { hideLayout: true } , loadComponent : () => 
     import('./pages/sign-up/sign-up.component').then(c => c.SignUpComponent)
     },
+    {path : 'call-back' , data: { hideLayout: true } , loadComponent : () => 
+    import('./pages/auth-call-back/auth-call-back.component').then(c => c.AuthCallBackComponent)
+    },
     {path : '' , redirectTo : '/auth/sign-up' , pathMatch : 'full'}
 ];

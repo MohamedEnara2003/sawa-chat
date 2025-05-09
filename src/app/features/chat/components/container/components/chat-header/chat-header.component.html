@@ -1,8 +1,10 @@
-<header aria-label="chat-heaer" class="w-full h-[10vh] bg-tint rounded-t-box flex justify-between items-center
-px-4">
+<header aria-label="chat-heaer" 
+class="w-full h-[8vh] bg-tint rounded-t-box flex justify-between items-center
+px-4 ">
 
     <div class="flex justify-center items-center gap-2">
-    <a routerLink="/chat" class="z-50 btn-hover">
+
+    <a routerLink="/chat" class="btn-hover">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" 
         class="size-8 text-sawa-primary">
         <path fill-rule="evenodd" d="M7.72 12.53a.75.75 0 0 1 0-1.06l7.5-7.5a.75.75 0 1 1 1.06 1.06L9.31 12l6.97 6.97a.75.75 0 1 1-1.06 1.06l-7.5-7.5Z" clip-rule="evenodd" />
@@ -10,11 +12,15 @@ px-4">
     </a>
 
     @let userImage = chatStore.chat()?.user1_id?.avatar_url ;
-    <app-user-image  [avatarUrl]="userImage!" [isDefault]="userImage ? false : true"
-    imageClass="size-12  object-cover"/> 
+    <div class="size-10 rounded-box border-2 border-background"
+    (click)="imageViewer.getImage(userImage! ,userImage ? true : false)">
+        <app-user-image  [avatarUrl]="userImage!" [isDefault]="userImage ? false : true"
+        imageClass="size-full  object-cover rounded-box"/> 
+    </div>
+
     <div class="flex flex-col justify-center items-start gap-1 text-white ">
-    <h1 class="font-semibold capitalize">{{chatStore.chat()?.user1_id?.fullName}}</h1>
-    <h4 class="text-xs text-overlay">Active 1 min ago.</h4>
+    <h1 class="font-semibold capitalize text-sm">{{chatStore.chat()?.user1_id?.fullName}}</h1>
+    <h5 class="text-xs text-overlay">Active 1 min ago.</h5>
     </div>
     </div>
 

@@ -1,4 +1,4 @@
-import { Component, effect, ElementRef, inject, input, OnInit, viewChild } from '@angular/core';
+import { Component, effect, ElementRef, inject, viewChild } from '@angular/core';
 import { MessageStore } from '../../../../../../store/messages/message.signal';
 import { SharedModule } from '../../../../../../shared/modules/shared.module';
 import { DayJsService } from '../../../../../../core/services/day-js.service';
@@ -8,7 +8,7 @@ import { UserStore } from '../../../../../../store/users/users.signal';
   selector: 'app-chat-body',
   imports: [ SharedModule],
   template : `
-<div #chatContainer class="w-full  h-[80vh] border-1 border-tint overflow-y-auto p-2 flex flex-col gap-5"
+<div #chatContainer class="w-full  h-[82vh] border-1 border-tint overflow-y-auto p-2 flex flex-col gap-5"
 style="scrollbar-width: none;">
     @for (item of messageStore.messages(); track item) {
     <div class="chat" 
@@ -40,27 +40,20 @@ style="scrollbar-width: none;">
 </div>
   `
 })
-export class ChatBodyComponent implements OnInit{
+export class ChatBodyComponent  {
   readonly datJs = inject(DayJsService);
-  readonly chatId = input.required<string>();
   readonly messageStore = inject(MessageStore);
   readonly userStore = inject(UserStore);
   chatContainer = viewChild<ElementRef<HTMLElement>>('chatContainer');
 
   constructor(){
-    effect(() => {
+  effect(() => {
     const chatContainer = this.chatContainer()?.nativeElement;
-    const chatId = this.chatId();
-    if(chatContainer && chatId){
-    this.messageStore.getMessage(chatId , chatContainer);
-    this.messageStore.initMessageRealTime(chatId);
-    this.messageStore.scrollChatContanierToBottom();
+    if(chatContainer ){
+    this.messageStore.getChatContanier(chatContainer);
     }
-    })
-  }
-
-  ngOnInit(): void {
-  this.messageStore.scrollChatContanierToBottom();
-  }
+  })
+ 
+}
 
 }

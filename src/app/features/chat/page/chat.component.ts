@@ -1,4 +1,4 @@
-import { Component, effect, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { MessagesComponent } from "../components/messages/ui/messages.component";
 import { ChatContainerComponent } from "../components/container/ui/chat-container.component";
 import { toSignal } from '@angular/core/rxjs-interop';
@@ -6,7 +6,7 @@ import { selectRouteParams } from '../../../store/routes/router.selectors';
 import { Store } from '@ngrx/store';
 import { map } from 'rxjs';
 import { SharedModule } from '../../../shared/modules/shared.module';
-import { ChatStore } from '../../../store/chats/chats.signal';
+import { MessageStore } from '../../../store/messages/message.signal';
 
 @Component({
   selector: 'app-chat',
@@ -16,16 +16,17 @@ import { ChatStore } from '../../../store/chats/chats.signal';
   <app-messages class="w-full lg:w-[30%] h-full " [chatId]="chatId()"
   [ngClass]="!chatId() ? '' : 'hidden lg:inline-block'"
   />
-  <app-chat-container [chatId]="chatId()" class="w-full h-full  lg:w-[65%]"
+  <app-chat-container class="w-full h-full  lg:w-[65%]"
   [ngClass]="chatId() ? '' : 'hidden lg:inline-block'"
   />
   </section>
   `
 })
-export class ChatComponent {
+export class ChatComponent implements OnInit{
+
 
   private readonly store = inject(Store);
-  readonly chatStore = inject(ChatStore);
+  private readonly messageStore = inject(MessageStore);
 
   chatId = toSignal<string>(
   this.store.select(selectRouteParams).pipe(
@@ -33,16 +34,8 @@ export class ChatComponent {
   )
   );
 
-  constructor(){
-    effect(() => {
-    const chat_id = this.chatId() ;
-    if(chat_id) {
-    this.chatStore.getChat(chat_id)
-    }
-    })
-    
-
-  
+  ngOnInit(): void {
+  this.messageStore.getChatId(this.chatId()!);
   }
 
 }

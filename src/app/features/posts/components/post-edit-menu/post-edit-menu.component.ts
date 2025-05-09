@@ -34,6 +34,7 @@ export class PostEditMenuComponent {
   readonly postsStore = inject(PostsStore);
   readonly router = inject(Router);
   postId = input.required<number>();
+  file_name = input.required<string>();
   
   postLinks = signal<LinksType[]>([
   {id : 1 , linkName : 'edit post' , iconName : 'fa-solid fa-edit'},
@@ -52,7 +53,7 @@ export class PostEditMenuComponent {
   this.router.navigate(['/',{outlets :{'container' : 'create-post'}}])
   break
   case(2) :
-  this.postsStore.removePost(this.postId())
+  this.postsStore.removePost(this.postId() , this.file_name())
   }
   this.isOpenMenu.set(0);
   }

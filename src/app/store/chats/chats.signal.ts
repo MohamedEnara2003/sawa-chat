@@ -5,11 +5,13 @@ import { ChatService } from "../../features/chat/service/chat.service";
 import { catchError, of, tap } from "rxjs";
 import { UserStore } from "../users/users.signal";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
+import { MessageStore } from "../messages/message.signal";
+
 
 
 interface ChatState {
-    chats : ChatUserData[]
-    chat : ChatUserData | undefined
+    chats : ChatUserData[],
+    chat : ChatUserData | undefined,
     isLoading : boolean ,
     error : string ,
 };
@@ -24,19 +26,18 @@ const initialState : ChatState = {
 export const ChatStore = signalStore(
     {providedIn : 'root'},
     withState(initialState),
-    withMethods((store, 
-    chatService = inject(ChatService) ,
-    userStore = inject(UserStore) ,
-    ) => ({
-
+    withMethods((store) => {
+    const chatService = inject(ChatService);
+    const userStore = inject(UserStore);
+    const messageStore = inject(MessageStore);
+    return{ 
     addChat(user1_id : string , user2_id : string) : void {
     const chatData : ChatType = {user1_id, user2_id};
-    
     const existingChat = store.chats().some((chat) => 
     chat.user1_id.user_id === user1_id && chat.user2_id.user_id === user2_id ||
     chat.user1_id.user_id === user2_id && chat.user2_id.user_id === user1_id 
     )
-    
+
     if(!existingChat)
     chatService.addChat(chatData).subscribe();
     },
@@ -58,9 +59,11 @@ export const ChatStore = signalStore(
     }
     },
     
-    getChat(id : string) : void {
-    const chat = store.chats().find((chat) => chat.id === id) ;
-    patchState(store , ({chat}))
+    getChat(chatId : string) : void {
+    const chat = store.chats().find((chat) => chat.id === chatId);
+    patchState(store , ({chat}));
+    },
+
     }
-    }))
+    })
 )

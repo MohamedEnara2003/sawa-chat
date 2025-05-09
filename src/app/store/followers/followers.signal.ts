@@ -1,6 +1,6 @@
-import { patchState, signalStore, withMethods, withState } from "@ngrx/signals"
+import { patchState, signalStore, withComputed, withMethods, withState } from "@ngrx/signals"
 import { FollowersService } from "../../core/services/followers.service";
-import { inject } from "@angular/core";
+import { computed, inject } from "@angular/core";
 import { catchError, Observable, of, tap } from "rxjs";
 import { followerType, UserFollowerssData } from "../../core/interface/followers";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
@@ -32,6 +32,10 @@ const initialState : FollowersState = {
 export const FollowersStore = signalStore(
     {providedIn : 'root'} ,
     withState(initialState),
+    withComputed((store)=> ({
+    followingCount : computed<number>(() => store.followingData().length),
+    followersCount : computed<number>(() => store.followersData().length),
+    })),
     withMethods((store) => {
     const followersService = inject(FollowersService);
     const userStore = inject(UserStore) ;
@@ -39,9 +43,10 @@ export const FollowersStore = signalStore(
     const notificationsStore = inject(NotificationsStore);
 
     return {
-
-    addFollow(following_id : string ) : void {
-    const data : followerType = {follower_id : userStore.user_id() ,following_id,}
+    addFollow( ) : void {
+    const following_id = userStore.userProfile()?.user_id ;
+    if(following_id){ 
+    const data : followerType = {follower_id : userStore.user_id() ,following_id}
     followersService.addFollow(data).subscribe();
     chatStore.addChat(data.follower_id , following_id);
     const follower = {
@@ -54,6 +59,7 @@ export const FollowersStore = signalStore(
     };
     patchState(store, ({isFollowing : true , follower , following}));
     notificationsStore.addNotification('follow' , following_id , null);
+    }
     },
 
     unFollow() : void {

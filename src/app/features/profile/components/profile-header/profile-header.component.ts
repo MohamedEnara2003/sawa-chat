@@ -1,6 +1,7 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, effect, inject, linkedSignal, signal } from '@angular/core';
 import { SharedModule } from '../../../../shared/modules/shared.module';
 import { NotificationsStore } from '../../../../store/notifications/notifications.signal';
+import { PostsStore } from '../../../../store/posts/posts.signal';
 
 @Component({
   selector: 'app-profile-header',
@@ -18,7 +19,7 @@ import { NotificationsStore } from '../../../../store/notifications/notification
     @if(link.statusCount){
     <span class="absolute -top-2  badge badge-xs badge-neutral bg-transparent 
     text-background dark:text-white border-1 border-background dark:border-white">
-    {{link.statusCount}}
+    {{link.statusCount}} 
     </span>
     }
     </a> 
@@ -31,12 +32,18 @@ import { NotificationsStore } from '../../../../store/notifications/notification
 })
 export class ProfileHeaderComponent {
   private readonly notificationsStore = inject(NotificationsStore);
-  profileLinks = signal<Array<{id : number , name : string , statusCount? : number}>>([
-    {id : 1 , name : 'activity' , statusCount : 145 },
+  private readonly postsStore = inject(PostsStore);
+  profileLinks = linkedSignal<Array<{id : number , name : string , statusCount? : number}>>( () => [
+    {id : 1 , name : 'activity' , statusCount : this.postsStore.activityCount() },
     {id : 2 , name : 'notification' , statusCount : this.notificationsStore.notificationsCount() },
     {id : 3 , name : 'display'},
     {id : 4 , name : 'apps'},
     ]);
+  constructor(){
+  effect(() => {
+    console.log(this.postsStore.activityCount());
     
+  })
+  }
   
 }

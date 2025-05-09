@@ -1,12 +1,11 @@
 
-<section class="w-full h-screen  fixed  top-0 left-0 flex justify-center items-end z-50">
-<nav class="w-full lg:w-1/2 h-[70vh] bg-tint rounded-t-4xl shadow-md shadow-background z-50 
-border-t-1 border-t-overlay flex flex-col justify-start items-center p-4 gap-2 animate-up">
+<nav class="w-full  bg-tint rounded-t-4xl shadow-md shadow-background z-50 
+border-t-1 border-t-overlay flex flex-col justify-start items-center p-4 gap-2 ">
 <button type="button" role="button" class="w-10 h-1 rounded-box  bg-overlay btn-hover"></button>
 <h1 class="title-h1">{{commentsStore.comments().length}} comments</h1>
 
 <ul #commentsRef
-class=" w-full h-full overflow-y-auto " style="scrollbar-width: none;">
+class=" w-full " style="scrollbar-width: none;">
 @for (comment of commentsStore.comments(); track comment) {
 @defer (on viewport) {
 <li class="w-full flex flex-wrap justify-start items-center  p-2  gap-2 border-b-1 border-b-background" >
@@ -53,6 +52,3 @@ class="btn btn-xs bg-sawa-primary btn-hover shadow shadow-background ">
 </form>
 </nav>
 
-<div (click)="commentsStore.closeContainerComments()"
-class="w-full h-full fixed left-0 top-0 bg-background opacity-50 z-40 "></div>
-</section>

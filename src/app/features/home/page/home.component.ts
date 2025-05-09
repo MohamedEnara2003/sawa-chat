@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { ProfileAsideComponent } from "../../../shared/components/profile-aside/ui/profile-aside.component";
 import { SharedModule } from '../../../shared/modules/shared.module';
 import { PostsStore } from '../../../store/posts/posts.signal';
@@ -24,41 +24,41 @@ import { selectRouteParams } from '../../../store/routes/router.selectors';
     PostStatusLinksComponent
 ],
   template : `
-<section class="w-full  flex flex-wrap justify-evenly items-start  mt-5 mb-12 sm:mb-0 p-4 ">
+<section class="w-full  flex flex-wrap justify-evenly  mt-5 mb-12 sm:mb-0 p-2 overflow-hidden">
 
-  <div class="hidden md:inline-flex w-full  md:w-[35%] lg:w-[30%] h-screen overflow-y-auto  flex-col gap-2" style="scrollbar-width: none;">
+@if(this.innerWidth() > 1024){ 
+  <div class="hidden lg:inline-flex w-full  lg:w-[30%]  " >
     <app-profile-aside class="w-full h-full" />
   </div>
-
-    <div class="w-full md:w-[60%] lg:w-[40%] flex flex-col justify-center  gap-4 ">
+}
+    <div class="w-full md:w-[90%] lg:w-[40%] flex flex-col justify-center  gap-4 ">
     <app-following-list/> 
     <app-add-post />
     <app-post-status-links />
-
-
     @if(postStatus() === "public") {
-      <app-post [posts]="postsStore.publicPosts()"  class="w-full md:h-screen"/>
+    <app-post [posts]="postsStore.publicPosts()"  class="w-full lg:h-screen"/>
     }
     @else if (postStatus() === "followers") {
-      <app-post [posts]="postsStore.followingPosts()" class="w-full md:h-screen" />
+      <app-post [posts]="postsStore.followingPosts()" class="w-full lg:h-screen" />
     }
-
     </div>
-  
+
+    @if(this.innerWidth() > 1024){ 
     <div class="hidden lg:inline-flex  lg:w-[25%] h-screen bg-tint rounded-2xl shadow shadow-background p-4" >
     <app-notifications class="w-full h-full"/>
     </div>
-
+    }
+  
     <a [routerLink]="['/']" 
-    class="fixed right-1 bottom-15 sm:bottom-2 size-8 bg-sawa-primary rounded-full 
-    flex justify-center items-center shadow-md shadow-background">
+    class="fixed right-2 bottom-18 sm:bottom-2 size-8 bg-sawa-primary rounded-full 
+    flex justify-center items-center shadow-md shadow-background border border-tint">
     <i class="fa-solid fa-angle-up text-background text-xl"></i>
     </a>
-  
+    
   </section>
   `
 })
-export class HomeComponent{
+export class HomeComponent {
   readonly postsStore = inject(PostsStore);
   private readonly store = inject(Store);
   
@@ -68,12 +68,7 @@ export class HomeComponent{
     )
   );
   
-  constructor(){
-  this.postsStore.getPublicPosts();
-  this.postsStore.getFollowingPosts();
-  this.postsStore.initRealTimeForPosts();
-  }
-
+  innerWidth = signal<number>(window.innerWidth)
 
 
 }

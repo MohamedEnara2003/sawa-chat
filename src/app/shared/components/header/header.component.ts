@@ -23,7 +23,7 @@ import { ResponsiveNavLinksComponent } from "../responsive-nav-links/responsive-
         <div class="flex justify-start items-center gap-5">
         <app-logo routerLink="/home"/>
         <a role="link" aria-label="link-search" routerLink="/search" 
-        class="relative py-2 flex justify-center items-center" routerLinkActive="linkActive">
+        class="relative py-2 flex justify-center items-center btn-hover" routerLinkActive="linkActive">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" 
         class="size-7">
         <path fill-rule="evenodd" d="M10.5 3.75a6.75 6.75 0 1 0 0 13.5 6.75 6.75 0 0 0 0-13.5ZM2.25 10.5a8.25 8.25 0 1 1 14.59 5.28l4.69 4.69a.75.75 0 1 1-1.06 1.06l-4.69-4.69A8.25 8.25 0 0 1 2.25 10.5Z" clip-rule="evenodd" />
@@ -32,17 +32,17 @@ import { ResponsiveNavLinksComponent } from "../responsive-nav-links/responsive-
         </div>
 
         <app-main-links class="w-100 hidden md:inline-block "/>
-        
-        <picture class="flex justify-end items-center">
+        <a role="link" aria-label="link-profile" class="size-8 rounded-full">
         <app-user-image [isRouteProfile]="true"
-        imageClass="size-8 rounded-full shadow-md shadow-background"/>
-        </picture>
+        imageClass="size-full object-cover rounded-full shadow-md shadow-background border 
+        border-tint btn-hover"/>
+        </a>
         </nav>
 </header>
 
-<nav class="fixed  bottom-0 left-0  md:hidden w-full  z-50 shadow shadow-background ">
-  <app-responsive-nav-links class="w-full  h-[6vh]" />
-</nav>
+
+  <app-responsive-nav-links  />
+
 
   </section>
 

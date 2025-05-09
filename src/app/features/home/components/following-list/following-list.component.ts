@@ -12,6 +12,7 @@ import { SharedModule } from '../../../../shared/modules/shared.module';
   template : `
   <ul class="flex flex-wrap justify-start items-start gap-5">
   @for (following of followersStore.followingData(); track following) {
+  @defer (when !followersStore.isLoading()) { 
     <li [routerLink]="['/user-profile/', following.following_id]"
     class="w-12 flex flex-col justify-center items-center gap-1">
       @let userImage = following.following.avatar_url;
@@ -23,6 +24,9 @@ import { SharedModule } from '../../../../shared/modules/shared.module';
       {{following.following.fullName}}
       </h2>
     </li>
+  }@placeholder {
+    <li class="size-12 rounded-2xl bg-tint animate-pulse"></li>
+  }
   }
   </ul>
   `,

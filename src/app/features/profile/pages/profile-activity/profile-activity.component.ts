@@ -1,11 +1,10 @@
 import { Component, inject} from '@angular/core';
-import { ProfileSettingsComponent } from "../../components/profile-settings/profile-settings.component";
 import { ProfileService } from '../../service/profile.service';
 import { ChartComponent } from "../../../../shared/components/chart/chart.component";
 
 @Component({
   selector: 'app-profile-activity',
-  imports: [ProfileSettingsComponent, ChartComponent],
+  imports: [ ChartComponent],
   template :`
     <section class="w-full flex flex-col gap-10 justify-center items-start"> 
     <app-chart
@@ -31,7 +30,6 @@ import { ChartComponent } from "../../../../shared/components/chart/chart.compon
     type="bar"
     class="w-full" 
     />
-    <app-profile-settings />
     </section>
   `
 })

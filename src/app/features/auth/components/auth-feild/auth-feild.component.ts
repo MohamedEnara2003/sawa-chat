@@ -1,15 +1,16 @@
 import { Component, input, signal } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { SharedModule } from '../../../../shared/modules/shared.module';
+import { SignwithGoogleComponent } from "../signwith-google/signwith-google.component";
 
 @Component({
   selector: 'app-auth-feild',
-  imports: [SharedModule],
+  imports: [SharedModule, SignwithGoogleComponent],
   template : `
   <form [formGroup]="formGroup()" aria-label="authentication" 
-  class="size-full flex flex-col justify-center items-center capitalize gap-2   ">
+  class="size-full flex flex-col justify-center items-center capitalize   ">
 
-  <fieldset class="w-[95%] flex flex-col justify-center items-center  gap-2 ">
+  <fieldset class="w-[95%] flex flex-col justify-center   gap-4 ">
 
   <legend class="fieldset-legend text-white text-center text-xl italic">
     {{legendElText()}}
@@ -51,21 +52,22 @@ import { SharedModule } from '../../../../shared/modules/shared.module';
   <div class="w-full flex justify-between items-center my-2">
   <div  class="flex justify-center items-center gap-2">
   <input (change)="isShowPassword.set(!isShowPassword())" type="checkbox" name="showPassword" id="showPassword" 
-    class="checkbox checkbox-neutral border-1 border-white checkbox-sm">
-    <label for="showPassword" class="link link-hover">
-      Remember me
-    </label>
+  class="checkbox checkbox-neutral border-1 border-white checkbox-sm">
+  <label for="showPassword" class="link link-hover">
+  Remember me
+  </label>
   </div>
   <ng-content select="[forgotPassword]"/>
   </div>  
   </div>
   <ng-content />
+  <app-signwith-google />
   </fieldset>
 </form>
   `
 })
 export class AuthFeildComponent {
   formGroup = input.required<FormGroup>() ;
-  legendElText = input.required<string>()
+  legendElText = input.required<string>();
   isShowPassword = signal<boolean>(false);
 }

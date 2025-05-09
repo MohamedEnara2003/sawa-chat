@@ -33,7 +33,7 @@ class="absolute   top-0 right-0 btn-hover z-10">
     @let userimage = notification.avatar_url;
     <app-user-image [avatarUrl]="userimage" [isDefault]="userimage ? false : true"
     imageClass="object-cover size-full rounded-full"/>
-    <span class="absolute -bottom-1 -left-1 size-6 bg-white flex justify-center items-center rounded-full
+    <span class="absolute -bottom-1 -left-1 size-5 bg-white flex justify-center items-center rounded-full
     shadow shadow-background">
     @for (item of notificationsMsg(); track item) {
     @if(notification.type === item.type){

@@ -40,7 +40,7 @@ items-start z-0 ">
 statLabel="follwers"
 />
 <picture 
-  class="size-32 outline-4 outline-background rounded-2xl ">
+  class="size-32 outline-4 outline-background rounded-2xl  hover:opacity-90 duration-200">
   <app-user-image [isRouteProfile]="true" imageClass="size-full object-cover rounded-2xl bg-white "/>
 </picture>
 
@@ -60,7 +60,7 @@ statLabel="following"
 }
 
 <a aria-label="btn-my-profile" [routerLink]="['/user-profile/',userStore.user()?.user_id]"
-class="w-[80%] py-5 btn rounded-2xl btn-neutral  capitalize 
+class="w-[80%] py-5 btn rounded-2xl btn-neutral  capitalize hover:opacity-70 duration-200
 font-[400] text-white bg-gradient-to-b from-[#282828] to-overlay  ">
     my profile
 </a>

@@ -47,6 +47,8 @@ import { ChatStore } from '../../../../../store/chats/chats.signal';
   ` 
 })
 export class MessagesComponent {
-  readonly chatStore = inject(ChatStore)
+  readonly chatStore = inject(ChatStore);
   chatId = input<string>();
+
 }
+  

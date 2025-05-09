@@ -13,7 +13,7 @@ import { SharedModule } from '../../../../shared/modules/shared.module';
     <a aria-label="profile-links" 
     [routerLink]="['/user-profile/', user_id()]"
     [queryParams]="{type : link}"
-    routerLinkActive="text-sawa-primary border-b-1 border-b-sawa-primary pb-2"
+    routerLinkActive="text-sawa-primary border-b-1 border-b-sawa-primary pb-1"
     class="w-[20%] hover:text-sawa-primary duration-200">
     {{link}}
     </a>
@@ -27,6 +27,6 @@ import { SharedModule } from '../../../../shared/modules/shared.module';
 export class ProfileLinksComponent {
   readonly user_id = input.required<string>()
   profileLinks = signal<string[]>([
-    "posts" , "about" , "friends" , "photos" ,"videos"
+    "posts" , "about" , "photos" ,"videos"
     ])
 }

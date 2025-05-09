@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { UserImageComponent } from "../../../../../../shared/components/user-image/user-image.component";
 import { SharedModule } from '../../../../../../shared/modules/shared.module';
 import { ChatStore } from '../../../../../../store/chats/chats.signal';
+import { ImageViewerStore } from '../../../../../../store/imageViewer/imageViewer.signal';
 
 @Component({
   selector: 'app-chat-header',
@@ -11,4 +12,5 @@ import { ChatStore } from '../../../../../../store/chats/chats.signal';
 })
 export class ChatHeaderComponent {
   readonly chatStore = inject(ChatStore);
+  readonly imageViewer = inject(ImageViewerStore);
 }

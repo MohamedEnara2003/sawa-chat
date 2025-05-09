@@ -74,7 +74,8 @@ usersService.getUsers().pipe(
 LoadUser() : void  {
     patchState(store , ({isLoading : true}))
     authClient.onAuthStateChange((event ,  session) => {
-    const user_id = session?.user.id ;
+    const user_id = session?.user.id;
+
 if(user_id) { 
     patchState(store , ({isLoading : true , user_id }))
     usersService.getUserByUserId(user_id).pipe(

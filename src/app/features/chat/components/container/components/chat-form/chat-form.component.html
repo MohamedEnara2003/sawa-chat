@@ -31,7 +31,8 @@ flex justify-evenly items-center px-3 sm:px-6" (ngSubmit)="addMessage()">
         </label>
     </div>
 
-    <input type="text" [ngModel]="value()" (ngModelChange)="onChangeValue($event)" name="chatValue"  id="chatValue" 
+    <input #chatFormRef type="text" 
+    [ngModel]="value()" (ngModelChange)="onChangeValue($event)" name="chatValue"  id="chatValue" 
     class="w-[70%] sm:w-[80%] input  bg-[#333333] rounded-2xl placeholder:text-overlay
     focus:outline-none focus:border focus:border-sawa-primary" 
     placeholder="Start the conversation"  accept="image/*"/>

@@ -39,9 +39,24 @@ export const PostsStore = signalStore(
     {providedIn : 'root'} ,
     withState(initialState),
 
-    withComputed((store) => ({
+    withComputed((store , userStore = inject(UserStore),  ) => ({
     publicPosts: computed(() => store.posts().filter((post) => post.privacy === "public")),
     followingPosts: computed(() => store.posts().filter((post) => post.privacy === "followers")),
+    myPosts: computed(() => 
+    store.posts().filter((post) => {
+    const profileUserId = userStore.userProfile()?.user_id || userStore.user_id();;
+    return post.user_id === profileUserId ;
+    })),
+
+    activityCount : computed(() => {
+    const myPosts = store.posts().filter((post) => post.user_id === userStore.user_id())
+    const likes = myPosts.map((post) => post.likes?.count ?? 0)
+    .reduce((prev, value) => prev += value, 0);
+    const comments = myPosts.map((post) => post.comments_count?.count!)
+    .reduce((prev, value) => prev += value, 0)
+    return  comments + likes;
+    }),
+    
     })),
 
     withMethods((store , 
@@ -70,13 +85,14 @@ export const PostsStore = signalStore(
     },
     
     removeUploadedImage() : void {
-    if(store.previewUrl() !== '') { 
+    if(store.file_name() !== '') { 
     postsService.removeFilePost(store.file_name());
     patchState(store , ({file_name : '' , file_url : '' , previewUrl : ''}));
     }
     },
     
     createPost (value : string, privacy : postStatus) : void {
+    patchState(store , ({isLoading : true }));
     const post : PostType = {
     user_id : userStore.user_id(),
     value,
@@ -84,9 +100,13 @@ export const PostsStore = signalStore(
     file_url : store.file_url(),
     file_name : store.file_name(),
     } 
-    postsService.createPost(post).subscribe();
+    postsService.createPost(post).pipe(
+    tap(() => {
     const user = {fullName : userStore.user()?.fullName! , avatar_url : userStore.user()?.avatar_url!}
-    patchState(store , ({file_name : '' , file_url : '' , previewUrl : '' , user,}));
+    patchState(store , ({isLoading : false ,file_name : '' , file_url : '' , previewUrl : '' , user,}));
+    })
+    ).subscribe();
+
     },
 
     editPost(value : string, privacy : postStatus) : void {
@@ -106,15 +126,16 @@ export const PostsStore = signalStore(
     }
     },
 
-    removePost(id : number) : void {
+    removePost(id : number , file_name : string) : void {
     postsService.removePost(id).subscribe();
     const posts = store.posts().filter((post) => post.id !== id);
-    patchState(store , ({posts}));
+    patchState(store , ({posts , file_name}));
+    this.removeUploadedImage()
     },
 
     getPublicPosts() : void {
     const user_id = userStore.user_id();
-if(store.posts().length < 1) { 
+    if(store.posts().length < 1) { 
     patchState(store , ({ isLoading : true}))
     postsService.getPublicPosts(user_id).pipe(
     tap((res) => {
@@ -162,6 +183,11 @@ if(store.posts().length < 1){
     file_url : post?.file_url , previewUrl : post?.file_url , file_name : post?.file_name}));
     },
 
+    openPostViewer(post_id : number | undefined) : void {
+    const post = store.posts().find((post) => post.id === post_id);
+    patchState(store , ({post}));
+    },
+
     updateLikesCount(post_id: number, isLike: boolean): void {
         const post = store.posts().find((post) => post.id === post_id);
         if (post) {
@@ -174,8 +200,7 @@ if(store.posts().length < 1){
             isLiked: isLike,
         };
         const posts: UserPostData[] = store.posts()
-            .map(p => p.id === post_id ? updatedPost : p)
-            .sort(post => post.user_id === userStore.user_id() ? -1 : 0);
+        .map(p => p.id === post_id ? updatedPost : p)
         patchState(store, { posts });
         }
     },

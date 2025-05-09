@@ -28,7 +28,9 @@ import { Router } from '@angular/router';
   }
     </div>
 
-  <button (click)="signUp()" type="submit" class="btn btn-neutral btn-lg font-[300] bg-black opacity-80 capitalize w-full">
+  <button (click)="signUp()" type="submit" 
+  class="w-full btn btn-neutral btn-lg font-[300] bg-black text-white opacity-80 capitalize
+  hover:bg-background duration-200">
   sign up
   </button>
 </app-auth-feild>

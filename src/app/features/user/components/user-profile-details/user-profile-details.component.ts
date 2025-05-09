@@ -10,37 +10,22 @@ import { UserStore } from '../../../../store/users/users.signal';
   imports: [SharedModule,ProfileBioComponent, ProfileDetailsComponent, ProfileSkillsComponent],
   template : `
     <div class="w-full flex flex-col justify-center items-start gap-5">
-    @let isMyProfile = userStore.user_id() === userStore.userProfile()?.user_id ;
     <div class="w-full flex flex-col justify-center items-start gap-1">
     <div title class="w-full flex justify-start items-center gap-2">
     <h1 class="title-h1">bio</h1>
-    @if(isMyProfile){
-    <i [routerLink]="['/',{outlets : {'profile-setup' : 'user'}}]" [queryParams]="{editType : 'bio'}" 
-    class="fa-solid fa-edit text-sawa-primary text-lg btn-hover">
-    </i>
-    }
     </div>
     <app-profile-bio [bio]="userStore.userProfile()?.bio!" />
     </div>
     <app-profile-details [details]="userStore.userProfile()?.details!" class="w-full">
     <div title class="w-full flex justify-start items-center gap-2">
     <h1 title class="title-h1">details</h1>
-    @if(isMyProfile){
-    <i [routerLink]="['/',{outlets : {'profile-setup' : 'user'}}]" [queryParams]="{editType : 'details'}" 
-    class="fa-solid fa-edit text-sawa-primary text-lg btn-hover">
-    </i>
-    }
+ 
     </div>
     </app-profile-details>
     <app-profile-skills class="w-full"  [skills]="userStore.userProfile()?.skills!">
 
     <div title class="w-full flex justify-start items-center gap-2">
     <h1  class="title-h1">skills</h1>
-    @if(isMyProfile){
-    <i [routerLink]="['/',{outlets : {'profile-setup' : 'user'}}]" [queryParams]="{editType : 'skills'}" 
-    class="fa-solid fa-edit text-sawa-primary text-lg btn-hover">
-    </i>
-    }
     </div>
 
     </app-profile-skills>

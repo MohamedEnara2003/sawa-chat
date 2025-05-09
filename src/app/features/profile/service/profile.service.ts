@@ -66,7 +66,6 @@ postChartData = computed<ChartData<'bar'>>(
       datasets: [
         { label: 'Likes', data: [120, 200, 150, 250, 180, 300, 220], backgroundColor: '#facc15' },
         { label: 'Comments', data: [40, 65, 50, 80, 60, 90, 75], backgroundColor: '#38bdf8' },
-        { label: 'Shares', data: [10, 25, 20, 30, 22, 40, 28], backgroundColor: '#a78bfa' },
       ]
     }
   )
