@@ -1,11 +1,14 @@
 
-<nav class="w-full  bg-tint rounded-t-4xl shadow-md shadow-background z-50 
-border-t-1 border-t-overlay flex flex-col justify-start items-center p-4 gap-2 ">
+<nav class="size-full bg-tint rounded-t-4xl shadow-md shadow-background z-50 
+flex flex-col justify-between items-center p-4 gap-2 ">
+
+<div class="flex flex-col justify-center items-center gap-1">
 <button type="button" role="button" class="w-10 h-1 rounded-box  bg-overlay btn-hover"></button>
 <h1 class="title-h1">{{commentsStore.comments().length}} comments</h1>
+</div>
 
 <ul #commentsRef
-class=" w-full " style="scrollbar-width: none;">
+class="size-full overflow-y-auto" style="scrollbar-width: none;">
 @for (comment of commentsStore.comments(); track comment) {
 @defer (on viewport) {
 <li class="w-full flex flex-wrap justify-start items-center  p-2  gap-2 border-b-1 border-b-background" >

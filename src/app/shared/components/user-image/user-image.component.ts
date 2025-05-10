@@ -1,17 +1,21 @@
 import { Component, inject, input } from '@angular/core';
 import { SharedModule } from '../../modules/shared.module';
 import { UserStore } from '../../../store/users/users.signal';
+import { LinkComponent } from "../link/link.component";
 
 @Component({
   selector: 'app-user-image',
-  imports: [SharedModule],
+  imports: [SharedModule, LinkComponent],
   template : `
   @let userImage = userStore.user()?.avatar_url ;
-  <img [routerLink]="isRouteProfile() ? ['/user-profile/', userStore.user_id()] : null" 
-  class="bg-white" [ngClass]="imageClass()"
+  <app-link>
+  <img role="img" aria-label="user-image-link"
+  [routerLink]="isRouteProfile() ? ['/user-profile/', userStore.user_id()] : null" 
+  [ngClass]="imageClass()" class="cursor-pointer hover:opacity-80 duration-200"
   [src]="avatarUrl() ? avatarUrl() : !isDefault() && userImage ? userImage : defaultImage" 
   alt="user image"
   loading="lazy">
+  </app-link>
   `
 })
 export class UserImageComponent {

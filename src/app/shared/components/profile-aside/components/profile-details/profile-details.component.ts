@@ -5,6 +5,7 @@ import { userDetails } from '../../../../../core/interface/user';
   selector: 'app-profile-details',
   imports: [],
   template : `
+  @if(details()){ 
   <nav aria-label="profile-details" class="w-full  flex flex-col gap-3">
   <ng-content title/>
   <ul class="w-full flex flex-col justify-start items-start text-white   gap-4 capitalize">
@@ -23,6 +24,7 @@ import { userDetails } from '../../../../../core/interface/user';
 }
   </ul>
   </nav>
+}
   `,
   styles: ``
 })

@@ -14,10 +14,10 @@ import { ChatStore } from '../../../../../store/chats/chats.signal';
   ],
 
   template :`
-  <aside aria-label="Messages" class="w-full h-full bg-tint  p-5 flex flex-col justify-start items-center 
+  <aside aria-label="Messages" class="w-full h-full bg-tint  p-5 flex flex-col justify-start
   gap-5 rounded-2xl">
 
-  <app-messages-header class="w-[85%]"/>
+  <app-messages-header />
 
   <section class="w-full h-[90%] overflow-y-auto" style="scrollbar-width: none;">
   <ul class="w-full flex flex-col justify-center items-center gap-4">

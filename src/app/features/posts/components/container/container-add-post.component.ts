@@ -12,7 +12,6 @@ import { postStatus } from '../../../../core/interface/posts';
   imports: [UserImageComponent , SharedModule],
   template : `
   <section class="w-full fixed flex justify-center items-center z-100">
-  
   <div class="w-full  lg:w-[45%] h-[75vh] bg-tin  flex flex-col justify-start  gap-4 z-100
   items-center bg-tint rounded-2xl border-2 border-background p-4 overflow-hidden animate-up">
 
@@ -50,7 +49,6 @@ import { postStatus } from '../../../../core/interface/posts';
     name="postPrivacy" class="focus:outline-none">
     <option value="public">Public</option>
     <option value="followers">followers</option>
-    <option value="privacy">Only me</option>
   </select>
   </label>
 
@@ -128,8 +126,6 @@ export class ContainerAddPostComponent implements OnInit{
   const value = this.form.getRawValue();
   if(this.form.valid || this.postsStore.file_url()){
   if(this.postsStore.post() === undefined){
-    console.log('create');
-    
   this.postsStore.createPost(value.postContent , this.postPrivacy());
   }else{
   this.postsStore.editPost(value.postContent , this.postPrivacy())

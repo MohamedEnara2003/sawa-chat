@@ -43,7 +43,8 @@ export const FollowersStore = signalStore(
     const notificationsStore = inject(NotificationsStore);
 
     return {
-    addFollow( ) : void {
+
+    addFollow() : void {
     const following_id = userStore.userProfile()?.user_id ;
     if(following_id){ 
     const data : followerType = {follower_id : userStore.user_id() ,following_id}
@@ -79,22 +80,23 @@ export const FollowersStore = signalStore(
     catchError((err : Error) => {
     patchState(store, ({isLoading : false, error : err.message}))
     return of([])
-    }),
+    }),takeUntilDestroyed()
     )
     .subscribe();
     }
     },
 
-    getFollowers(follwing_id : string): void{
+    getFollowers(): void{
+    const following_id = userStore.user_id();
     if(store.followersData().length < 1) { 
-    if(!follwing_id) return;
+    if(!following_id) return;
     patchState(store, ({isLoading : true}))
-    followersService.getFollowersOrFollowingUsers({follwing_id }).pipe(
-    tap((followingData) => patchState(store, ({isLoading : false, followingData}))), 
+    followersService.getFollowersOrFollowingUsers({following_id}).pipe(
+    tap((followersData) => patchState(store, ({isLoading : false, followersData}))), 
     catchError((err : Error) => {
     patchState(store, ({isLoading : false, error : err.message}))
     return of([])
-    }),
+    }),takeUntilDestroyed()
     )
     .subscribe();
     }

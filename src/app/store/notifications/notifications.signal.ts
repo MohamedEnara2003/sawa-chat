@@ -5,6 +5,7 @@ import { Notifications, NotificationsTypes } from "../../core/interface/notifica
 import { catchError, of, tap } from "rxjs";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import { UserStore } from "../users/users.signal";
+import { SoundEffectStore } from "../sound/sound.signal";
 
 interface NotificationsState  {
     notifications : Notifications[] , 
@@ -29,6 +30,7 @@ export const NotificationsStore = signalStore(
     withMethods((store) => {
     const notificationsService = inject(NotificationsService);
     const userStore = inject(UserStore);
+    const soundEffectStore = inject(SoundEffectStore);
     return {
 
     addNotification(
@@ -72,6 +74,7 @@ export const NotificationsStore = signalStore(
     tap((updated) => {
     const {eventType : event , new : newData , old : oldData} = updated ;
     if (event === 'INSERT') {
+    soundEffectStore.handlSoundEffect('sound-effects/MessageNotification.mp3')
     const notifications : Notifications[] = [...store.notifications() , newData].filter((notification) => {
     return notification.from_user_id !== userStore.user_id() && notification.to_user_id === userStore.user_id()
     });

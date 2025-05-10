@@ -1,22 +1,23 @@
 import { Component, input, signal } from '@angular/core';
 import { SharedModule } from '../../../../shared/modules/shared.module';
+import { LinkComponent } from "../../../../shared/components/link/link.component";
 
 @Component({
   selector: 'app-profile-links',
-  imports: [SharedModule],
+  imports: [SharedModule, LinkComponent],
   template : `
     <nav aria-label="profile-links"  class="w-full"> 
     <ul class="w-full flex flex-wrap  justify-center items-center gap-5 sm:gap-10 
     capitalize text-background dark:text-white">
     @for (link of profileLinks(); track link) {
     <li>
-    <a aria-label="profile-links" 
+    <app-link aria-label="profile-links" 
     [routerLink]="['/user-profile/', user_id()]"
     [queryParams]="{type : link}"
     routerLinkActive="text-sawa-primary border-b-1 border-b-sawa-primary pb-1"
-    class="w-[20%] hover:text-sawa-primary duration-200">
+    linkClass="w-[20%] hover:text-sawa-primary duration-200  cursor-pointer">
     {{link}}
-    </a>
+    </app-link>
     </li>
     }
     </ul>

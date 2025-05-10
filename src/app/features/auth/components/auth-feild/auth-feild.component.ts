@@ -10,7 +10,7 @@ import { SignwithGoogleComponent } from "../signwith-google/signwith-google.comp
   <form [formGroup]="formGroup()" aria-label="authentication" 
   class="size-full flex flex-col justify-center items-center capitalize   ">
 
-  <fieldset class="w-[95%] flex flex-col justify-center   gap-4 ">
+  <fieldset class="size-[90%] flex flex-col justify-center items-center   gap-4 ">
 
   <legend class="fieldset-legend text-white text-center text-xl italic">
     {{legendElText()}}
@@ -60,8 +60,8 @@ import { SignwithGoogleComponent } from "../signwith-google/signwith-google.comp
   <ng-content select="[forgotPassword]"/>
   </div>  
   </div>
+  <app-signwith-google class="w-full text-center"/>
   <ng-content />
-  <app-signwith-google />
   </fieldset>
 </form>
   `

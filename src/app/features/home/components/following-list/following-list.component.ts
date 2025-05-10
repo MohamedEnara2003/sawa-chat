@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FollowersStore } from '../../../../store/followers/followers.signal';
 import { UserImageComponent } from "../../../../shared/components/user-image/user-image.component";
 import { SharedModule } from '../../../../shared/modules/shared.module';
@@ -32,10 +32,8 @@ import { SharedModule } from '../../../../shared/modules/shared.module';
   `,
   styles: ``
 })
-export class FollowingListComponent implements OnInit{
+export class FollowingListComponent  {
   readonly followersStore = inject(FollowersStore);
 
-  ngOnInit(): void {
-    this.followersStore.getFollowingUsers();
-  }
+
 }

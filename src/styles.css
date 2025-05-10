@@ -66,7 +66,8 @@
   @apply cursor-pointer hover:opacity-60 duration-300
   }
   .linkActive {
-  @apply text-sawa-primary before:size-1.5 before:absolute before:bg-sawa-primary before:rounded-full before:bottom-0
+  @apply text-sawa-primary before:size-1.5 before:absolute before:bg-sawa-primary before:rounded-full 
+  before:bottom-0  before:left-1/2  before:-translate-x-1/2;
   }
   .btn-sawa {
   @apply btn btn-neutral bg-sawa-primary text-background capitalize hover:opacity-70 duration-300;

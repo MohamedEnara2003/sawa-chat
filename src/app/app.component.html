@@ -1,9 +1,12 @@
-<div class="relative w-full bg-overlay dark:bg-background  flex flex-col justify-center items-center ">
+<div class="relative w-full bg-gray-50 dark:bg-background">
 
 <app-header class="w-full " />
-
 <main class="w-full  overflow-hidden">
   <router-outlet />
+  @if(soundEffectStore.isLoading()){
+    <audio #audioEle autoplay  [src]="soundEffectStore.soundEffect_Url()" 
+    type="audio/mpeg" class="hidden"></audio>
+  }
 </main>
 
 </div>

@@ -2,26 +2,26 @@ import { Component, inject, input, signal } from '@angular/core';
 import { LinksType } from '../../../../shared/interfaces/links';
 import { PostsStore } from '../../../../store/posts/posts.signal';
 import { Router } from '@angular/router';
+import { BtnComponent } from "../../../../shared/components/btn/btn.component";
+import { LinkComponent } from "../../../../shared/components/link/link.component";
 
 @Component({
   selector: 'app-post-edit-menu',
-  imports: [],
+  imports: [BtnComponent, LinkComponent],
   template : `
   <div class="flex flex-col justify-center items-center gap-1">
-  <button  (click)="isOpenMenu.set(isOpenMenu() === postId() ? 0 : postId())" 
-  role="button-edit-post" type="button">
+  <app-btn  aria-label="button-edit-post" btnType="button"
+  (click)="isOpenMenu.set(isOpenMenu() === postId() ? 0 : postId())" >
   <i class="fa-solid fa-ellipsis  text-xl text-white btn-hover"></i>
-  </button>
+  </app-btn>
   @if (isOpenMenu() === postId()) {
   <nav class="relative z-50">
   <ul aria-label="post-menu-links" 
-  class="menu absolute right-0  w-40 h-30 bg-background rounded-box  animate-opacity-up
+  class="menu absolute right-0  w-40 h-22 bg-background rounded-box  animate-opacity-up
   shadow-md shadow-background capitalize text-sm  border-1 border-overlay">
   @for (item of postLinks(); track $index) {
   <li (click)="menuLink(item.id)">
-  <a >
-  <i [class]="item.iconName"></i> <span>{{item.linkName}}</span>
-  </a>
+  <app-link>{{item.linkName}}</app-link>
   </li>
 }
   </ul>
@@ -39,7 +39,6 @@ export class PostEditMenuComponent {
   postLinks = signal<LinksType[]>([
   {id : 1 , linkName : 'edit post' , iconName : 'fa-solid fa-edit'},
   {id : 2 , linkName : 'remove post',iconName : 'fa-solid fa-trash-can'},
-  {id : 3 , linkName : 'save post',  iconName : 'fa-solid fa-bookmark'},
   ])
   
   isOpenMenu =  signal<number>(0);
@@ -49,8 +48,8 @@ export class PostEditMenuComponent {
 
   switch(linkId){ 
   case(1) :
-  this.postsStore.openModlePostEdit(this.postId());
   this.router.navigate(['/',{outlets :{'container' : 'create-post'}}])
+  this.postsStore.openModlePostEdit(this.postId());
   break
   case(2) :
   this.postsStore.removePost(this.postId() , this.file_name())

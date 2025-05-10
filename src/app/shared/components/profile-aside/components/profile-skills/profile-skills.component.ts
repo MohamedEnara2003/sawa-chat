@@ -6,7 +6,8 @@ import { SharedModule } from '../../../../modules/shared.module';
   selector: 'app-profile-skills',
   imports: [SharedModule],
   template : `
-  <div class="w-full flex flex-col justify-center gap-5">
+  @if (skills().length > 0) {
+  <nav class="w-full flex flex-col justify-center gap-5">
   <ng-content select="[title]" />
   <ul class="w-full grid grid-cols-2 justify-items-center-safe gap-4">
   @for (skill of skills(); track skill ; let index = $index ) {
@@ -16,9 +17,10 @@ import { SharedModule } from '../../../../modules/shared.module';
   </li>
   }
   </ul>
-  </div>
+</nav>
+}
   `
 })
 export class ProfileSkillsComponent {
-  skills = input.required<string[]>()
+  skills = input.required<string[]>();
 }

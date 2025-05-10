@@ -5,7 +5,7 @@ import { ChatService } from "../../features/chat/service/chat.service";
 import { catchError, of, tap } from "rxjs";
 import { UserStore } from "../users/users.signal";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
-import { MessageStore } from "../messages/message.signal";
+
 
 
 
@@ -29,7 +29,6 @@ export const ChatStore = signalStore(
     withMethods((store) => {
     const chatService = inject(ChatService);
     const userStore = inject(UserStore);
-    const messageStore = inject(MessageStore);
     return{ 
     addChat(user1_id : string , user2_id : string) : void {
     const chatData : ChatType = {user1_id, user2_id};

@@ -17,18 +17,14 @@ import { UserStore } from '../../../../store/users/users.signal';
     <app-profile-bio [bio]="userStore.userProfile()?.bio!" />
     </div>
     <app-profile-details [details]="userStore.userProfile()?.details!" class="w-full">
-    <div title class="w-full flex justify-start items-center gap-2">
     <h1 title class="title-h1">details</h1>
- 
-    </div>
     </app-profile-details>
-    <app-profile-skills class="w-full"  [skills]="userStore.userProfile()?.skills!">
-
-    <div title class="w-full flex justify-start items-center gap-2">
-    <h1  class="title-h1">skills</h1>
-    </div>
-
+    @let skills = userStore.userProfile()?.skills ;
+    @if(skills){
+    <app-profile-skills class="w-full"  [skills]="skills">
+    <h1 title class="title-h1">skills</h1>
     </app-profile-skills>
+    }
     </div>
   `,
   styles: ``

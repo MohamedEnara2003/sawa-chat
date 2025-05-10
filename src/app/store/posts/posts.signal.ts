@@ -20,6 +20,7 @@ export interface PostState  {
     previewUrl : string | ArrayBuffer | null,
     isLoadingUpload : boolean,
     errorUpload :  string,
+    isLoadPostViewer : boolean ;
 }
 
 const initialState : PostState = {
@@ -33,6 +34,7 @@ const initialState : PostState = {
     previewUrl : '', 
     isLoadingUpload : false ,
     errorUpload : '', 
+    isLoadPostViewer : false ,
 }
 
 export const PostsStore = signalStore(
@@ -48,13 +50,18 @@ export const PostsStore = signalStore(
     return post.user_id === profileUserId ;
     })),
 
-    activityCount : computed(() => {
+    likesCount : computed(() => {
     const myPosts = store.posts().filter((post) => post.user_id === userStore.user_id())
     const likes = myPosts.map((post) => post.likes?.count ?? 0)
     .reduce((prev, value) => prev += value, 0);
+    return   likes;
+    }),
+
+    commentsCount : computed(() => {
+    const myPosts = store.posts().filter((post) => post.user_id === userStore.user_id())
     const comments = myPosts.map((post) => post.comments_count?.count!)
     .reduce((prev, value) => prev += value, 0)
-    return  comments + likes;
+    return  comments ;
     }),
     
     })),
@@ -106,7 +113,6 @@ export const PostsStore = signalStore(
     patchState(store , ({isLoading : false ,file_name : '' , file_url : '' , previewUrl : '' , user,}));
     })
     ).subscribe();
-
     },
 
     editPost(value : string, privacy : postStatus) : void {
@@ -154,7 +160,7 @@ export const PostsStore = signalStore(
     
     getFollowingPosts() : void {
     const user_id = userStore.user_id();
-if(store.posts().length < 1){ 
+    if(store.posts().length < 1){ 
     patchState(store , ({ isLoading : true}))
     followersService.getFollowingIds(user_id).pipe(
     switchMap((ids) => {
@@ -176,16 +182,15 @@ if(store.posts().length < 1){
 }
     },
 
-
     openModlePostEdit(postId : number ) : void {
     const post =  store.posts().find((post) => post.id === postId);
     patchState(store , ({post ,
     file_url : post?.file_url , previewUrl : post?.file_url , file_name : post?.file_name}));
     },
 
-    openPostViewer(post_id : number | undefined) : void {
+    openPostViewer(post_id : number | undefined , isLoadPostViewer : boolean) : void {
     const post = store.posts().find((post) => post.id === post_id);
-    patchState(store , ({post}));
+    patchState(store , ({post , isLoadPostViewer}));
     },
 
     updateLikesCount(post_id: number, isLike: boolean): void {

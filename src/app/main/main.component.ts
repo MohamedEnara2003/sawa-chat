@@ -20,7 +20,7 @@ import { PostsStore } from '../store/posts/posts.signal';
   <router-outlet name="comments"/>
   <router-outlet/>
   <app-image-viewer />
-  @if(postsStore.post()){ 
+  @if(postsStore.isLoadPostViewer()){ 
   <app-post-viewer/>
   }
   </section>
@@ -45,14 +45,17 @@ export class MainComponent implements OnInit{
 
   constructor(){
   this.chatStore.getChats()
-  this.followersStore.initRealTime();
+  this.followersStore.getFollowingUsers();
+  this.followersStore.getFollowers();
   this.postsStore.getPublicPosts();
   this.postsStore.getFollowingPosts();
+  this.followersStore.initRealTime();
   this.postsStore.initRealTimeForPosts();
   }
-  
+
 
   ngOnInit(): void {
+
   timer(1500).subscribe(() => this.isIntro.set(false));
   }
   

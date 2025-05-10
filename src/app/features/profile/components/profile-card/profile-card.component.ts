@@ -2,16 +2,19 @@ import { Component, inject } from '@angular/core';
 import { UserImageComponent } from "../../../../shared/components/user-image/user-image.component";
 import { SharedModule } from '../../../../shared/modules/shared.module';;
 import { UserStore } from '../../../../store/users/users.signal';
+import { ImageViewerStore } from '../../../../store/imageViewer/imageViewer.signal';
 
 @Component({
   selector: 'app-profile-card',
   imports: [SharedModule , UserImageComponent],
   template : `
   
-  <div class="w-full h-full flex flex-col justify-center items-center overflow-hidden gap-5 capitalize ">
-  <picture class="size-45 md:size-50  rounded-full  flex justify-center  outline-4 outline-background ">
-    <app-user-image imageClass="size-45 md:size-50 rounded-full object-cover outline-4 outline-tint"/>
-  </picture>
+  <div class="w-full h-full flex flex-col justify-center items-center overflow-hidden gap-2 capitalize ">
+
+  <div (click)="imageViewer.getImage(userStore.user()?.avatar_url! , true)" 
+  class="size-45 md:size-50  rounded-full   border-4 border-background ">
+    <app-user-image imageClass="size-full rounded-full object-cover "/>
+  </div>
 
     <h1 class="text-white font-semibold text-xl ">{{userStore.user()?.fullName}}</h1>
     <h3 class="text-background dark:text-overlay text-center">
@@ -30,5 +33,6 @@ import { UserStore } from '../../../../store/users/users.signal';
   `
 })
 export class ProfileCardComponent {
-  readonly userStore = inject(UserStore)
+  readonly userStore = inject(UserStore);
+  readonly imageViewer = inject(ImageViewerStore);
 }

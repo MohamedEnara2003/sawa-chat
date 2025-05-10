@@ -1,16 +1,16 @@
 import { Component, inject } from '@angular/core';
 import { AuthenticationService } from '../../service/authentication.service';
+import { BtnComponent } from "../../../../shared/components/btn/btn.component";
 
 @Component({
   selector: 'app-signwith-google',
-  imports: [],
+  imports: [BtnComponent],
   template : `
-  <button (click)="authService.signInWithGoogle()" type="button"
-  class="w-full btn btn-neutral btn-lg font-[300] bg-black text-white opacity-80 capitalize
+  <app-btn  (click)="authService.signInWithGoogle()" btnType="button" 
+  btnClass="w-[80%] btn btn-neutral  font-[300] bg-black text-white opacity-80 capitalize
   hover:bg-background duration-200">
-  <i class="fa-brands fa-google text-overlay"></i>
   sign with google
-  </button>
+  </app-btn>
   `,
   styles: ``
 })

@@ -6,6 +6,7 @@ import { catchError, EMPTY, of, switchMap, tap } from "rxjs";
 import { FileUploadService } from "../../core/services/file-upload-service.service";
 import { UserStore } from "../users/users.signal";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
+import { SoundEffectStore } from "../sound/sound.signal";
 
 
 interface MessagesState {
@@ -47,9 +48,11 @@ export const MessageStore = signalStore(
     const messagesService = inject(MessagesService);
     const userStore = inject(UserStore);
     const fileUploadService = inject(FileUploadService);
+    const soundEffectStore = inject(SoundEffectStore);
     return { 
         
     addMessage (chat_id : string , message : string , receiver_id : string ) : void {
+        
     const sender_id = userStore.user()?.user_id;
     if(receiver_id && sender_id){
     const messageData : Messages = {
@@ -58,6 +61,7 @@ export const MessageStore = signalStore(
     file_type : store.file_type(),
     file_name : store.file_name(),
     }
+    soundEffectStore.handlSoundEffect('sound-effects/SendMessage.wav');
     messagesService.addMessage(messageData).pipe(
     tap(() => this.scrollChatContanierToBottom())
     ).subscribe();
@@ -132,6 +136,7 @@ export const MessageStore = signalStore(
         messagesService.listenForNewMessages(chatId).pipe(
         tap((updated) => {
         if(updated.eventType === 'INSERT'){
+        soundEffectStore.handlSoundEffect('sound-effects/ReceiveMessage.wav')
         patchState(store, { isLoading: false, messages: [...store.messages(), updated.new] });
         }
         }), takeUntilDestroyed()

@@ -4,22 +4,30 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthData } from '../../interface/auth';
 import { AuthenticationService } from '../../service/authentication.service';
 import { Router } from '@angular/router';
+import { BtnComponent } from "../../../../shared/components/btn/btn.component";
+import { SharedModule } from '../../../../shared/modules/shared.module';
 
 
 @Component({
   selector: 'app-sign-in',
-  imports: [AuthFeildComponent],
+  imports: [AuthFeildComponent, BtnComponent , SharedModule],
   template : `
  
   <app-auth-feild class="w-100" [formGroup]="form"  legendElText="sign in">
   <a forgotPassword aria-label="forgot-password-linke" class="capitalize link link-hover">
   Forgot Password
   </a>
-  <button (click)="signIn()" type="submit" 
-  class="w-full btn btn-neutral btn-lg font-[300] bg-black text-white opacity-80 capitalize
+
+  <div class="w-full flex flex-col justify-center items-center gap-1">
+  <app-btn  (click)="signIn()" btnType="submit" class="w-full text-center" 
+  btnClass="w-[80%] btn btn-neutral  font-[300] bg-black text-white opacity-80 capitalize
   hover:bg-background duration-200">
   sign in
-  </button>
+  </app-btn>
+  <a routerLink="/auth/sign-up" class="text-overlay link text-center">
+  Don't have an account? Create One
+  </a>
+  </div>
   </app-auth-feild>
   `
 })

@@ -11,6 +11,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { Store } from '@ngrx/store';
 import { map } from 'rxjs';
 import { selectRouteParams } from '../../../store/routes/router.selectors';
+import { LinkComponent } from "../../../shared/components/link/link.component";
 
 @Component({
   selector: 'app-home',
@@ -21,7 +22,8 @@ import { selectRouteParams } from '../../../store/routes/router.selectors';
     PostComponent,
     FollowingListComponent,
     NotificationsComponent,
-    PostStatusLinksComponent
+    PostStatusLinksComponent,
+    LinkComponent
 ],
   template : `
 <section class="w-full  flex flex-wrap justify-evenly  mt-5 mb-12 sm:mb-0 p-2 overflow-hidden">
@@ -49,11 +51,11 @@ import { selectRouteParams } from '../../../store/routes/router.selectors';
     </div>
     }
   
-    <a [routerLink]="['/']" 
-    class="fixed right-2 bottom-18 sm:bottom-2 size-8 bg-sawa-primary rounded-full 
+    <app-link [routerLink]="['/']" 
+    linkClass="fixed right-2 bottom-18 sm:bottom-2 size-8 bg-sawa-primary rounded-full 
     flex justify-center items-center shadow-md shadow-background border border-tint">
     <i class="fa-solid fa-angle-up text-background text-xl"></i>
-    </a>
+    </app-link>
     
   </section>
   `

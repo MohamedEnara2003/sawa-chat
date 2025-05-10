@@ -8,15 +8,15 @@ import { LogoComponent } from "../../../shared/components/logo/logo.component";
   template : `
   <div aria-label="authentication page" class="w-full flex flex-wrap justify-evenly items-center h-screen ">
 
-  <section class="relative w-[95%] h-[90%] md:w-[50%] lg:w-[45%]  bg-tint rounded-2xl">   
+  <section class="relative w-[95%] h-full md:w-[50%] lg:w-[45%]  bg-tint">   
   <header class="absolute left-2 top-2">
   <app-logo /> 
   </header>
   <router-outlet />
   </section>
 
-  <picture class="hidden md:inline-block md:w-[40%] lg:w-[50%] h-[90%] ">
-  <img src="Rectangle.png" alt="auth image" class="size-full rounded-2xl 
+  <picture class="hidden md:inline-block md:w-[40%] lg:w-[50%] h-full ">
+  <img src="Rectangle.png" alt="auth image" class="size-full 
   object-cover shadow shadow-background">
   </picture>
   </div>

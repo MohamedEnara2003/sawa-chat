@@ -1,63 +1,50 @@
-<header class="w-full flex flex-col  justify-center items-center gap-4">
+<header class="w-full flex flex-col  justify-center  gap-4">
 
     <div class="w-full flex flex-col  justify-center items-center gap-1">
             @let imageUser = userStore.userProfile()?.avatar_url!;
             <div (click)="imageViewerStore.getImage(imageUser , imageUser ? true : false)"
             aria-label="profile-image"  class="size-45 md:size-50   cursor-pointer rounded-ful btn-hover">
             <app-user-image  [avatarUrl]="imageUser" [isDefault]="imageUser ? false : true"
-            imageClass="size-full object-cover rounded-full border-2 border-white "/>
+            imageClass="size-full object-cover rounded-full border-1 border-white "/>
             </div>
         <h1 class="title-h1 text-2xl line-clamp-2">{{userStore.userProfile()?.fullName}}</h1>
     </div>
 
-    <nav class="w-full">
-        <ul class="w-full flex justify-evenly items-center">
-        <li class="flex flex-col justify-center items-center">
-        <h2 class="text-white font-extrabold text-lg">1200</h2>
-        <p  class="text-overlay capitalize text-sm">followers</p>
-        </li>
-        <li  class="flex flex-col justify-center items-center">
-        <h2 class="text-white font-extrabold text-lg">200</h2>
-        <p  class="text-overlay capitalize text-sm">following</p>
-        </li>
-        <li  class="flex flex-col justify-center items-center">
-        <h2 class="text-white font-extrabold text-lg">20</h2>
-        <p  class="text-overlay capitalize text-sm">likes</p>
-        </li>
-        </ul>
-    </nav>
+    <app-interaction-count />
 
-        <div class="flex flex-wrap justify-center items-center gap-2 md:gap-5 ">
-            @let isMyProfile = userStore.user()?.user_id ===  userStore.userProfile()?.user_id ;
-            @if(isMyProfile){
-            <button type="button" class="w-40 btn-sawa">
-            <i class="fa-solid fa-plus"></i>
-            add to story
-            </button>
-            <button [routerLink]="['/',{outlets : {'profile-setup' : 'user'}}]" 
-            type="button" class="w-40  btn-sawa-2">
-            <i class="fa-solid fa-pen"></i>
-            edit profile
-            </button>
-            }@else {
-            @if(!followersStore.isFollowing()){
-                <button (click)="followersStore.addFollow()" 
-                type="button" class="w-40 btn-sawa">
-                <i class="fa-solid fa-user-plus"></i>
-                follow
-                </button>
-            }@else {
-                <button (click)="followersStore.unFollow()" 
-                type="button" class="w-40 btn-sawa">
-                <i class="fa-solid fa-user-xmark"></i>
-                unfollow
-                </button>
-            }
-            <button [routerLink]="['chat']" 
-            type="button" class="w-40 btn-sawa-2">
-            <i class="fa-solid fa-comment"></i>
-            message
-            </button>
-            }
+    <div class="flex flex-wrap justify-center items-center gap-2 md:gap-5 ">
+            @let isMyProfile = userStore.user()?.user_id === userStore.userProfile()?.user_id;
+            <ng-container *ngIf="isMyProfile; else notMyProfile">
+                <app-btn btnbtnType="button" btnClass="w-40 btn-sawa">
+                    <i class="fa-solid fa-plus"></i>
+                    add to story
+                </app-btn>
+                <app-btn [routerLink]="['/', { outlets: { 'profile-setup': 'user' } }]" 
+                        btnType="button" btnClass="w-40 btn-sawa-2">
+                    <i class="fa-solid fa-pen"></i>
+                    edit profile
+                </app-btn>
+            </ng-container>
+            <ng-template #notMyProfile>
+                <ng-container *ngIf="!followersStore.isFollowing(); else following">
+                    <app-btn (click)="followersStore.addFollow()" 
+                            btnType="button" btnClass="w-40 btn-sawa">
+                        <i class="fa-solid fa-user-plus"></i>
+                        follow
+                    </app-btn>
+                </ng-container>
+                <ng-template #following>
+                    <app-btn (click)="followersStore.unFollow()" 
+                            btnType="button" btnClass="w-40 btn-sawa">
+                        <i class="fa-solid fa-user-xmark"></i>
+                        unfollow
+                    </app-btn>
+                </ng-template>
+                <app-btn [routerLink]="['/chat']" 
+                btnType="button" btnClass="w-40 btn-sawa-2">
+                    <i class="fa-solid fa-comment"></i>
+                    message
+                </app-btn>
+            </ng-template>
             </div>
     </header>

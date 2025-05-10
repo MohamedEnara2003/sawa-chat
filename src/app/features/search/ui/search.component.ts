@@ -2,22 +2,18 @@ import { Component, ElementRef, inject, OnInit, viewChild } from '@angular/core'
 import { SharedModule } from '../../../shared/modules/shared.module';
 import { UserImageComponent } from '../../../shared/components/user-image/user-image.component';
 import { UserStore } from '../../../store/users/users.signal';
+import { LinkArrowLeftComponent } from "../../../shared/components/link-arrow-left/link-arrow-left.component";
 
 
 @Component({
   selector: 'app-search',
-  imports: [SharedModule, UserImageComponent],
+  imports: [SharedModule, UserImageComponent, LinkArrowLeftComponent],
   template :`
   <section class="w-full h-[90vh] flex flex-col justify-start gap-5 p-4 items-center 
   overflow-hidden">
 
   <div class="w-full flex justify-start items-center gap-2 p-2">
-  <a [routerLink]="['/home']" class="z-50 btn-hover">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" 
-        class="size-8 text-white">
-        <path fill-rule="evenodd" d="M7.72 12.53a.75.75 0 0 1 0-1.06l7.5-7.5a.75.75 0 1 1 1.06 1.06L9.31 12l6.97 6.97a.75.75 0 1 1-1.06 1.06l-7.5-7.5Z" clip-rule="evenodd" />
-        </svg>
-    </a>
+  <app-link-arrow-left [routerLink]="['/home']"/>
 
   <label class="w-100 input input-neutral bg-tint">
   <svg class="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">

@@ -5,11 +5,12 @@ import { SharedModule } from '../../../../shared/modules/shared.module';
 import { AuthData } from '../../interface/auth';
 import { AuthenticationService } from '../../service/authentication.service';
 import { Router } from '@angular/router';
+import { BtnComponent } from "../../../../shared/components/btn/btn.component";
 
 
 @Component({
   selector: 'app-sign-up',
-  imports: [AuthFeildComponent, SharedModule],
+  imports: [AuthFeildComponent, SharedModule, BtnComponent],
   template : `
   
   <app-auth-feild  [formGroup]="form" legendElText="sign up" class="size-full">
@@ -28,11 +29,16 @@ import { Router } from '@angular/router';
   }
     </div>
 
-  <button (click)="signUp()" type="submit" 
-  class="w-full btn btn-neutral btn-lg font-[300] bg-black text-white opacity-80 capitalize
+  <div class="w-full flex flex-col justify-center items-center gap-1">
+  <app-btn (click)="signUp()" btnType="submit" class="w-full text-center" 
+  btnClass="w-[80%] btn btn-neutral  font-[300] bg-black text-white opacity-80 capitalize
   hover:bg-background duration-200">
   sign up
-  </button>
+  </app-btn>
+  <a routerLink="/auth/sign-in" class="text-overlay link text-center">
+  Already have an account? Log In
+  </a>
+  </div>
 </app-auth-feild>
 
   `

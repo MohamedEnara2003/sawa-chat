@@ -12,6 +12,7 @@ import { PostsLikesStore } from '../../../store/posts/likes.signal';
 import { SharedModule } from '../../../shared/modules/shared.module';
 import { PostsStore } from '../../../store/posts/posts.signal';
 import { PostLoadingComponent } from "../components/post-loading/post-loading.component";
+import { SoundEffectStore } from '../../../store/sound/sound.signal';
 
 
 @Component({
@@ -39,11 +40,12 @@ import { PostLoadingComponent } from "../components/post-loading/post-loading.co
 
     <div class="flex flex-wrap justify-start items-center gap-3">
     <ng-content select="[link-close-post]" />
-    <picture class="size-10 rounded-full shadow shadow-background">
+    
+    <div [routerLink]="['/user-profile' , post.user_id]" class="size-10 rounded-full shadow shadow-background">
     @let userImage = post.user.avatar_url;
     <app-user-image [avatarUrl]="userImage" [isDefault]="userImage ? false : true" 
-    imageClass="size-10 ovject-cover rounded-full"/>
-    </picture>
+    imageClass="size-full object-cover rounded-full"/>
+    </div>
 
     <div class="flex flex-col justify-start items-start">
     <h1 class="text-white font-semibold capitalize text-lg">
@@ -68,7 +70,8 @@ import { PostLoadingComponent } from "../components/post-loading/post-loading.co
     </div>
     @if(post.file_url){
     <picture (click)="
-    postsStore.openPostViewer(post.id!); 
+    soundEffectStore.handlSoundEffect('sound-effects/Post.mp3');
+    postsStore.openPostViewer(post.id! , true); 
     commentsStore.openContainerComments(post.id! , false)"
     class="w-full rounded-box" >
     <img [src]="post.file_url"
@@ -86,7 +89,7 @@ import { PostLoadingComponent } from "../components/post-loading/post-loading.co
   </div>
   @if(commentsStore.isLoadComments()){
   <section class="w-full h-screen  fixed top-0 left-0  z-100 flex justify-center items-end ">
-  <app-posts-comments [post_user_id]="post.user_id!" class="w-1/2  z-100"/>
+  <app-posts-comments [post_user_id]="post.user_id!" class="w-full h-[50vh] md:w-[70%] lg:w-1/2  z-100"/>
   <div (click)="commentsStore.closeContainerComments()"
   class="w-full h-full fixed top-0 left-0 z-50 bg-background opacity-60">
   </div>
@@ -111,6 +114,7 @@ export class PostComponent {
   readonly commentsStore = inject(CommentsStore);
   readonly postsLikesStore = inject(PostsLikesStore);
   readonly postsStore = inject(PostsStore);
+  readonly soundEffectStore = inject(SoundEffectStore);
 
   constructor(){
   this.commentsStore.initRealTimeForPostComment();
