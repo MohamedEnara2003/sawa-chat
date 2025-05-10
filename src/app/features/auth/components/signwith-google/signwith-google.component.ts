@@ -7,8 +7,9 @@ import { BtnComponent } from "../../../../shared/components/btn/btn.component";
   imports: [BtnComponent],
   template : `
   <app-btn  (click)="authService.signInWithGoogle()" btnType="button" 
-  btnClass="w-[80%] btn btn-neutral  font-[300] bg-black text-white opacity-80 capitalize
+  btnClass="w-[90%] btn btn-lg btn-neutral  font-[300] bg-black text-white opacity-80 capitalize
   hover:bg-background duration-200">
+  <i class="fa-brands fa-google text-xl "></i>
   sign with google
   </app-btn>
   `,

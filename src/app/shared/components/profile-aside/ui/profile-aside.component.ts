@@ -62,9 +62,12 @@ my Profile
 <app-profile-details class="w-full" [details]="userStore.user()?.details!" >
 <h1 title class="title-h1">details</h1>
 </app-profile-details>
-<app-profile-skills class="w-full" [skills]="userStore.user()?.skills!">
+@let skills = userStore.user()?.skills ;
+@if(skills){
+<app-profile-skills class="w-full" [skills]="skills">
 <h1 title class="w-full text-left  text-white font-semibold text-lg">Skills</h1>
 </app-profile-skills>
+}
 </aside>
 </div>
   `

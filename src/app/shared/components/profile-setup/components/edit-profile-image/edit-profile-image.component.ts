@@ -3,10 +3,11 @@ import { UserImageComponent } from "../../../user-image/user-image.component";
 import { SharedModule } from '../../../../modules/shared.module';
 import { EditHeaderComponent } from "../edit-header/edit-header.component";
 import { UserStore } from '../../../../../store/users/users.signal';
+import { BtnComponent } from "../../../btn/btn.component";
 
 @Component({
   selector: 'app-edit-profile-image',
-  imports: [UserImageComponent, SharedModule, EditHeaderComponent],
+  imports: [UserImageComponent, SharedModule, EditHeaderComponent, BtnComponent],
   templateUrl: './edit-profile-image.component.html',
   styles: ``
 })

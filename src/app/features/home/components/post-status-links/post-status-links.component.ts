@@ -1,24 +1,22 @@
 import { Component } from '@angular/core';
 import { SharedModule } from '../../../../shared/modules/shared.module';
+import { LinkComponent } from "../../../../shared/components/link/link.component";
 
 @Component({
   selector: 'app-post-status-links',
-  imports: [SharedModule],
+  imports: [SharedModule, LinkComponent],
   template : `
     <nav class="w-full">
     <ul class="w-full flex justify-evenly items-center capitalize md:text-lg">
-    <li >
-    <a [routerLink]="['/home/followers']" routerLinkActive=" after:w-full"
+    <li [routerLink]="['/home/followers']" routerLinkActive=" after:w-full" 
     class="btn-hover relative pb-1   after:h-0.5 after:absolute after:bottom-0 after:left-0 
     after:bg-white">
-    following</a>
+    <app-link >following</app-link >
     </li>
-    <li >
-    <a [routerLink]="['/home/public']"  routerLinkActive="after:w-full"
+    <li [routerLink]="['/home/public']" routerLinkActive=" after:w-full" 
     class="btn-hover relative pb-1   after:h-0.5 after:absolute after:bottom-0 after:left-0 
-    after:bg-white ">
-      for you
-    </a>
+    after:bg-white">
+    <app-link>for you</app-link >
     </li>
     </ul>
     </nav>

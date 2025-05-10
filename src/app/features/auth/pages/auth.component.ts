@@ -6,12 +6,11 @@ import { LogoComponent } from "../../../shared/components/logo/logo.component";
   selector: 'app-auth',
   imports: [RouterOutlet, LogoComponent],
   template : `
-  <div aria-label="authentication page" class="w-full flex flex-wrap justify-evenly items-center h-screen ">
+  <div aria-label="authentication page" class="w-full flex flex-wrap justify-evenly items-center h-screen 
+  bg-gradient-to-b from-background to-tint">
 
-  <section class="relative w-[95%] h-full md:w-[50%] lg:w-[45%]  bg-tint">   
-  <header class="absolute left-2 top-2">
+  <section class="relative w-[95%] h-full md:w-[50%] lg:w-[45%] flex flex-col justify-center gap-4 p-4">   
   <app-logo /> 
-  </header>
   <router-outlet />
   </section>
 

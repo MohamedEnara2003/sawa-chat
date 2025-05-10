@@ -2,7 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { authClient } from '../../../../environments/environment';
 import { UsersService } from '../../../../core/services/users.service';
 import { Router } from '@angular/router';
-import {  tap } from 'rxjs';
+import {  catchError, of, tap } from 'rxjs';
 
 @Component({
   selector: 'app-auth-call-back',
@@ -24,6 +24,7 @@ export class AuthCallBackComponent implements OnInit{
     this.addUser();
   }
   
+
   async addUser() : Promise<void> {
     try {
       const { data, error } = await authClient.getUser();
@@ -37,11 +38,20 @@ export class AuthCallBackComponent implements OnInit{
       const user_id : string = user.id;
       const email : string = user.email!;
       const fullName : string = identity_data?.['name'] || identity_data?.['fullName'];
-    if(user_id  && email && fullName){ 
-      this.usersService.addUser({user_id , email , fullName , role : 'user'}).pipe(
-      tap(() => this.router.navigate(['/',{outlets : {primary : 'home/public' ,'profile-setup' : 'user'}}]))
-      ).subscribe()
-    }
+      this.usersService.getUserByUserId(user_id).subscribe({
+        next: (existingUser) => {
+          if (existingUser) {
+          this.router.navigate(['/home/public']);
+          } else if (user_id && email && fullName) {
+            this.usersService.addUser({user_id, email, fullName, role: 'user'}).pipe(
+            tap(() => this.router.navigate(['/', {outlets: {primary: 'home/public', 'profile-setup': 'user'}}]))
+            ).subscribe();
+          }
+        },
+        error: (err) => {
+          console.error('Error checking user:', err);
+        }
+      });
     } catch (err) {
       console.error('Error adding user after Google SignIn:', err);
     }

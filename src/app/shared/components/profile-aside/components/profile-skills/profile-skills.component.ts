@@ -6,7 +6,6 @@ import { SharedModule } from '../../../../modules/shared.module';
   selector: 'app-profile-skills',
   imports: [SharedModule],
   template : `
-  @if (skills().length > 0) {
   <nav class="w-full flex flex-col justify-center gap-5">
   <ng-content select="[title]" />
   <ul class="w-full grid grid-cols-2 justify-items-center-safe gap-4">
@@ -18,7 +17,6 @@ import { SharedModule } from '../../../../modules/shared.module';
   }
   </ul>
 </nav>
-}
   `
 })
 export class ProfileSkillsComponent {

@@ -20,23 +20,23 @@
     }
     </picture>
     @if(editType() === 'image'){ 
-    <div class="w-full flex flex-col justify-center items-center px-5 lg:px-20">
+    <div class="w-full flex flex-col justify-center  px-5 lg:px-20">
     @if(userStore.previewUrl() === ''){ 
-        <button type="button" class="w-full text-center capitalize">
+        <app-btn btnType="button" btnClass="w-full text-center capitalize">
             <label for="upload" class="w-full  btn-neutral  btn bg-tint text-sawa-primary 
             btn-hover duration-300">
             <i class="fa-solid fa-plus"></i> Upload photo
             <input (change)="onFileSelected($event)" type="file" name="upload" accept="image/*" id="upload" 
             class="hidden">
             </label>
-        </button>
+        </app-btn>
     }@else {
-    <button (click)="userStore.saveImage()" 
+    <app-btn btnType="button" (click)="userStore.saveImage()" 
             [routerLink]="['/',{outlets : {'profile-setup' : 'user'}}]" [queryParams]="{editType : null}" 
-            type="button" class="w-full  btn-neutral btn bg-tint text-sawa-primary capitalize
+            btnClass="w-full  btn-neutral btn bg-tint text-sawa-primary capitalize
             btn-hover duration-300">
             save image
-    </button>
+    </app-btn >
     }
 </div>
 }

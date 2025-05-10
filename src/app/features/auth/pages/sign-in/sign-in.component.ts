@@ -6,29 +6,31 @@ import { AuthenticationService } from '../../service/authentication.service';
 import { Router } from '@angular/router';
 import { BtnComponent } from "../../../../shared/components/btn/btn.component";
 import { SharedModule } from '../../../../shared/modules/shared.module';
+import { SignwithGoogleComponent } from "../../components/signwith-google/signwith-google.component";
 
 
 @Component({
   selector: 'app-sign-in',
-  imports: [AuthFeildComponent, BtnComponent , SharedModule],
+  imports: [AuthFeildComponent, BtnComponent, SharedModule, SignwithGoogleComponent],
   template : `
- 
-  <app-auth-feild class="w-100" [formGroup]="form"  legendElText="sign in">
-  <a forgotPassword aria-label="forgot-password-linke" class="capitalize link link-hover">
-  Forgot Password
-  </a>
+  <form [formGroup]="form" aria-label="from-sign-in" 
+  class="w-full flex flex-col justify-center items-center gap-5">
 
-  <div class="w-full flex flex-col justify-center items-center gap-1">
+
+  <app-auth-feild  [formGroup]="form"  class="w-full"/>
+  <div class="w-full flex flex-col justify-center items-center gap-5">
   <app-btn  (click)="signIn()" btnType="submit" class="w-full text-center" 
-  btnClass="w-[80%] btn btn-neutral  font-[300] bg-black text-white opacity-80 capitalize
+  btnClass="w-[90%] btn btn-lg btn-neutral  font-[300] bg-black text-white opacity-80 capitalize
   hover:bg-background duration-200">
   sign in
   </app-btn>
-  <a routerLink="/auth/sign-up" class="text-overlay link text-center">
+  <app-signwith-google  class="w-full text-center"/>
+  <a routerLink="/auth/sign-up" class="text-overlay link text-center link-hover">
   Don't have an account? Create One
   </a>
   </div>
-  </app-auth-feild>
+  </form>
+
   `
 })
 export class SignInComponent {

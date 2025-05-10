@@ -2,18 +2,18 @@
     <app-edit-header EditTypeName="skills"/>
     @if (editType() === 'skills') {
     <div class="w-full flex justify-start items-center gap-4 my-1">
-    <button type="button" 
-    (click)="addSkill()"class="w-24 btn btn-sm btn-neutral bg-tint text-white capitalize btn-hover">
+    <app-btn btnType="button" 
+    (click)="addSkill()" btnClass="w-24 btn btn-sm btn-neutral bg-tint text-white capitalize btn-hover">
     <i class="fa-solid fa-plus"></i>
     add skill
-    </button>
+    </app-btn>
 
-    <button (click)="onSave()"  type="button"  
+    <app-btn  (click)="onSave()"  btnType="button"  
     [routerLink]="['/',{outlets : {'profile-setup' : 'user'}}]" 
     [queryParams]="{editType :  null }"
-    class="w-24 btn btn-sm btn-neutral bg-sawa-primary text-tint capitalize  btn-hover">
+    btnClass="w-24 btn btn-sm btn-neutral bg-sawa-primary text-tint capitalize  btn-hover">
     save
-    </button>
+    </app-btn >
     </div>
     <form [formGroup]="form" class="w-full my-1">
     <div formGroupName="skills" class="w-full grid grid-cols-1 sm:grid-cols-2 justify-items-center-safe gap-4">

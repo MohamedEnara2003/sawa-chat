@@ -4,10 +4,11 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProfileSkillsComponent } from "../../../profile-aside/components/profile-skills/profile-skills.component";
 import { EditHeaderComponent } from "../edit-header/edit-header.component";
 import { UserStore } from '../../../../../store/users/users.signal';
+import { BtnComponent } from "../../../btn/btn.component";
 
 @Component({
   selector: 'app-edit-profile-skills',
-  imports: [SharedModule, ProfileSkillsComponent, EditHeaderComponent],
+  imports: [SharedModule, ProfileSkillsComponent, EditHeaderComponent, BtnComponent],
   templateUrl: './edit-profile-skills.component.html',
   styles: ``
 })

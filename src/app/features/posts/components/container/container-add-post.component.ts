@@ -6,10 +6,11 @@ import { SharedModule } from '../../../../shared/modules/shared.module';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { postStatus } from '../../../../core/interface/posts';
+import { BtnComponent } from "../../../../shared/components/btn/btn.component";
 
 @Component({
   selector: 'app-container-add-post',
-  imports: [UserImageComponent , SharedModule],
+  imports: [UserImageComponent, SharedModule, BtnComponent],
   template : `
   <section class="w-full fixed flex justify-center items-center z-100">
   <div class="w-full  lg:w-[45%] h-[75vh] bg-tin  flex flex-col justify-start  gap-4 z-100
@@ -66,24 +67,24 @@ import { postStatus } from '../../../../core/interface/posts';
 
   @if(postsStore.previewUrl() === ''){ 
   <div class="w-full h-30 bg-[#333] rounded-t-2xl">
-  <button type="button" class="w-full text-center capitalize">
+  <app-btn btnType="button" btnClass="w-full text-center capitalize">
             <label for="upload" class="w-[90%] mt-5  btn-ghost  btn bg-tint text-sawa-primary">
             <i class="fa-solid fa-plus"></i> Upload photo
             <input (change)="uploadImage($event)"
             type="file" name="upload" accept="image/*" id="upload"
             class="hidden">
             </label>
-        </button>
+      </app-btn>
   </div>
 }@else {
 <picture aria-label="uploaded-image" class="relative w-full h-[90%] bg-background">
   @if(!postsStore.isLoadingUpload()){ 
   <img [src]="postsStore.previewUrl()" alt="uploaded-image" class="size-full object-cover">
-  <button type="button" (click)="postsStore.removeUploadedImage()"
-  class="absolute right-2 top-2 size-8 bg-background rounded-full text-center 
+  <app-btn btnType="button"  (click)="postsStore.removeUploadedImage()"
+  btnClass="absolute right-2 top-2 size-8 bg-background rounded-full text-center 
   hover:opacity-70 duration-300 cursor-pointer shadow-md shadow-background">
   <i class="fa-solid fa-trash-can text-sawa-primary text-lg"></i>
-  </button>
+  </app-btn>
   }@else {
   <div class="w-full h-full bg-overlay animate-pulse"></div>
   }
@@ -136,6 +137,9 @@ export class ContainerAddPostComponent implements OnInit{
 
   closeModle() : void {
   this.router.navigate(['/',{outlets : {'container':null}}]);
+  if(this.postsStore.post()){
+  this.postsStore.closeModlePostEdit();
+  }
   }
 
 }

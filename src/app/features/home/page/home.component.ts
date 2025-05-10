@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ProfileAsideComponent } from "../../../shared/components/profile-aside/ui/profile-aside.component";
 import { SharedModule } from '../../../shared/modules/shared.module';
 import { PostsStore } from '../../../store/posts/posts.signal';
@@ -28,11 +28,10 @@ import { LinkComponent } from "../../../shared/components/link/link.component";
   template : `
 <section class="w-full  flex flex-wrap justify-evenly  mt-5 mb-12 sm:mb-0 p-2 overflow-hidden">
 
-@if(this.innerWidth() > 1024){ 
-  <div class="hidden lg:inline-flex w-full  lg:w-[30%]  " >
+    <div class="hidden lg:inline-flex w-full  lg:w-[30%]  " >
     <app-profile-aside class="w-full h-full" />
-  </div>
-}
+    </div>
+
     <div class="w-full md:w-[90%] lg:w-[40%] flex flex-col justify-center  gap-4 ">
     <app-following-list/> 
     <app-add-post />
@@ -45,11 +44,10 @@ import { LinkComponent } from "../../../shared/components/link/link.component";
     }
     </div>
 
-    @if(this.innerWidth() > 1024){ 
     <div class="hidden lg:inline-flex  lg:w-[25%] h-screen bg-tint rounded-2xl shadow shadow-background p-4" >
     <app-notifications class="w-full h-full"/>
     </div>
-    }
+    
   
     <app-link [routerLink]="['/']" 
     linkClass="fixed right-2 bottom-18 sm:bottom-2 size-8 bg-sawa-primary rounded-full 
@@ -70,7 +68,4 @@ export class HomeComponent {
     )
   );
   
-  innerWidth = signal<number>(window.innerWidth)
-
-
 }

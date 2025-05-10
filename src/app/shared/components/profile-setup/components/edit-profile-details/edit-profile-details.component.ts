@@ -5,10 +5,11 @@ import { userDetails } from '../../../../../core/interface/user';
 import { ProfileDetailsComponent } from "../../../profile-aside/components/profile-details/profile-details.component";
 import { EditHeaderComponent } from "../edit-header/edit-header.component";
 import { UserStore } from '../../../../../store/users/users.signal';
+import { BtnComponent } from "../../../btn/btn.component";
 
 @Component({
   selector: 'app-edit-profile-details',
-  imports: [SharedModule, ProfileDetailsComponent, EditHeaderComponent],
+  imports: [SharedModule, ProfileDetailsComponent, EditHeaderComponent, BtnComponent],
   templateUrl: './edit-profile-details.component.html',
   styles: ``
 })

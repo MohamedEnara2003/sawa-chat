@@ -42,13 +42,14 @@
         </label>
         </div>
     </div>
+    
     <div class="w-full flex justify-end items-center">
-        <button  type="submit"  
+        <app-btn  btnType="submit"  
         [routerLink]="['/',{outlets : {'profile-setup' : 'user'}}]" 
         [queryParams]="{editType :  null }"
-        class="w-24 btn btn-sm btn-neutral bg-sawa-primary text-tint capitalize btn-hover">
+        btnClass="w-24 btn btn-sm  btn-sawa bg-sawa-primary text-background font-bold   my-1">
         save
-        </button>
+        </app-btn>
     </div>
     </form>
 }@else {

@@ -3,13 +3,12 @@ import { UserImageComponent } from "../../../../shared/components/user-image/use
 import { SharedModule } from '../../../../shared/modules/shared.module';
 import { CommentsStore } from '../../../../store/comments/comments.signal';
 import { DayJsService } from '../../../../core/services/day-js.service';
-import { BtnLikeComponent } from "../btn-like/btn-like.component";
 import { CommentEditMenuComponent } from "../comment-edit-menu/comment-edit-menu.component";
 
 
 @Component({
   selector: 'app-posts-comments',
-  imports: [SharedModule, UserImageComponent, BtnLikeComponent, CommentEditMenuComponent],
+  imports: [SharedModule, UserImageComponent, CommentEditMenuComponent],
   templateUrl: './posts-comments.component.html',
   styles: ``
 })

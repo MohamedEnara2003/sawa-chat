@@ -56,7 +56,9 @@ export const CommentsStore = signalStore(
     notificationsStore.addNotification('comment' , post_user_id , store.postId());
     }
     },
-
+    removeComment(id : number) : void {
+    commentsService.removeComment(id).subscribe();
+    },
     getComments(postId : number) : void {
         if(postId !== store.postId()){ 
         patchState(store , ({isLoading : true }))
@@ -77,16 +79,24 @@ export const CommentsStore = signalStore(
     initRealTimeForPostComment () : void {
     commentsService.listenForAddedComments().pipe(
     switchMap((updated) => {
-    const newComment : CommentsType = updated.new;
-
-    if(updated.eventType === 'INSERT'){
-        return usersService.getUserData(newComment.user_id).pipe(
+    const {eventType : event , new : newData , old } = updated ;
+   
+    if(event === 'INSERT'){
+        return usersService.getUserData(newData.user_id).pipe(
         map(({fullName , avatar_url}) => {
         const comments : UserCommentstData[] =
-        [...store.comments() , {...newComment , user : {fullName , avatar_url }}].sort(
+        [...store.comments() , {...newData , user : {fullName , avatar_url }}].sort(
         (comment) => comment.user_id === userStore.user_id() ? 0 : -1 );
         patchState(store , ({comments}));
     }))
+    }
+
+    if(event === 'DELETE'){
+
+    const comments : UserCommentstData[]  = store.comments().filter((comment) => comment.id !== old.id).sort(
+    (comment) => comment.user_id === userStore.user_id() ? 0 : -1 );
+
+    patchState(store , ({comments}));
     }
 
     return EMPTY

@@ -1,73 +1,60 @@
 import { Component, input, signal } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { SharedModule } from '../../../../shared/modules/shared.module';
-import { SignwithGoogleComponent } from "../signwith-google/signwith-google.component";
+import { InputFieldComponent } from "../input-field/input-field.component";
 
 @Component({
   selector: 'app-auth-feild',
-  imports: [SharedModule, SignwithGoogleComponent],
+  imports: [SharedModule, InputFieldComponent],
   template : `
-  <form [formGroup]="formGroup()" aria-label="authentication" 
-  class="size-full flex flex-col justify-center items-center capitalize   ">
-
-  <fieldset class="size-[90%] flex flex-col justify-center items-center   gap-4 ">
-
-  <legend class="fieldset-legend text-white text-center text-xl italic">
-    {{legendElText()}}
-  </legend>
-
-  <ng-content select="[signUp]"/>
-
-  <div class="w-full flex flex-col justify-start gap-2 text-white">
-  <label for="email" class="fieldset-label text-white">*email</label>
-  <input type="email" class="w-full outline-white input focus:outline-sawa-primary outline-2 
-  bg-overlay dark:bg-tint focus:border-transparent" 
-  id="email" formControlName="email"
-  />
-  
+  <div [formGroup]="formGroup()"
+  class="w-full flex flex-col justify-center items-center gap-2">
+  <app-input-field
+  label="*email"  
+  fieldId="email" 
+  [formGroup]="formGroup()!"
+  type="email"
+  controlName="email" 
+  class="w-full">
+  <p  class="text-error capitalize text-sm">
   @let Email = formGroup().get('email');
   @if(Email?.invalid && Email?.touched){
-  <p class="validator-hint  text-error">
   @if(Email?.getError('email')){write a valid email}
   @else if(Email?.getError('required')){Enter a email address}
-  </p>
   }
-  </div>
+  </p>
+</app-input-field>
+<app-input-field
+  label="*password"  
+  fieldId="password" 
+  [formGroup]="formGroup()!"
+  controlName="password" 
+  [type]="!isShowPassword() ? 'password' : 'text'" 
+  class="w-full">
 
-  <div class="w-full flex flex-col justify-start gap-2  text-white">
-  <label for="password" class="fieldset-label text-white">*password</label>
-  <input [type]="!isShowPassword() ? 'password' : 'text'" 
-  class="w-full outline-white input focus:outline-sawa-primary outline-2 bg-overlay dark:bg-tint
-  focus:border-transparent" 
-  id="password"  formControlName="password"
-  />
+ <p class="text-error capitalize text-sm">
   @let Password = formGroup().get('password');
   @if(Password?.invalid && Password?.touched){
-  <p class="validator-hint  text-error">
   @if(Password?.getError('required')){Enter a password}
   @else if (Password?.getError('minlength')) {write a valid password}
   @else if (Password?.getError('maxlength')) {write a valid password} 
-  </p>
   }
-  <div class="w-full flex justify-between items-center my-2">
-  <div  class="flex justify-center items-center gap-2">
+  </p>
+
+  <div  class="flex justify-center items-center  gap-2">
   <input (change)="isShowPassword.set(!isShowPassword())" type="checkbox" name="showPassword" id="showPassword" 
   class="checkbox checkbox-neutral border-1 border-white checkbox-sm">
-  <label for="showPassword" class="link link-hover">
-  Remember me
+  <label for="showPassword" class="link link-hover capitalize">
+  show password
   </label>
-  </div>
-  <ng-content select="[forgotPassword]"/>
-  </div>  
-  </div>
-  <app-signwith-google class="w-full text-center"/>
-  <ng-content />
-  </fieldset>
-</form>
+  </div> 
+  </app-input-field>
+
+
+</div>
   `
 })
 export class AuthFeildComponent {
   formGroup = input.required<FormGroup>() ;
-  legendElText = input.required<string>();
   isShowPassword = signal<boolean>(false);
 }

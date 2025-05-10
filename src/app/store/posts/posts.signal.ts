@@ -188,6 +188,9 @@ export const PostsStore = signalStore(
     file_url : post?.file_url , previewUrl : post?.file_url , file_name : post?.file_name}));
     },
 
+    closeModlePostEdit() : void {
+    patchState(store , ({post : undefined,file_url : '', previewUrl : '', file_name : ''}));
+    },
     openPostViewer(post_id : number | undefined , isLoadPostViewer : boolean) : void {
     const post = store.posts().find((post) => post.id === post_id);
     patchState(store , ({post , isLoadPostViewer}));

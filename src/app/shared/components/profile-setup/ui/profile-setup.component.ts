@@ -10,11 +10,12 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { selectQueryParams } from '../../../../store/routes/router.selectors';
 import { map } from 'rxjs';
 import { UserStore } from '../../../../store/users/users.signal';
+import { LinkArrowLeftComponent } from "../../link-arrow-left/link-arrow-left.component";
 
 
 @Component({
   selector: 'app-profile-setup',
-  imports: [SharedModule, EditProfileImageComponent, EditProfileBioComponent, EditProfileDetailsComponent, EditProfileSkillsComponent],
+  imports: [SharedModule, EditProfileImageComponent, EditProfileBioComponent, EditProfileDetailsComponent, EditProfileSkillsComponent, LinkArrowLeftComponent],
   template : `
 <section class="w-full fixed top-0 left-0 h-screen flex justify-center items-end z-50">
 <div aria-label="container-profile-setup"  
@@ -22,11 +23,11 @@ class="w-[95%] sm:w-[70%] lg:w-1/2 h-[90%] bg-background shadow-md shadow-backgr
 flex flex-col gap-8 overflow-y-auto overflow-hidden animate-up px-5 py-5 pb-14">
 
 <div class="w-full flex justify-between items-center">
-<h1 class="title-h1  text-background dark:text-sawa-primary  text-center ">edit profile</h1>
-<a aria-label="link-close-profile-edit" 
-(click)="userStore.closeProfileEdit()">
-<i class="fa-solid fa-close text-xl btn-hover"></i>
-</a>
+
+<app-link-arrow-left aria-label="link-close-profile-edit" 
+(click)="userStore.closeProfileEdit()" />
+
+<h1 class="title-h1  text-background dark:text-overlay  text-center ">edit profile</h1>
 </div>
 
 <app-edit-profile-image [editType]="editType()!"/>

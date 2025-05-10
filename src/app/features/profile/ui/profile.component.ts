@@ -19,6 +19,4 @@ mt-5  p-2 md:p-5" style="scrollbar-width: none;">
 </section>
   `
 })
-export class ProfileComponent {
-
-}
+export class ProfileComponent {}

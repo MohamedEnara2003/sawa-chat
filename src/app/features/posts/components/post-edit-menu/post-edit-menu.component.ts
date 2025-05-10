@@ -1,5 +1,4 @@
 import { Component, inject, input, signal } from '@angular/core';
-import { LinksType } from '../../../../shared/interfaces/links';
 import { PostsStore } from '../../../../store/posts/posts.signal';
 import { Router } from '@angular/router';
 import { BtnComponent } from "../../../../shared/components/btn/btn.component";
@@ -19,11 +18,10 @@ import { LinkComponent } from "../../../../shared/components/link/link.component
   <ul aria-label="post-menu-links" 
   class="menu absolute right-0  w-40 h-22 bg-background rounded-box  animate-opacity-up
   shadow-md shadow-background capitalize text-sm  border-1 border-overlay">
-  @for (item of postLinks(); track $index) {
-  <li (click)="menuLink(item.id)">
-  <app-link>{{item.linkName}}</app-link>
+  <li (click)="isOpenMenu.set(0)">
+  <app-link (click)="openModlePostEdit()">edit post</app-link>
+  <app-link (click)="removePost()">remove post</app-link>
   </li>
-}
   </ul>
   </nav>
 }
@@ -35,26 +33,17 @@ export class PostEditMenuComponent {
   readonly router = inject(Router);
   postId = input.required<number>();
   file_name = input.required<string>();
-  
-  postLinks = signal<LinksType[]>([
-  {id : 1 , linkName : 'edit post' , iconName : 'fa-solid fa-edit'},
-  {id : 2 , linkName : 'remove post',iconName : 'fa-solid fa-trash-can'},
-  ])
-  
   isOpenMenu =  signal<number>(0);
 
-  menuLink(linkId : number) : void {
-  if(this.isOpenMenu() === this.postId()){
-
-  switch(linkId){ 
-  case(1) :
+  openModlePostEdit() : void {
   this.router.navigate(['/',{outlets :{'container' : 'create-post'}}])
   this.postsStore.openModlePostEdit(this.postId());
-  break
-  case(2) :
-  this.postsStore.removePost(this.postId() , this.file_name())
   }
-  this.isOpenMenu.set(0);
+
+  removePost() : void {
+  this.postsStore.removePost(this.postId() , this.file_name());
   }
-  }
+
+
+  
 }

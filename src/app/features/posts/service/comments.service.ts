@@ -13,6 +13,10 @@ export class CommentsService {
   addComment(data : CommentsType) : Observable<CommentsType> {
   return this.singleTonApi.insert(this.tableName , data) ;
   }
+  
+  removeComment(id : number) : Observable<void> {
+  return this.singleTonApi.delete(this.tableName , {id}) ;
+  }
 
   getComments (post_id : number) : Observable<UserCommentstData[]> {
   const promise = this.singleTonApi.supabase.from(this.tableName)
