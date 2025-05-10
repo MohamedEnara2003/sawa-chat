@@ -32,7 +32,7 @@ import { LinkComponent } from "../../../shared/components/link/link.component";
     <app-profile-aside class="w-full h-full" />
     </div>
 
-    <div class="w-full md:w-[90%] lg:w-[40%] flex flex-col justify-center  gap-4 ">
+    <div class="w-full md:w-[90%] lg:w-[40%] flex flex-col justify-center  gap-5 p-2  ">
     <app-following-list/> 
     <app-add-post />
     <app-post-status-links />

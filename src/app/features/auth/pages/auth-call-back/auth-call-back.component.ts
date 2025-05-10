@@ -41,7 +41,7 @@ export class AuthCallBackComponent implements OnInit{
       this.usersService.getUserByUserId(user_id).subscribe({
         next: (existingUser) => {
           if (existingUser) {
-          this.router.navigate(['/home/public']);
+          this.router.navigate(['/', {outlets: {primary: 'home/public', 'profile-setup': 'user'}}]);
           } else if (user_id && email && fullName) {
             this.usersService.addUser({user_id, email, fullName, role: 'user'}).pipe(
             tap(() => this.router.navigate(['/', {outlets: {primary: 'home/public', 'profile-setup': 'user'}}]))
