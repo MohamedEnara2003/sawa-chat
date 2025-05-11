@@ -2,7 +2,7 @@ import { patchState, signalStore, withComputed, withMethods, withState } from "@
 import { userDetails, UserEditableData, userType } from "../../core/interface/user";
 import { computed, inject } from "@angular/core";
 import { UsersService } from "../../core/services/users.service";
-import { catchError, EMPTY,   switchMap,  tap } from "rxjs";
+import { catchError, EMPTY,   Observable,   switchMap,  tap } from "rxjs";
 import { authClient } from "../../environments/environment";
 import isEqual from 'lodash/isEqual';
 import { Router } from "@angular/router";
@@ -103,7 +103,9 @@ getUserProfileByUserId(userId : string) : void {
             .subscribe();
     }
 },
-
+getUserData(user_id : string) : Observable<{fullName: string, avatar_url: string;}>{
+    return usersService.getUserData(user_id);
+},
     upLoadUserImage (file : File) : void {
     if(store.previewUrl() !== ''){
     this.removeUploadedImage();

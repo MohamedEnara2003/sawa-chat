@@ -34,7 +34,7 @@ import { SoundEffectStore } from '../../../store/sound/sound.signal';
   @for (post of posts(); track post) {
   @defer (on viewport) {
   <li 
-  class="relative w-full bg-tint flex flex-col justify-center items-center rounded-2xl ">
+  class="relative w-full bg-tint flex flex-col justify-center items-center rounded-2xl py-2">
     <div class="w-full flex flex-col justify-start items-center  gap-2 my-5 px-4">
     <div class="w-full flex justify-between items-center ">
 

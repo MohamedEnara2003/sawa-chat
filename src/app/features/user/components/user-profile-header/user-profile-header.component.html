@@ -40,7 +40,7 @@
                         unfollow
                     </app-btn>
                 </ng-template>
-                <app-btn [routerLink]="['/chat']" 
+                <app-btn  (click)="chatStore.addChat()" [routerLink]="['/chat']"
                 btnType="button" btnClass="w-40 btn-sawa-2">
                     <i class="fa-solid fa-comment"></i>
                     message

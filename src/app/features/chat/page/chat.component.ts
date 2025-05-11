@@ -23,11 +23,8 @@ import { MessageStore } from '../../../store/messages/message.signal';
   `
 })
 export class ChatComponent implements OnInit{
-
-
   private readonly store = inject(Store);
   private readonly messageStore = inject(MessageStore);
-
   chatId = toSignal<string>(
   this.store.select(selectRouteParams).pipe(
   map((params) => params['chatId']!)

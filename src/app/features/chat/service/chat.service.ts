@@ -32,8 +32,8 @@ export class ChatService {
   `)
   return from(promise).pipe(map((res) => res.data!.map((item) => {
   const chatsData = {...item , 
-    user1_id : Array.isArray(item.user1_id) ?  item.user1_id[0] : item.user1_id ,
-    user2_id : Array.isArray(item.user2_id) ?  item.user2_id[0] : item.user2_id
+  user1_id : Array.isArray(item.user1_id) ?  item.user1_id[0] : item.user1_id ,
+  user2_id : Array.isArray(item.user2_id) ?  item.user2_id[0] : item.user2_id
   }
   const chats = {
   user1_id : chatsData.user1_id.user_id === user_id ?  chatsData.user2_id : chatsData.user1_id ,
@@ -47,5 +47,9 @@ export class ChatService {
   }
   })))
   }  
+  
+  listenChats() : Observable<any> {
+  return this.singleTonApi.RealTime(this.tableName)
+  }
 
-}
+} 

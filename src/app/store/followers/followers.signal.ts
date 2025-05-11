@@ -45,11 +45,12 @@ export const FollowersStore = signalStore(
     return {
 
     addFollow() : void {
+    const follower_id = userStore.user_id();
     const following_id = userStore.userProfile()?.user_id ;
-    if(following_id){ 
-    const data : followerType = {follower_id : userStore.user_id() ,following_id}
+    if(following_id && follower_id){ 
+    const data : followerType = {follower_id,following_id}
     followersService.addFollow(data).subscribe();
-    chatStore.addChat(data.follower_id , following_id);
+    chatStore.addChat();
     const follower = {
     avatar_url: userStore.user()?.avatar_url!,
     fullName: userStore.user()?.fullName!

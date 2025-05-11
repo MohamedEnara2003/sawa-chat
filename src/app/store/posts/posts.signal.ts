@@ -14,7 +14,6 @@ export interface PostState  {
     post : UserPostData | undefined, 
     isLoading : boolean,
     error : string ,
-    user : {fullName : string, avatar_url : string} ,
     file_url  : string, 
     file_name : string,
     previewUrl : string | ArrayBuffer | null,
@@ -26,7 +25,6 @@ export interface PostState  {
 const initialState : PostState = {
     posts : [] ,
     post : undefined ,
-    user : {fullName : '' , avatar_url : ''} ,
     isLoading : false ,
     error : 'string' ,
     file_url  : '', 
@@ -72,6 +70,7 @@ export const PostsStore = signalStore(
     followersService= inject(FollowersService), 
     fileUploadService= inject(FileUploadService), 
     ) => ({
+
     uploadImage(file : File) : void {
     patchState(store , ({isLoadingUpload : true}));
         fileUploadService.compressAndPreview(file).pipe(
@@ -87,7 +86,7 @@ export const PostsStore = signalStore(
         return EMPTY
         })
         )
-        })
+    })
     ).subscribe()
     },
     
@@ -109,8 +108,7 @@ export const PostsStore = signalStore(
     } 
     postsService.createPost(post).pipe(
     tap(() => {
-    const user = {fullName : userStore.user()?.fullName! , avatar_url : userStore.user()?.avatar_url!}
-    patchState(store , ({isLoading : false ,file_name : '' , file_url : '' , previewUrl : '' , user,}));
+    patchState(store , ({isLoading : false ,file_name : '' , file_url : '' , previewUrl : '' }));
     })
     ).subscribe();
     },
@@ -134,9 +132,8 @@ export const PostsStore = signalStore(
 
     removePost(id : number , file_name : string) : void {
     postsService.removePost(id).subscribe();
-    const posts = store.posts().filter((post) => post.id !== id);
-    patchState(store , ({posts , file_name}));
-    this.removeUploadedImage()
+    patchState(store , ({file_name}));
+    this.removeUploadedImage();
     },
 
     getPublicPosts() : void {
@@ -189,8 +186,9 @@ export const PostsStore = signalStore(
     },
 
     closeModlePostEdit() : void {
-    patchState(store , ({post : undefined,file_url : '', previewUrl : '', file_name : ''}));
+    patchState(store , ({post : undefined, file_url : '', previewUrl : '', file_name : ''}));
     },
+    
     openPostViewer(post_id : number | undefined , isLoadPostViewer : boolean) : void {
     const post = store.posts().find((post) => post.id === post_id);
     patchState(store , ({post , isLoadPostViewer}));
@@ -216,18 +214,30 @@ export const PostsStore = signalStore(
     initRealTimeForPosts() : void {
     postsService.listenForPosts().pipe(
     tap((updated) => {
-    const newPost : PostType = updated.new;
-    if(updated.eventType === 'INSERT'){
-    const posts = [...store.posts() , {...newPost , user : store.user()}].sort(
-    (post) => post.user_id === userStore.user_id() ? -1 : 0 );
-    patchState(store , ({posts}))
+    const {eventType : event , new : newData , old : oldData} : 
+    {eventType : string , new : PostType , old : {id : number}} = updated ;
+
+    if(event === 'INSERT'){
+    userStore.getUserData(newData.user_id).pipe(
+        tap((user) => { 
+        const posts = [...store.posts() , {...newData , user}].sort(
+        (post) => post.user_id === userStore.user_id() ? -1 : 0 )
+        patchState(store , ({posts}))
+        })
+    ).subscribe()
     }
-    if(updated.eventType === 'UPDATE'){
+    if(event === 'UPDATE'){
     const posts = store.posts().map((post) => 
-    post.id === newPost.id 
-    ? { ...newPost, user: {fullName: post.user.fullName, avatar_url: post.user.avatar_url }} 
+    post.id === newData.id 
+    ? { ...newData, user: {fullName: post.user.fullName, avatar_url: post.user.avatar_url }} 
     : post
     ).sort((post) => post.user_id === userStore.user_id() ? -1 : 0);
+
+    
+    patchState(store, {posts});
+    }
+    if(event === 'DELETE'){
+    const posts = store.posts().filter((post) => post.id !== oldData.id);
     patchState(store, {posts});
     }
     return EMPTY ;

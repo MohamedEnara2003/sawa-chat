@@ -32,7 +32,7 @@ import { LinkComponent } from "../../../shared/components/link/link.component";
     <app-profile-aside class="w-full h-full" />
     </div>
 
-    <div class="w-full md:w-[90%] lg:w-[40%] flex flex-col justify-center  gap-5 p-2  ">
+    <div class="w-full md:w-[90%] lg:w-[40%] flex flex-col justify-center  gap-4 p-1  my-1">
     <app-following-list/> 
     <app-add-post />
     <app-post-status-links />
@@ -50,7 +50,7 @@ import { LinkComponent } from "../../../shared/components/link/link.component";
     
   
     <app-link [routerLink]="['/']" 
-    linkClass="fixed right-2 bottom-18 sm:bottom-2 size-8 bg-sawa-primary rounded-full 
+    linkClass="fixed right-2 bottom-18 sm:bottom-2 size-8 bg-sawa-primary rounded-full  cursor-pointer
     flex justify-center items-center shadow-md shadow-background border border-tint">
     <i class="fa-solid fa-angle-up text-background text-xl"></i>
     </app-link>

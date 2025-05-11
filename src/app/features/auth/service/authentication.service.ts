@@ -1,15 +1,12 @@
-import { inject, Injectable,   } from '@angular/core';
-import { from, Observable, tap } from 'rxjs';
+import { Injectable} from '@angular/core';
+import { from, Observable } from 'rxjs';
 import { authClient } from '../../../environments/environment';
-import { UsersService } from '../../../core/services/users.service';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
-
-  private usersService = inject(UsersService) ;
 
   signInWithGoogle() : Observable<any> {
     const promise = authClient.signInWithOAuth({

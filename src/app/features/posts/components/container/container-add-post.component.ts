@@ -7,10 +7,11 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { postStatus } from '../../../../core/interface/posts';
 import { BtnComponent } from "../../../../shared/components/btn/btn.component";
+import { LinkComponent } from "../../../../shared/components/link/link.component";
 
 @Component({
   selector: 'app-container-add-post',
-  imports: [UserImageComponent, SharedModule, BtnComponent],
+  imports: [UserImageComponent, SharedModule, BtnComponent, LinkComponent],
   template : `
   <section class="w-full fixed flex justify-center items-center z-100">
   <div class="w-full  lg:w-[45%] h-[75vh] bg-tin  flex flex-col justify-start  gap-4 z-100
@@ -18,16 +19,16 @@ import { BtnComponent } from "../../../../shared/components/btn/btn.component";
 
   <header class="w-full border-b-1 border-b-background flex justify-between items-center pb-2
   capitalize">
-  <a aria-label="close-create-post" (click)="postsStore.removeUploadedImage(); closeModle()">
+  <app-link aria-label="close-create-post" (click)="closeModle()">
   <i class="fa-solid fa-close text-xl btn-hover text-white"></i>
-  </a>
+  </app-link>
   <h1>{{postsStore.post() ? 'edit post' : 'create post'}} </h1>
   
-  <button (click)="createAndEditPost()" type="button" 
+  <app-btn (click)="createAndEditPost()" btnType="button" 
   [disabled]="form.invalid && !postsStore.file_url()"
-  class="btn btn-sm bg-sawa-primary text-background">
+  btnClass="btn btn-sm bg-sawa-primary text-background">
   Post
-  </button>
+  </app-btn>
   </header>
 
   <div class="w-full flex flex-wrap justify-between items-start  px-2">
@@ -71,7 +72,7 @@ import { BtnComponent } from "../../../../shared/components/btn/btn.component";
             <label for="upload" class="w-[90%] mt-5  btn-ghost  btn bg-tint text-sawa-primary">
             <i class="fa-solid fa-plus"></i> Upload photo
             <input (change)="uploadImage($event)"
-            type="file" name="upload" accept="image/*" id="upload"
+            type="file" name="upload" id="upload"  accept="image/*"  capture="environment" 
             class="hidden">
             </label>
       </app-btn>
@@ -93,8 +94,7 @@ import { BtnComponent } from "../../../../shared/components/btn/btn.component";
 </form>
 
   </div>
-  <div  (click)="postsStore.removeUploadedImage(); closeModle()"
-  class="w-full h-screen bg-background opacity-50  fixed top-0 left-0 z-50">
+  <div  class="w-full h-screen bg-background opacity-50  fixed top-0 left-0 z-50">
   </div>
   </section>
   `,
@@ -139,6 +139,8 @@ export class ContainerAddPostComponent implements OnInit{
   this.router.navigate(['/',{outlets : {'container':null}}]);
   if(this.postsStore.post()){
   this.postsStore.closeModlePostEdit();
+  }else{
+  this.postsStore.removeUploadedImage();
   }
   }
 

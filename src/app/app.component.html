@@ -8,6 +8,14 @@
     type="audio/mpeg" class="hidden"></audio>
   }
 </main>
+@if(isIntro()){
 
+  <section class="w-full h-screen fixed top-0 left-0 bg-background 
+  flex justify-center items-center z-100 ">
+    <div class="animate-opacity-up">
+    <app-logo  logoClass="size-24"/>
+    </div>
+  </section>
+  }
 </div>
 

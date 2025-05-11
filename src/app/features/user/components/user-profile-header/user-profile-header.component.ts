@@ -6,6 +6,7 @@ import { SharedModule } from '../../../../shared/modules/shared.module';
 import { ImageViewerStore } from '../../../../store/imageViewer/imageViewer.signal';
 import { InteractionCountComponent } from "../../../../shared/components/profile-aside/components/interaction-count/interaction-count.component";
 import { BtnComponent } from "../../../../shared/components/btn/btn.component";
+import { ChatStore } from '../../../../store/chats/chats.signal';
 
 @Component({
   selector: 'app-user-profile-header',
@@ -17,4 +18,5 @@ export class UserProfileHeaderComponent {
   readonly userStore = inject(UserStore);
   readonly followersStore = inject(FollowersStore);
   readonly imageViewerStore = inject(ImageViewerStore);
+  readonly chatStore = inject(ChatStore);
 }

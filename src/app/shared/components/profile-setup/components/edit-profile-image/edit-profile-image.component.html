@@ -26,7 +26,8 @@
             <label for="upload" class="w-full  btn-neutral  btn bg-tint text-sawa-primary 
             btn-hover duration-300">
             <i class="fa-solid fa-plus"></i> Upload photo
-            <input (change)="onFileSelected($event)" type="file" name="upload" accept="image/*" id="upload" 
+            <input (change)="onFileSelected($event)" 
+            type="file" name="upload" id="upload"  accept="image/*"  capture="environment" 
             class="hidden">
             </label>
         </app-btn>
