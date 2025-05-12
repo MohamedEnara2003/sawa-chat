@@ -80,7 +80,6 @@ export const CommentsStore = signalStore(
     commentsService.listenForAddedComments().pipe(
     switchMap((updated) => {
     const {eventType : event , new : newData , old } = updated ;
-   
     if(event === 'INSERT'){
         return usersService.getUserData(newData.user_id).pipe(
         map(({fullName , avatar_url}) => {
@@ -92,10 +91,8 @@ export const CommentsStore = signalStore(
     }
 
     if(event === 'DELETE'){
-
     const comments : UserCommentstData[]  = store.comments().filter((comment) => comment.id !== old.id).sort(
     (comment) => comment.user_id === userStore.user_id() ? 0 : -1 );
-
     patchState(store , ({comments}));
     }
 

@@ -61,7 +61,6 @@ export const MessageStore = signalStore(
     file_type : store.file_type(),
     file_name : store.file_name(),
     }
-    soundEffectStore.handlSoundEffect('sound-effects/SendMessage.wav');
     messagesService.addMessage(messageData).pipe(
     tap(() => this.scrollChatContanierToBottom())
     ).subscribe();
@@ -95,7 +94,8 @@ export const MessageStore = signalStore(
         patchState(store , ({isLoadingUpload : true ,lastFileSignature : signature}));
         fileUploadService.compressAndPreview(file).pipe(
         switchMap((data) => {
-        const filePath = `${Date.now()}_${data.compressedFile.name}`;
+        const sanitizeFileName  = (fileName : string) => fileName.replace(/[^a-zA-Z0-9]/g, '_');
+        const filePath = `${Date.now()}_${sanitizeFileName(data.compressedFile.name)}`;
         patchState(store , ({isLoadingUpload : false , previewUrl : data.previewUrl}))
     
         return messagesService.upLoadFile(filePath , data.compressedFile).pipe(
@@ -136,7 +136,11 @@ export const MessageStore = signalStore(
         messagesService.listenForNewMessages(chatId).pipe(
         tap((updated) => {
         if(updated.eventType === 'INSERT'){
+        if(updated.new.sender_id !== userStore.user_id()){
         soundEffectStore.handlSoundEffect('sound-effects/ReceiveMessage.wav')
+        }else if(updated.new.sender_id === userStore.user()?.user_id){
+        soundEffectStore.handlSoundEffect('sound-effects/SendMessage.wav');
+        }
         patchState(store, { isLoading: false, messages: [...store.messages(), updated.new] });
         }
         }), takeUntilDestroyed()

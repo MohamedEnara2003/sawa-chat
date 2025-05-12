@@ -75,7 +75,8 @@ export const PostsStore = signalStore(
     patchState(store , ({isLoadingUpload : true}));
         fileUploadService.compressAndPreview(file).pipe(
         switchMap((data) => {
-        const filePath = `${Date.now()}_${data.compressedFile.name}`;
+        const sanitizeFileName  = (fileName : string) => fileName.replace(/[^a-zA-Z0-9]/g, '_');
+        const filePath = `${Date.now()}_${sanitizeFileName(data.compressedFile.name)}`;
         patchState(store , ({isLoadingUpload : false , previewUrl : data.previewUrl}))
         return postsService.uploadFilePost(filePath , data.compressedFile).pipe(
         tap(({file_url , file_name}) => {

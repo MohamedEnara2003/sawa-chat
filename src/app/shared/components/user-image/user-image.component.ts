@@ -20,7 +20,7 @@ import { LinkComponent } from "../link/link.component";
 })
 export class UserImageComponent {
   readonly userStore = inject(UserStore);
-  defaultImage : string = "https://fpycbjhhzhzwuakxsdpx.supabase.co/storage/v1/object/public/users//user.webp";
+  defaultImage : string = "https://fpycbjhhzhzwuakxsdpx.supabase.co/storage/v1/object/public/images//user.png";
   isDefault = input<boolean>(false);
   isRouteProfile = input<boolean>(false);
   avatarUrl = input<string>("");

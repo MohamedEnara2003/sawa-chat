@@ -70,9 +70,9 @@ import { LinkComponent } from "../../../../shared/components/link/link.component
   <div class="w-full h-30 bg-[#333] rounded-t-2xl">
   <app-btn btnType="button" btnClass="w-full text-center capitalize">
             <label for="upload" class="w-[90%] mt-5  btn-ghost  btn bg-tint text-sawa-primary">
-            <i class="fa-solid fa-plus"></i> Upload photo
+            <i class="fa-solid fa-plus"></i> Add photo
             <input (change)="uploadImage($event)"
-            type="file" name="upload" id="upload"  accept="image/*"  capture="environment" 
+            type="file" name="upload" id="upload"  accept="image/*" 
             class="hidden">
             </label>
       </app-btn>

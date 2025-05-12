@@ -74,7 +74,9 @@ export const NotificationsStore = signalStore(
     tap((updated) => {
     const {eventType : event , new : newData , old : oldData} = updated ;
     if (event === 'INSERT') {
-    soundEffectStore.handlSoundEffect('sound-effects/MessageNotification.mp3')
+    if(newData.from_user_id !== userStore.user_id()){
+    soundEffectStore.handlSoundEffect('sound-effects/MessageNotification.mp3');
+    }
     const notifications : Notifications[] = [...store.notifications() , newData].filter((notification) => {
     return notification.from_user_id !== userStore.user_id() && notification.to_user_id === userStore.user_id()
     });

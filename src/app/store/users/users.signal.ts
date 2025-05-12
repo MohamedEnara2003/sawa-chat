@@ -113,7 +113,8 @@ getUserData(user_id : string) : Observable<{fullName: string, avatar_url: string
     patchState(store , ({isLoading : true}))
     fileUploadService.compressAndPreview(file).pipe(
     switchMap((data) => {
-    const filePath = `${Date.now()}_${data.compressedFile.name}`;
+    const sanitizeFileName  = (fileName : string) => fileName.replace(/[^a-zA-Z0-9]/g, '_');
+    const filePath = `${Date.now()}_${sanitizeFileName(data.compressedFile.name)}`;
     patchState(store , ({isLoading : false , previewUrl : data.previewUrl}))
 
     return usersService.uploadUserImage(filePath , data.compressedFile).pipe(

@@ -1,7 +1,7 @@
 import { inject, Injectable } from "@angular/core";
 import { from, map, Observable } from "rxjs";
 import { SingleTonApiService } from "../../../core/services/single-ton-api.service";
-import { postStatus, PostType, UserPostData } from "../../../core/interface/posts";
+import { PostType, UserPostData } from "../../../core/interface/posts";
 import { UploadFileData } from "../../../core/interface/user";
 
 
@@ -11,7 +11,7 @@ import { UploadFileData } from "../../../core/interface/user";
 
 export class PostsService {
   private readonly tableName : string = "posts" ;
-  private readonly bucketName : string = "postsfiles" ;
+  private readonly bucketName : string = "post" ;
   private readonly singleTonApi = inject(SingleTonApiService);
   private readonly SelectionPostData = `
   id,
@@ -22,7 +22,7 @@ export class PostsService {
   file_name,
   privacy,
   likes:post_likes(count),
-  post_likes(user_id),
+  post_likes(user_id),  
   comments_count:comments(count),
   user:user_id(fullName,avatar_url)
   `;
@@ -77,7 +77,7 @@ export class PostsService {
   }
 
   uploadFilePost( filePath: string, file: File) : Observable<UploadFileData>{
-  return this.singleTonApi.upload(this.bucketName,filePath , file);
+  return this.singleTonApi.upload(this.bucketName, filePath , file);
   }
   removeFilePost(filePath: string) : Observable<void>{
   return this.singleTonApi.deleteStorgeFile(this.bucketName , filePath) ;

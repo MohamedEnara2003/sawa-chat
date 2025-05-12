@@ -6,7 +6,9 @@ import { DayJsService } from '../../../core/services/day-js.service';
 import { NotificationHeaderComponent } from "../components/notification-header/notification-header.component";
 import { Router } from '@angular/router';
 import { NotificationsTypes } from '../../../core/interface/notifications';
-import { UserStore } from '../../../store/users/users.signal';
+import { PostsStore } from '../../../store/posts/posts.signal';
+import { CommentsStore } from '../../../store/comments/comments.signal';
+
 
 @Component({
 selector: 'app-notifications',
@@ -43,7 +45,7 @@ class="absolute   top-0 right-0 btn-hover z-10">
     </span>
     </div>
 
-    <div (click)="notificationRoute(notification.type , notification.from_user_id)"
+    <div (click)="notificationRoute(notification.type , notification.from_user_id , notification.post_id!)"
     class="max-w-[70%] text-xs text-white ">
     <p> 
     <span class="font-semibold text-sawa-primary capitalize">
@@ -70,7 +72,8 @@ class="absolute   top-0 right-0 btn-hover z-10">
 })
 export class NotificationsComponent  {
     readonly notificationsStore = inject(NotificationsStore);
-    private readonly userStore = inject(UserStore);
+    readonly postsStore = inject(PostsStore);
+    readonly commentsStore = inject(CommentsStore);
     readonly dayJs = inject(DayJsService);
     private readonly router = inject(Router);
 
@@ -86,11 +89,13 @@ export class NotificationsComponent  {
     }
 
 
-    notificationRoute(type : NotificationsTypes , from_user_id : string) : void {
+    notificationRoute(type : NotificationsTypes , from_user_id : string , post_id : number) : void {
     if(type === 'follow'){
     this.router.navigate(['/user-profile/' , from_user_id]);
-    }else if(type === 'like' || type === 'comment'){
-    
+    }else if(type === 'like'){
+    this.postsStore.openPostViewer(post_id , true);
+    }else if(type === 'comment'){
+    this.commentsStore.openContainerComments(post_id , true);
     }
     }
 
