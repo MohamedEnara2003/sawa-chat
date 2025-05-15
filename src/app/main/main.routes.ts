@@ -14,7 +14,8 @@ export const mainRoutes: Routes = [
     import('../features/profile/ui/profile.component').then(c => c.ProfileComponent),
     loadChildren : () => import('../features/profile/profile.routes').then((r) => r.profileRoutes)
     },
-    {path : 'user' , component : ProfileSetupComponent  , outlet : 'profile-setup'},
+    {path : 'user' , loadComponent : () => 
+    import('../shared/components/profile-setup/ui/profile-setup.component').then(c => c.ProfileSetupComponent), outlet : 'profile-setup'},
     {path : 'user-profile/:userId' ,   loadComponent : () =>  
     import('../features/user/ui/user-profile.component').then(c => c.UserProfileComponent)
     },
@@ -27,7 +28,8 @@ export const mainRoutes: Routes = [
         import('../features/chat/page/chat.component').then(c => c.ChatComponent),
     },
 
-    {path : 'create-post' , component : ContainerAddPostComponent, outlet : 'container'},
+    {path : 'create-post' , loadComponent : () => 
+    import('../features/posts/components/container/container-add-post.component').then(c => c.ContainerAddPostComponent), outlet : 'container'},
 
     {path : 'settings' , loadComponent : () => 
     import('../features/settings/page/settings.component').then(c => c.SettingsComponent),

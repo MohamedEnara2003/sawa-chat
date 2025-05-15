@@ -5,7 +5,7 @@ import { SharedModule } from '../../modules/shared.module';
   selector: 'app-logo',
   imports: [SharedModule],
   template : `
-  <div  aria-label="logo-link" 
+  <div  aria-label="logo-link"  role="img"
   class="bg-white rounded-full flex justify-center items-center  overflow-hidden btn-hover"
   [ngClass]="logoClass() ? logoClass(): 'size-12 md:size-15'">
   <svg viewBox="0 0 43 44" fill="none" xmlns="http://www.w3.org/2000/svg" class="size-[65%] mr-2">

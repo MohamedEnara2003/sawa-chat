@@ -47,7 +47,15 @@ export class ChatService {
   }
   })))
   }  
-  
+
+  isExistingChat(user1_id : string, user2_id : string) : Observable<boolean> {
+  const promise = this.singleTonApi.supabase.from(this.tableName)
+  .select('id')
+  .or(`and(user1_id.eq.${user1_id},user2_id.eq.${user2_id}),and(user1_id.eq.${user2_id},user2_id.eq.${user1_id})`)
+  .maybeSingle()
+  return from(promise).pipe(map((res) => res.data ? true : false))
+  }
+
   listenChats() : Observable<any> {
   return this.singleTonApi.RealTime(this.tableName)
   }

@@ -8,7 +8,8 @@ import {  catchError, of, tap } from 'rxjs';
   selector: 'app-auth-call-back',
   imports: [],
   template : `
-  <section class="size-full flex flex-col justify-center items-center gap-5">
+  <section aria-label="Auth call back"
+  class="size-full flex flex-col justify-center items-center gap-5">
   <span class="loading loading-spinner w-30 text-sawa-primary"></span>
   <p class="text-white font-bold text-xl">Please wait, signing you in...</p>
   </section>
@@ -45,7 +46,7 @@ export class AuthCallBackComponent implements OnInit{
           } else if (user_id && email && fullName) {
             this.usersService.addUser({user_id, email, fullName, role: 'user'}).pipe(
             tap(() => {
-              // this.router.navigate(['/', {outlets: {primary: 'home/public', 'profile-setup': 'user'}}])
+              this.router.navigate(['/', {outlets: {primary: 'home/public', 'profile-setup': 'user'}}])
             })
             ).subscribe();
           }

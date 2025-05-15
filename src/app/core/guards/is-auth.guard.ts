@@ -5,10 +5,12 @@ import { authClient } from '../../environments/environment';
 
 async function checkIsAuthenticated(router: Router): Promise<boolean | UrlTree> {
   const { data, error } = await authClient.getSession();
-  if (error || !data.session){
-  return router.navigate(['/auth/sign-up']); 
+
+  if (error || !data.session) {
+  return router.navigate(['/auth/sign-up']);
+  }else{
+  return true
   }
-  return true;
 }
 
 export const isAuthGuard: CanMatchFn = async (route, segments) => {

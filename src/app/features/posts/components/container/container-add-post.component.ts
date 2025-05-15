@@ -26,6 +26,7 @@ import { LinkComponent } from "../../../../shared/components/link/link.component
   
   <app-btn (click)="createAndEditPost()" btnType="button" 
   [disabled]="form.invalid && !postsStore.file_url()"
+  aria-label="Submit post"
   btnClass="btn btn-sm bg-sawa-primary text-background">
   Post
   </app-btn>
@@ -82,6 +83,7 @@ import { LinkComponent } from "../../../../shared/components/link/link.component
   @if(!postsStore.isLoadingUpload()){ 
   <img [src]="postsStore.previewUrl()" alt="uploaded-image" class="size-full object-cover">
   <app-btn btnType="button"  (click)="postsStore.removeUploadedImage()"
+  aria-label="Remove uploaded image"
   btnClass="absolute right-2 top-2 size-8 bg-background rounded-full text-center 
   hover:opacity-70 duration-300 cursor-pointer shadow-md shadow-background">
   <i class="fa-solid fa-trash-can text-sawa-primary text-lg"></i>
@@ -94,7 +96,7 @@ import { LinkComponent } from "../../../../shared/components/link/link.component
 </form>
 
   </div>
-  <div  class="w-full h-screen bg-background opacity-50  fixed top-0 left-0 z-50">
+  <div (click)="closeModle()"  class="w-full h-screen bg-background opacity-50  fixed top-0 left-0 z-50">
   </div>
   </section>
   `,

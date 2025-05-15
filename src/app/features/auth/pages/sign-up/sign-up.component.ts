@@ -14,11 +14,8 @@ import { SignwithGoogleComponent } from "../../components/signwith-google/signwi
   selector: 'app-sign-up',
   imports: [AuthFeildComponent, SharedModule, BtnComponent, InputFieldComponent, SignwithGoogleComponent],
   template : `
-
-
-  <form [formGroup]="form" aria-label="from-sign-up" 
+  <form [formGroup]="form" aria-label="Sign up" 
   class="w-full flex flex-col justify-center items-center gap-5">
-
   <app-input-field  
   label="*full name"  
   fieldId="fullName" 

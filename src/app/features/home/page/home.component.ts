@@ -26,7 +26,7 @@ import { LinkComponent } from "../../../shared/components/link/link.component";
     LinkComponent
 ],
   template : `
-<section class="w-full  flex flex-wrap justify-evenly  mt-5 mb-12 sm:mb-0 p-2 overflow-hidden">
+<section aria-label="Home Page" class="w-full  flex flex-wrap justify-evenly  mt-5 mb-12 sm:mb-0 p-2 overflow-hidden">
 
     <div class="hidden lg:inline-flex w-full  lg:w-[30%]  " >
     <app-profile-aside class="w-full h-full" />

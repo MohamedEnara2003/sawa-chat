@@ -1,18 +1,22 @@
-import { Component } from '@angular/core';
-import { MainLinksComponent } from "../../../../../../shared/components/main-links/main-links.component";
+import { Component, inject } from '@angular/core';
+import { ChatStore } from '../../../../../../store/chats/chats.signal';
+import { SharedModule } from '../../../../../../shared/modules/shared.module';
+import { LinkArrowLeftComponent } from "../../../../../../shared/components/link-arrow-left/link-arrow-left.component";
 
 @Component({
   selector: 'app-messages-header',
-  imports: [MainLinksComponent],
+  imports: [SharedModule, LinkArrowLeftComponent],
   template : `
   <header class="w-full flex flex-col justify-center items-center gap-4 p-2">
-    <app-main-links class="w-full"/>
+    <div class="w-full flex justify-center items-center gap-2">
+    <app-link-arrow-left routerLink="/" />
     <h1 class="w-full title-h1 text-left">Chats</h1>
-    <label class="w-full input input-neutral   bg-[#212121] rounded-box">
-        <button type="button" class="link-hover">
+    </div>
+
+    <label class="w-full input input-neutral bg-[#212121] rounded-box">
         <svg class="size-5 opacity-50 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g stroke-linejoin="round" stroke-linecap="round" stroke-width="2.5" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></g></svg>
-        </button>
-        <input type="search" class="grow  text-white bg-transparent placeholder:text-overlay" 
+        <input type="search" [ngModel]="chatStore.vlaue()" (ngModelChange)="chatStore.onChangeValueFiltering($event)"
+        class="grow text-white bg-transparent placeholder:text-overlay" 
         placeholder="Search"  />
         <span>
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" 
@@ -25,5 +29,5 @@ import { MainLinksComponent } from "../../../../../../shared/components/main-lin
   `,
 })
 export class MessagesHeaderComponent {
-
+  readonly chatStore = inject(ChatStore);
 }

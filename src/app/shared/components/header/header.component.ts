@@ -17,7 +17,7 @@ import { LinkComponent } from "../link/link.component";
   template :`
   @if(!hideLayout()){ 
   <section>
-  <header class="w-full h-[10vh] flex justify-center items-cente shadow shadow-background ">
+  <header aria-label="Header" class="w-full h-[10vh] flex justify-center items-cente shadow shadow-background ">
         <nav class=" relative w-[95%] flex justify-between items-center mt-2">
         <app-logo routerLink="/home"/>
         <nav class="w-100 hidden md:inline-block absolute left-1/2 -translate-x-1/2">

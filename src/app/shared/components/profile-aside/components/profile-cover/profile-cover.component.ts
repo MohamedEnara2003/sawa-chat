@@ -12,5 +12,5 @@ import { Component } from '@angular/core';
   styles: ``
 })
 export class ProfileCoverComponent {
-  readonly coverUrl : string = "https://fpycbjhhzhzwuakxsdpx.supabase.co/storage/v1/object/public/images//unnamed.png";
+  readonly coverUrl : string = "https://fpycbjhhzhzwuakxsdpx.supabase.co/storage/v1/object/public/images//unnamed.webp";
 }

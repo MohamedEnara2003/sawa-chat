@@ -8,16 +8,16 @@ import { LinkComponent } from "../link/link.component";
   selector: 'app-main-links',
   imports: [SharedModule, LinkComponent],
   template : `
-  <ul class="w-full flex justify-around sm:justify-evenly  items-center  text-white   px-1">
+  <ul aria-label="Main Links"  role="list" 
+  class="w-full flex justify-around sm:justify-evenly  items-center  text-white   px-1">
   @for (link of mainLinks(); track link) {
-  <li >
-  <app-link linkClass="relative py-2 sm:py-3 flex flex-col justify-center items-center hover:text-sawa-primary  
+  <li  role="listitem"  [title]="link.linkName">
+  <app-link linkClass="relative py-3 flex flex-col justify-center items-center hover:text-sawa-primary  
   duration-200 cursor-pointer" class="relative"
   routerLinkActive="linkActive "  [routerLink]="link.path"  >
   <i class="text-2xl " [ngClass]="link.iconName"></i>
-  <small class="sm:hidden text-overlay capitalize text-[10px]">{{link.linkName}}</small>
   @if(link.id === 3 && notificationsStore.notificationsCount() > 0) {
-  <span class="absolute top-1 right-0 sm:-right-3 badge  badge-xs bg-red-500 text-white">
+  <span class="absolute top-1 -right-3 badge  badge-xs bg-red-500 text-white">
   {{notificationsStore.notificationsCount()}}
   </span>
   }

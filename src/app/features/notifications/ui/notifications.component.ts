@@ -8,27 +8,27 @@ import { Router } from '@angular/router';
 import { NotificationsTypes } from '../../../core/interface/notifications';
 import { PostsStore } from '../../../store/posts/posts.signal';
 import { CommentsStore } from '../../../store/comments/comments.signal';
-
+import { BtnComponent } from "../../../shared/components/btn/btn.component";
 
 @Component({
 selector: 'app-notifications',
-imports: [SharedModule, UserImageComponent, NotificationHeaderComponent],
+imports: [SharedModule, UserImageComponent, NotificationHeaderComponent, BtnComponent],
 template : `
 
-<section class='w-full h-full flex flex-col gap-5'>
+<section class="w-full h-full flex flex-col gap-5">
 <app-notification-header />
-
-<ul class="w-full h-full flex flex-col justify-start overflow-y-auto gap-4" style="scrollbar-width: none;">
+<ul aria-label="Container notifications" role="list"
+class="w-full h-full flex flex-col justify-start overflow-y-auto gap-4" style="scrollbar-width: none;">
 @for (notification of notificationsStore.notifications(); track notification) {
 @defer (on viewport) {
 
 <li class="w-full relative border-b-2 border-b-background  shadow-lg p-2
 hover:opacity-80 duration-200 cursor-pointer">
 
-<button (click)="notificationsStore.removeNotification(notification.id!)"
-class="absolute   top-0 right-0 btn-hover z-10">
+<app-btn ariaLabel="Button Remove Notification" (click)="notificationsStore.removeNotification(notification.id!)"
+btnClass="absolute   top-0 right-0 btn-hover z-10">
 <i class="fa-solid fa-close text-white text-sm"></i>
-</button>
+</app-btn>
 
     <div class="w-full flex flex-wrap items-center gap-2 ">
     <div class="relative object-cover size-10 rounded-full">
@@ -55,9 +55,9 @@ class="absolute   top-0 right-0 btn-hover z-10">
     {{notification.type === item.type ? item.msg : ''}}
     }
     </p>
-    <h5 class="text-overlay text-[10px] ">
+    <small aria-label="Notification date" class="text-overlay text-[10px] ">
     {{dayJs.formatTime(notification.created_at!)}}
-    </h5>
+    </small>
 </div>
 
 </div>
@@ -81,13 +81,12 @@ export class NotificationsComponent  {
     {type : 'like' , msg : 'liked your post' , icon : 'fa-solid fa-heart text-red-500'},
     {type : 'comment' , msg : 'commented on your post' , icon : 'fa-solid fa-comment text-green-600'},
     {type : 'follow' , msg : 'started following you' , icon : 'fa-solid fa-user-plus text-blue-500'},
-    ])
+    ]).asReadonly()
 
     constructor(){
     this.notificationsStore.getNotifications();
     this.notificationsStore.initRealTimeNotifications();
     }
-
 
     notificationRoute(type : NotificationsTypes , from_user_id : string , post_id : number) : void {
     if(type === 'follow'){

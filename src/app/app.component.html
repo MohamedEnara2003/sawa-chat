@@ -1,21 +1,22 @@
-<div class="relative w-full bg-gray-50 dark:bg-background">
 
-<app-header class="w-full " />
-<main class="w-full  overflow-hidden">
-  <router-outlet />
-  @if(soundEffectStore.isLoading()){
-    <audio #audioEle autoplay  [src]="soundEffectStore.soundEffect_Url()" 
-    type="audio/mpeg" class="hidden"></audio>
-  }
-</main>
-@if(isIntro()){
-
-  <section class="w-full h-screen fixed top-0 left-0 bg-background 
-  flex justify-center items-center z-100 ">
-    <div class="animate-opacity-up">
-    <app-logo  logoClass="size-24"/>
-    </div>
-  </section>
+<div class="relative w-full bg-gray-50 dark:bg-background" role="application">
+  <main class="w-full overflow-hidden" role="main">
+    <router-outlet />
+    @if(soundEffectStore.isLoading()){
+      <audio #audioEle autoplay [src]="soundEffectStore.soundEffect_Url()" 
+        type="audio/mpeg" class="hidden" aria-hidden="true"></audio>
+    }
+  </main>
+  @if(isIntro()){
+    <section class="w-full h-screen fixed top-0 left-0 bg-background 
+      flex justify-center items-center z-100" 
+      role="dialog" 
+      aria-label="Loading screen">
+      <div class="animate-opacity-up">
+        <app-logo logoClass="size-24" aria-label="Application logo"/>
+      </div>
+    </section>
   }
 </div>
+
 

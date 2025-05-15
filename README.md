@@ -7,9 +7,9 @@
 #- npm install --save @types/lodash.isequal
 #- npm install browser-image-compression
 #- npm install dayjs
+#- npm install swiper
 
-# Icons:
-#- font-awesome
+## Icons: font-awesome
 
 # NGRX => State Management:
 #- ng add @ngrx/store@latest

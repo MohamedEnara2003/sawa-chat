@@ -35,7 +35,7 @@
     <app-btn btnType="button" (click)="userStore.saveImage()" 
             [routerLink]="['/',{outlets : {'profile-setup' : 'user'}}]" [queryParams]="{editType : null}" 
             btnClass="w-full  btn-neutral btn bg-tint text-sawa-primary capitalize
-            btn-hover duration-300">
+            btn-hover duration-300" aria-label="Save profile image">
             save image
     </app-btn >
     }

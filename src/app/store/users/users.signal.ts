@@ -30,7 +30,7 @@ const initialState : UserState = {
     user_id : '' ,
     serachValue : '' ,
     isLoading : false ,
-    error : 'string' ,
+    error : '' ,
     file_url : '' ,
     file_name : '' ,
     previewUrl : '' ,
@@ -81,7 +81,7 @@ if(user_id) {
     usersService.getUserByUserId(user_id).pipe(
         tap((user) => patchState(store , ({isLoading : false , user , user_id }))),
         catchError((err : Error) => {
-        patchState(store , ({isLoading : false , error : err.message})) ;
+        patchState(store , ({isLoading : false , error : 'Failed load user data'})) ;
         return EMPTY
         })
     ).subscribe();
@@ -90,19 +90,10 @@ if(user_id) {
 },
 
 getUserProfileByUserId(userId : string) : void {
-        if(store.userProfile()?.user_id !== userId){
-            patchState(store , ({isLoading : true}))
-            usersService.getUserByUserId(userId).pipe(
-            tap((userProfile) => {
-            patchState(store , ({isLoading : false , userProfile}))
-            }),
-            catchError((err : Error) => {
-            patchState(store , ({isLoading : false , error : err.message})) ;
-            return EMPTY
-            }) , takeUntilDestroyed())
-            .subscribe();
-    }
+const userProfile = store.users().find((user) => user.user_id === userId);
+patchState(store , ({userProfile}));
 },
+
 getUserData(user_id : string) : Observable<{fullName: string, avatar_url: string;}>{
     return usersService.getUserData(user_id);
 },
@@ -113,11 +104,8 @@ getUserData(user_id : string) : Observable<{fullName: string, avatar_url: string
     patchState(store , ({isLoading : true}))
     fileUploadService.compressAndPreview(file).pipe(
     switchMap((data) => {
-    const sanitizeFileName  = (fileName : string) => fileName.replace(/[^a-zA-Z0-9]/g, '_');
-    const filePath = `${Date.now()}_${sanitizeFileName(data.compressedFile.name)}`;
     patchState(store , ({isLoading : false , previewUrl : data.previewUrl}))
-
-    return usersService.uploadUserImage(filePath , data.compressedFile).pipe(
+    return usersService.uploadUserImage(data.fileName , data.compressedFile).pipe(
     tap(({file_url , file_name}) => {
     patchState(store , ({isLoading : false,file_url, file_name  }))
     }),
@@ -130,7 +118,6 @@ getUserData(user_id : string) : Observable<{fullName: string, avatar_url: string
     ).subscribe()
 
 },
-
 removeUploadedImage() : void {
     usersService.removeUserImage(store.user()?.avatar_name!).subscribe();
     patchState(store , ({file_url : '' , file_name : '' , previewUrl : ''}));
@@ -143,6 +130,7 @@ saveImage () : void {
     if(user_id && avatar_url  && avatar_name){
     const imageData : UserEditableData = {avatar_url , avatar_name};
     usersService.updateUserImage(user_id , imageData).subscribe();
+    patchState(store , ({user : {...store.user()! ,avatar_url , avatar_name}}))
     }
 },
 
@@ -177,8 +165,25 @@ router.navigate(['/',{outlets : {'profile-setup' : null}}]);
 
 onChangeSearchValue(serachValue : string) : void {
 patchState(store , ({serachValue}));
-}
+},
 
+initRealTimeForUsers() : void {
+usersService.listenForUsers().pipe(
+    tap((updated) => {
+    const {eventType : event , new : newData , old : OldData} = updated;
+    if(event === "INSERT"){
+    patchState(store , ({users : [store.users() , newData]}));
+    }
+    if(event === "UPDATE"){
+    const users : userType[] = 
+    store.users().map((user) => user.id === newData.id ? {...newData} : user)
+    patchState(store , ({users}));
+    }
+    }),
+    catchError(() => EMPTY),
+    takeUntilDestroyed()
+).subscribe()
+}
 }))
 
 )

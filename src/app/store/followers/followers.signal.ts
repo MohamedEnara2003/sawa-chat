@@ -115,7 +115,7 @@ export const FollowersStore = signalStore(
     return followersService.getFollowingIds(currentUserId)
     },
 
-    initRealTime() : void {
+    initRealTimeForFollowers() : void {
     followersService.listenRealTime().pipe(
     tap((updated) => {
     const {eventType : event, new: newData, old: oldData} = updated;

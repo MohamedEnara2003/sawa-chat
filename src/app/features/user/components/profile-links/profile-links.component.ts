@@ -13,7 +13,7 @@ import { LinkComponent } from "../../../../shared/components/link/link.component
     <li>
     <app-link aria-label="profile-links" 
     [routerLink]="['/user-profile/', user_id()]"
-    [queryParams]="{type : link}"
+    [queryParams]="{tap : link}"
     routerLinkActive="text-sawa-primary border-b-1 border-b-sawa-primary pb-1"
     linkClass="w-[20%] hover:text-sawa-primary duration-200  cursor-pointer">
     {{link}}

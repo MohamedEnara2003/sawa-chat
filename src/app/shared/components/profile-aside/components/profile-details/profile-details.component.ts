@@ -32,7 +32,7 @@ export class ProfileDetailsComponent {
   details = input.required<userDetails>() ;
   userDetalis = computed(() => [
   {title : 'Works at',icon : 'fa-solid fa-briefcase' ,detals : this.details()?.work},
-  {title : 'Gender' ,   icon : 'fa-solid fa-user' ,detals : this.details()?.gender},
+  {title : 'Gender' ,   icon : 'fa-solid fa-venus-mars' ,detals : this.details()?.gender},
   {title : 'From',  icon : 'fa-solid fa-location-dot' ,detals : this.details()?.address},
   ])
 }

@@ -45,4 +45,7 @@ export class UsersService {
   updateProfile(user_id : string , data : UserEditableData) : Observable<UserEditableData> {
   return this.singleTonService.update(this.tableName , this.columnUserId , user_id , data)
   }
+  listenForUsers() : Observable<any> {
+  return this.singleTonService.RealTime(this.tableName)
+  }
 }

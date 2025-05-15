@@ -7,12 +7,14 @@ import { map } from 'rxjs';
 import { SharedModule } from '../../../shared/modules/shared.module';
 import { ProfileLinksComponent } from "../components/profile-links/profile-links.component";
 import { UserProfileDetailsComponent } from "../components/user-profile-details/user-profile-details.component";
-import { AddPostComponent } from "../../posts/components/add-post/add-post.component";
 import { FollowersStore } from '../../../store/followers/followers.signal';
 import { UserProfileHeaderComponent } from "../components/user-profile-header/user-profile-header.component";
-import { PostsStore } from '../../../store/posts/posts.signal';
-import { PostComponent } from "../../posts/ui/post.component";
 import { LinkArrowLeftComponent } from "../../../shared/components/link-arrow-left/link-arrow-left.component";
+import { PostsProfileComponent } from "../components/posts-profile/posts-profile.component";
+import { AboutProfileComponent } from "../components/about-profile/about-profile.component";
+import { PhotosProfileComponent } from "../components/photos-profile/photos-profile.component";
+import { Router } from '@angular/router';
+import { VideosProfileComponent } from "../components/videos-profile/videos-profile.component";
 
 
 @Component({
@@ -21,10 +23,12 @@ import { LinkArrowLeftComponent } from "../../../shared/components/link-arrow-le
     SharedModule,
     ProfileLinksComponent,
     UserProfileDetailsComponent,
-    AddPostComponent,
     UserProfileHeaderComponent,
-    PostComponent,
-    LinkArrowLeftComponent
+    LinkArrowLeftComponent,
+    PostsProfileComponent,
+    AboutProfileComponent,
+    PhotosProfileComponent,
+    VideosProfileComponent
 ],
   template : `
   <section class="w-full lg:h-[90vh] animate-sideLeft flex flex-col  items-center  pb-10">
@@ -40,45 +44,58 @@ import { LinkArrowLeftComponent } from "../../../shared/components/link-arrow-le
     </div>
 
     <div class="w-full flex flex-col  gap-5 lg:h-full lg:overflow-y-auto"style="scrollbar-width: none;">
-    @if(type() === "posts" || !type()){
-    <app-add-post class="w-full"/>
-    <h1 class="title-h1 ">posts</h1>
-    <app-post [posts]="postsStore.myPosts()"/>
-  }
+    @switch (tap()) {
+    @case ("posts") {
+    <app-posts-profile/>
+    }
+    @case ("about") {
+    <app-about-profile/>
+    }
+    @case ("photos") {
+    <app-photos-profile />
+    }
+    @case ("videos") {
+   <app-videos-profile/>
+    }
+    }
     </div>
     </div>
-
 </section>
   `,
   styles: ``
 })
-export class UserProfileComponent  {
+export class UserProfileComponent {
   readonly userStore = inject(UserStore);
   readonly followersStore = inject(FollowersStore);
-  readonly postsStore = inject(PostsStore);
   private readonly store = inject(Store);
+  private readonly router = inject(Router);
   
   userId = toSignal<string>(
   this.store.select(selectRouteParams).pipe(
-  map((params) => params['userId'])
+  map((params) => {
+  const userProfileId = params['userId'] 
+  this.userStore.getUserProfileByUserId(userProfileId);
+  return userProfileId
+  })
   )
   )
 
-  type = toSignal<string>(
+  tap = toSignal<string>(
   this.store.select(selectQueryParams).pipe(
-  map((queryParams) => queryParams['type'])
+  map((queryParams) => queryParams['tap'])
   )
   )
 
   constructor(){
   effect(() => {
     const userProfile_id =  this.userId();
-    const user_id =  this.userStore.user_id();
+    const user_id = this.userStore.user_id();
     if(user_id && userProfile_id){
+    this.router.navigate(['/user-profile/', userProfile_id],{queryParams : {tap : 'posts'}})
     this.followersStore.isUserFollowing(userProfile_id , user_id);
+    this.userStore.getUserProfileByUserId(userProfile_id);
     }
   })
-  this.userStore.getUserProfileByUserId(this.userId()!);
   }
 
 }

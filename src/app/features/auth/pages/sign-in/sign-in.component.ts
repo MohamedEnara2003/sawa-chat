@@ -13,10 +13,8 @@ import { SignwithGoogleComponent } from "../../components/signwith-google/signwi
   selector: 'app-sign-in',
   imports: [AuthFeildComponent, BtnComponent, SharedModule, SignwithGoogleComponent],
   template : `
-  <form [formGroup]="form" aria-label="from-sign-in" 
+  <form [formGroup]="form" aria-label="Sign in" 
   class="w-full flex flex-col justify-center items-center gap-5">
-
-
   <app-auth-feild  [formGroup]="form"  class="w-full"/>
   <div class="w-full flex flex-col justify-center items-center gap-5">
   <app-btn  (click)="signIn()" btnType="submit" class="w-full text-center" 

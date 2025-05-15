@@ -1,11 +1,10 @@
 import { patchState, signalStore, withMethods, withState } from "@ngrx/signals";
 import { Messages } from "../../features/chat/interface/messages";
-import { inject } from "@angular/core";
+import {inject } from "@angular/core";
 import { MessagesService } from "../../features/chat/service/messages.service";
 import { catchError, EMPTY, of, switchMap, tap } from "rxjs";
 import { FileUploadService } from "../../core/services/file-upload-service.service";
 import { UserStore } from "../users/users.signal";
-import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import { SoundEffectStore } from "../sound/sound.signal";
 
 
@@ -52,7 +51,6 @@ export const MessageStore = signalStore(
     return { 
         
     addMessage (chat_id : string , message : string , receiver_id : string ) : void {
-        
     const sender_id = userStore.user()?.user_id;
     if(receiver_id && sender_id){
     const messageData : Messages = {
@@ -68,8 +66,8 @@ export const MessageStore = signalStore(
     }
     },
 
-    getMessage (chatId : string) : void { 
-    const existingChatId = store.messages().length > 0 && store.messages()[0].chat_id === chatId;
+getMessage (chatId : string) : void { 
+    const existingChatId = store.messages().length > 0 && store.messages()[0]?.chat_id === chatId;
     if(!existingChatId){ 
         patchState(store , ({isLoading : true }))
         messagesService.getMessages(chatId).pipe(
@@ -79,14 +77,10 @@ export const MessageStore = signalStore(
         catchError((err : Error) => {
         patchState(store , ({isLoading : false , error : err.message}))
         return of([])
-        }),takeUntilDestroyed()
+        }),
     ).subscribe();
 }
 },
-
-    getChatId(chat_id : string) : void {
-    patchState(store , ({chat_id}));
-    },
 
     uploadFile(file : File) : void {
         const signature = `${file.name}-${file.size}`;
@@ -94,11 +88,8 @@ export const MessageStore = signalStore(
         patchState(store , ({isLoadingUpload : true ,lastFileSignature : signature}));
         fileUploadService.compressAndPreview(file).pipe(
         switchMap((data) => {
-        const sanitizeFileName  = (fileName : string) => fileName.replace(/[^a-zA-Z0-9]/g, '_');
-        const filePath = `${Date.now()}_${sanitizeFileName(data.compressedFile.name)}`;
         patchState(store , ({isLoadingUpload : false , previewUrl : data.previewUrl}))
-    
-        return messagesService.upLoadFile(filePath , data.compressedFile).pipe(
+        return messagesService.upLoadFile(data.fileName  , data.compressedFile).pipe(
         tap(({file_url , file_name}) => {
         patchState(store ,({isLoadingUpload : false ,file_url , file_name}))
         }),
@@ -143,7 +134,7 @@ export const MessageStore = signalStore(
         }
         patchState(store, { isLoading: false, messages: [...store.messages(), updated.new] });
         }
-        }), takeUntilDestroyed()
+        }),
         ).subscribe()
     },
     

@@ -56,9 +56,7 @@ import { LinkArrowLeftComponent } from "../../../shared/components/link-arrow-le
 export class SearchComponent implements OnInit{
   readonly userStore = inject(UserStore);
   searchRef = viewChild<ElementRef<HTMLElement>>('searchRef');
-  constructor(){
-  this.userStore.LoadUsers()
-  }
+
   ngOnInit(): void {
     const searchRef = this.searchRef()?.nativeElement;
     if(searchRef){

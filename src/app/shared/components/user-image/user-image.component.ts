@@ -11,18 +11,19 @@ import { LinkComponent } from "../link/link.component";
   <app-link>
   <img role="img" aria-label="user-image-link"
   [routerLink]="isRouteProfile() ? ['/user-profile/', userStore.user_id()] : null" 
-  [ngClass]="imageClass()" class="cursor-pointer hover:opacity-80 duration-200"
+  [ngClass]="imageClass()" class="cursor-pointer hover:opacity-90 duration-200"
   [src]="avatarUrl() ? avatarUrl() : !isDefault() && userImage ? userImage : defaultImage" 
   alt="user image"
-  loading="lazy">
+  [loading]="isAboveFold() ? 'eager' : 'lazy'">
   </app-link>
   `
 })
 export class UserImageComponent {
   readonly userStore = inject(UserStore);
-  defaultImage : string = "https://fpycbjhhzhzwuakxsdpx.supabase.co/storage/v1/object/public/images//user.png";
+  defaultImage : string = "https://fpycbjhhzhzwuakxsdpx.supabase.co/storage/v1/object/public/images//user.webp";
   isDefault = input<boolean>(false);
   isRouteProfile = input<boolean>(false);
   avatarUrl = input<string>("");
   imageClass = input<string>();
+  isAboveFold = input<boolean>(false);
 }

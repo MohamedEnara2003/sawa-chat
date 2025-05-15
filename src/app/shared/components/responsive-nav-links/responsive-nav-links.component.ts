@@ -8,7 +8,8 @@ import { fromEvent, map, pairwise, tap } from 'rxjs';
   imports: [SharedModule , MainLinksComponent, ],
   template :`
   @if(isScroll()){ 
-<nav class="fixed  bottom-0 left-0  md:hidden w-full py-1 border-t border-t-overlay bg-tint  z-50 
+<nav aria-label="Responsive links" 
+class="fixed  bottom-0 left-0  md:hidden w-full py-1 border-t border-t-overlay bg-tint  z-50 
 shadow shadow-background animate-up   ">
     <app-main-links /> 
 </nav>

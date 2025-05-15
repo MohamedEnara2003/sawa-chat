@@ -8,61 +8,72 @@ import { FileUploadService } from "../../core/services/file-upload-service.servi
 import { UserStore } from "../users/users.signal";
 import { FollowersService } from "../../core/services/followers.service";
 
-
-export interface PostState  {
-    posts : UserPostData[], 
-    post : UserPostData | undefined, 
-    isLoading : boolean,
-    error : string ,
-    file_url  : string, 
-    file_name : string,
-    previewUrl : string | ArrayBuffer | null,
-    isLoadingUpload : boolean,
-    errorUpload :  string,
-    isLoadPostViewer : boolean ;
+export interface PostState {
+    readonly posts: UserPostData[];
+    readonly post: UserPostData | undefined;
+    readonly isLoading: boolean;
+    readonly error: string;
+    readonly file_url: string;
+    readonly file_name: string;
+    readonly previewUrl: string | ArrayBuffer | null;
+    readonly isLoadingUpload: boolean;
+    readonly errorUpload: string;
+    readonly isLoadPostViewer: boolean;
 }
 
-const initialState : PostState = {
-    posts : [] ,
-    post : undefined ,
-    isLoading : false ,
-    error : 'string' ,
-    file_url  : '', 
-    file_name : '', 
-    previewUrl : '', 
-    isLoadingUpload : false ,
-    errorUpload : '', 
-    isLoadPostViewer : false ,
+const initialState: PostState = {
+    posts: [],
+    post: undefined,
+    isLoading: false,
+    error: '',
+    file_url: '',
+    file_name: '',
+    previewUrl: '',
+    isLoadingUpload: false,
+    errorUpload: '',
+    isLoadPostViewer: false,
 }
 
 export const PostsStore = signalStore(
-    {providedIn : 'root'} ,
+    { providedIn: 'root' },
     withState(initialState),
 
-    withComputed((store , userStore = inject(UserStore),  ) => ({
-    publicPosts: computed(() => store.posts().filter((post) => post.privacy === "public")),
-    followingPosts: computed(() => store.posts().filter((post) => post.privacy === "followers")),
-    myPosts: computed(() => 
-    store.posts().filter((post) => {
-    const profileUserId = userStore.userProfile()?.user_id || userStore.user_id();;
-    return post.user_id === profileUserId ;
-    })),
+    withComputed((store, userStore = inject(UserStore)) => {
+        const currentUserId = computed(() => userStore.user_id());
+        const profileUserId = computed(() => userStore.userProfile()?.user_id || currentUserId());
 
-    likesCount : computed(() => {
-    const myPosts = store.posts().filter((post) => post.user_id === userStore.user_id())
-    const likes = myPosts.map((post) => post.likes?.count ?? 0)
-    .reduce((prev, value) => prev += value, 0);
-    return   likes;
-    }),
+        return {
+            publicPosts: computed(() => 
+                store.posts().filter(post => post.privacy === "public")
+            ),
 
-    commentsCount : computed(() => {
-    const myPosts = store.posts().filter((post) => post.user_id === userStore.user_id())
-    const comments = myPosts.map((post) => post.comments_count?.count!)
-    .reduce((prev, value) => prev += value, 0)
-    return  comments ;
+            followingPosts: computed(() => 
+                store.posts().filter(post => post.privacy === "followers")
+            ),
+
+            myPosts: computed(() => 
+                store.posts().filter(post => post.user_id === profileUserId())
+            ),
+
+            likesCount: computed(() => {
+                const myPosts = store.posts().filter(post => post.user_id === currentUserId());
+                return myPosts.reduce((total, post) => total + (post.likes?.count ?? 0), 0);
+            }),
+
+            commentsCount: computed(() => {
+                const myPosts = store.posts().filter(post => post.user_id === currentUserId());
+                return myPosts.reduce((total, post) => total + (post.comments_count?.count ?? 0), 0);
+            }),
+
+            postsImages: computed(() => {
+                const userId = profileUserId();
+                if (!userId) return [];
+                return store.posts()
+                    .filter(post => post.user_id === userId)
+                    .map(post => post.file_url);
+            }),
+        };
     }),
-    
-    })),
 
     withMethods((store , 
     userStore = inject(UserStore),  
@@ -75,10 +86,8 @@ export const PostsStore = signalStore(
     patchState(store , ({isLoadingUpload : true}));
         fileUploadService.compressAndPreview(file).pipe(
         switchMap((data) => {
-        const sanitizeFileName  = (fileName : string) => fileName.replace(/[^a-zA-Z0-9]/g, '_');
-        const filePath = `${Date.now()}_${sanitizeFileName(data.compressedFile.name)}`;
         patchState(store , ({isLoadingUpload : false , previewUrl : data.previewUrl}))
-        return postsService.uploadFilePost(filePath , data.compressedFile).pipe(
+        return postsService.uploadFilePost(data.fileName , data.compressedFile).pipe(
         tap(({file_url , file_name}) => {
         patchState(store ,({isLoadingUpload : false ,file_url , file_name}))
         }),
@@ -242,8 +251,12 @@ export const PostsStore = signalStore(
     patchState(store, {posts});
     }
     return EMPTY ;
-    }),takeUntilDestroyed()
+    }),
+    catchError(() => {
+    return EMPTY
+    }),
+    takeUntilDestroyed()
     ).subscribe()
     }
     }))
-)
+)    

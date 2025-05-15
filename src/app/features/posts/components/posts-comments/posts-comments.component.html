@@ -19,7 +19,7 @@ class="size-full overflow-y-auto" style="scrollbar-width: none;">
             <app-user-image [avatarUrl]="userImage" [isDefault]="userImage ? false : true"
             imageClass="size-full  object-cover rounded-full"/>
         </div>
-        <h1 class="title-h1 text-sm">{{comment.user.fullName}}</h1>
+        <h2 class="title-h1 text-sm">{{comment.user.fullName}}</h2>
         <span class="text-xs text-sawa-primary">{{dayJs.formatTime(comment.created_at!)}}</span>
     </div>
     <app-comment-edit-menu [commentId]="comment.id!" />
@@ -46,6 +46,7 @@ class="size-full overflow-y-auto" style="scrollbar-width: none;">
 class="w-[90%] input focus:outline-none bg-background placeholder:text-overlay rounded-box
 focus:border-1 focus:border-overlay">
 <button type="submit" [disabled]="commentValue().length < 1"
+aria-label="Submit comment"
 class="btn btn-xs bg-sawa-primary btn-hover shadow shadow-background ">
 <i class="fa-solid fa-arrow-up  text-background "></i>
 </button>

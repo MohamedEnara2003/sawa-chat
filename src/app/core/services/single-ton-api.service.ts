@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { createClient, SupabaseClient} from '@supabase/supabase-js';
 import { environment } from '../../environments/environment';
-import { from, map, Observable } from 'rxjs';
+import { catchError, EMPTY, from, map, Observable } from 'rxjs';
 import { UploadFileData } from '../interface/user';
 
 @Injectable({
@@ -72,6 +72,8 @@ export class SingleTonApiService {
       return () => {
         this.supabase.removeChannel(subscription);
       };
-    });
+    }).pipe(
+    catchError(() => EMPTY)
+    );
 }
 }

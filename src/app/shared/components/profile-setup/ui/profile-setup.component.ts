@@ -18,7 +18,7 @@ import { LinkArrowLeftComponent } from "../../link-arrow-left/link-arrow-left.co
   imports: [SharedModule, EditProfileImageComponent, EditProfileBioComponent, EditProfileDetailsComponent, EditProfileSkillsComponent, LinkArrowLeftComponent],
   template : `
 <section class="w-full fixed top-0 left-0 h-screen flex justify-center items-end z-50">
-<div aria-label="container-profile-setup"  
+<div aria-label="Container profile setup"  
 class="w-[95%] sm:w-[70%] lg:w-1/2 h-[90%] bg-background shadow-md shadow-background z-50 rounded-t-box
 flex flex-col gap-8 overflow-y-auto overflow-hidden animate-up px-5 py-5 pb-14">
 

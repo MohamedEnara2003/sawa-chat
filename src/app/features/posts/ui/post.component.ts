@@ -1,4 +1,4 @@
-import { Component, inject, input,  } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 import { UserPostData } from '../../../core/interface/posts';
 import { UserImageComponent } from "../../../shared/components/user-image/user-image.component";
 import { DayJsService } from '../../../core/services/day-js.service';
@@ -14,7 +14,6 @@ import { PostsStore } from '../../../store/posts/posts.signal';
 import { PostLoadingComponent } from "../components/post-loading/post-loading.component";
 import { SoundEffectStore } from '../../../store/sound/sound.signal';
 
-
 @Component({
   selector: 'app-post',
   imports: [
@@ -25,18 +24,20 @@ import { SoundEffectStore } from '../../../store/sound/sound.signal';
     BtnLikeComponent,
     PostsCommentsComponent,
     PostLoadingComponent
-],
-  template : `
+  ],
+  template: `
   <ul class="w-full h-full flex flex-col gap-5 overflow-y-auto" style="scrollbar-width: none;"> 
   @if(postsStore.isLoading()){
+    <li>
     <app-post-loading />
+    </li>
   }
   @for (post of posts(); track post) {
   @defer (on viewport) {
   <li 
-  class="relative w-full bg-tint flex flex-col justify-center items-center rounded-2xl py-2">
-    <div class="w-full flex flex-col justify-start items-center  gap-2 my-5 px-4">
-    <div class="w-full flex justify-between items-center ">
+  class="relative bg-tint flex flex-col justify-center items-center rounded-2xl py-2 text-gray-900 dark:text-white">
+    <div class="w-full flex flex-col justify-start items-center gap-2 my-5 px-4">
+    <div class="w-full flex justify-between items-center">
 
     <div class="flex flex-wrap justify-start items-center gap-3">
     <ng-content select="[link-close-post]" />
@@ -66,17 +67,22 @@ import { SoundEffectStore } from '../../../store/sound/sound.signal';
     </div>
 
     <div class="w-full">
-    <p class="text-overlay ">{{post.value}}</p>
+    <p class="text-overlay">{{post.value}}</p>
     </div>
     @if(post.file_url){
-    <picture (click)="
-    soundEffectStore.handlSoundEffect('sound-effects/Post.mp3');
-    postsStore.openPostViewer(post.id! , true); 
-    commentsStore.openContainerComments(post.id! , false)"
-    class="w-full rounded-box" >
-    <img [src]="post.file_url"
-    alt="image-post" class="w-full object-cover rounded-box shadow-background shadow-sm">
-    </picture>
+    <div class="w-full aspect-[4/3] relative">
+      <picture (click)="
+      soundEffectStore.handlSoundEffect('sound-effects/Post.mp3');
+      postsStore.openPostViewer(post.id! , true); 
+      commentsStore.openContainerComments(post.id! , false)"
+      class="w-full h-full rounded-box">
+        <img [src]="post.file_url"
+        [alt]="'Post by ' + post.user.fullName"
+        class="w-full h-full object-cover rounded-box shadow-background shadow-sm"
+        loading="lazy"
+        decoding="async">
+      </picture>
+    </div>
     }
 
   <app-posts-interaction class="w-full" 
@@ -88,8 +94,8 @@ import { SoundEffectStore } from '../../../store/sound/sound.signal';
   
   </div>
   @if(commentsStore.isLoadComments()){
-  <section class="w-full h-screen  fixed top-0 left-0  z-100 flex justify-center items-end ">
-  <app-posts-comments [post_user_id]="post.user_id!" class="w-full h-[50vh] md:w-[70%] lg:w-1/2  z-100"/>
+  <section class="w-full h-screen fixed top-0 left-0 z-100 flex justify-center items-end">
+  <app-posts-comments [post_user_id]="post.user_id!" class="w-full h-[50vh] md:w-[70%] lg:w-1/2 z-100"/>
   <div (click)="commentsStore.closeContainerComments()"
   class="w-full h-full fixed top-0 left-0 z-50 bg-background opacity-60">
   </div>
@@ -97,10 +103,12 @@ import { SoundEffectStore } from '../../../store/sound/sound.signal';
   }
   </li>
   }@placeholder {
-  <app-post-loading />
+  <li>
+    <app-post-loading />
+  </li>
   }
 }@empty {
-  <div class="w-full h-[50vh] text-center flex justify-center items-center text-xl text-white ">
+  <div class="w-full h-[50vh] text-center flex justify-center items-center text-xl text-white">
   No posts available yet. Stay tuned for updates!
   </div>
 }
@@ -117,17 +125,16 @@ export class PostComponent {
   readonly soundEffectStore = inject(SoundEffectStore);
 
   constructor(){
-  this.commentsStore.initRealTimeForPostComment();
+    this.commentsStore.initRealTimeForPostComment();
   }
 
   onClickBtnLike(post : UserPostData) : void {
-  const post_id = post.id!;
-  if(post_id)
-  if(post.isLiked ){
-  this.postsLikesStore.removePostLike(post_id) 
-  }else{
-    this.postsLikesStore.addPostLike(post_id); 
+    const post_id = post.id!;
+    if(post_id)
+    if(post.isLiked ){
+      this.postsLikesStore.removePostLike(post_id) 
+    }else{
+      this.postsLikesStore.addPostLike(post_id); 
+    }
   }
-  }
-
 }

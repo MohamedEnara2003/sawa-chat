@@ -8,7 +8,9 @@ import { BtnComponent } from "../../../../shared/components/btn/btn.component";
     imports: [LinkComponent, BtnComponent],
     template : `
     <div class="flex flex-col justify-center items-center gap-1">
-    <app-btn   role="button-edit-post"   btnType="button"
+    <app-btn    
+    ariaLabel="Open post menu" 
+      btnType="button"
     (click)="isOpenMenu.set(isOpenMenu() === commentId() ? 0 : commentId())" >
     <i class="fa-solid fa-ellipsis  text-xl text-white btn-hover"></i>
     </app-btn>
@@ -18,11 +20,9 @@ import { BtnComponent } from "../../../../shared/components/btn/btn.component";
     <ul aria-label="post-menu-links" 
     class="menu absolute right-0  w-40 h-15 bg-background rounded-box  animate-opacity-up
     shadow-md shadow-background capitalize text-sm  border-1 border-overlay">
-
     <li (click)="removeComment()">
     <app-link >remove</app-link >
     </li>
-    
     </ul>
     </nav>
 }

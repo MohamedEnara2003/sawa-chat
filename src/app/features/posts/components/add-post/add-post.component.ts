@@ -9,7 +9,7 @@ import { LinkComponent } from "../../../../shared/components/link/link.component
   selector: 'app-add-post',
   imports: [SharedModule, UserImageComponent, LinkComponent],
   template : `
-  <section class="w-full flex flex-col justify-center items-center bg-tint  py-4 rounded-2xl">
+  <section class="w-full flex flex-col justify-center items-center bg-tint py-4 rounded-2xl text-gray-900 dark:text-white">
   <div class="w-full flex justify-between items-center bg-tint px-4 ">
   
   <div class="flex justify-start items-center gap-2">
@@ -19,7 +19,7 @@ import { LinkComponent } from "../../../../shared/components/link/link.component
   </picture>
 
   <app-link [routerLink]="['/',{outlets : {'container' : 'create-post'}}]" 
-  class="text-sm text-overlay hover:bg-[#333] p-1 duration-300 cursor-pointer">
+  linkClass="text-sm text-overlay hover:bg-[#333] p-1 duration-300 cursor-pointer">
   Tell your friends about your thoughts?
   </app-link>
   </div>
