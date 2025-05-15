@@ -6,7 +6,7 @@ import { ChartConfiguration, ChartType } from 'chart.js';
   selector: 'app-chart',
   imports: [SharedModule , BaseChartDirective],
   template : `
-  <div aria-label="Chart" class="relative w-full max-w-4xl h-[300px]  lg:h-[350px] mx-auto ">
+  <div class="relative w-full max-w-4xl h-[300px]  lg:h-[350px] mx-auto ">
   <ng-content />
   <canvas baseChart
   [data]="data()"

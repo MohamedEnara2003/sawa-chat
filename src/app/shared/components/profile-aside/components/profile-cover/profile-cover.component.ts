@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
   selector: 'app-profile-cover',
   imports: [],
   template : `
-  <picture aria-label="cover-photo" class="w-full">
+  <picture aria-label="cover-photo" role="img" class="w-full">
   <img [src]="coverUrl" 
   alt="cover-photo" loading="lazy" class="size-full object-cover">
   </picture>

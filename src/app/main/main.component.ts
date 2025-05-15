@@ -14,7 +14,7 @@ import { ErrorLoadUserComponent } from "../features/error/ui/error-load-user/err
   template : `
   @defer (when userStore.user()) {
   <section> 
-  <app-header class="w-full " />
+  <app-header class="w-full" />
   <router-outlet name="container" />
   <router-outlet name="profile-setup"/>
   <router-outlet name="comments"/>

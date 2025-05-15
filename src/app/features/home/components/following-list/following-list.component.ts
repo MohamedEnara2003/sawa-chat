@@ -11,14 +11,16 @@ import { SharedModule } from '../../../../shared/modules/shared.module';
     
 ],
   template : `
-<swiper-container
+<swiper-container 
+aria-label="Swiper container "
 #swiperRef
 [speed]="200"
 [breakpoints]="{'0': {slidesPerView: 5 },'540': {slidesPerView: 6 },'1024': { slidesPerView:7}}"
 class="w-full">
   @for (following of followersStore.followingData(); track following) {
   @defer (when !followersStore.isLoading()) { 
-    <swiper-slide [routerLink]="['/user-profile/', following.following_id]">
+    <swiper-slide role="slider"
+    [routerLink]="['/user-profile/', following.following_id]">
     <div  class="w-12 flex flex-col justify-center items-center gap-1">
       @let userImage = following.following.avatar_url;
       <div class="w-full h-12  rounded-2xl border-2 border-sawa-primary ">
