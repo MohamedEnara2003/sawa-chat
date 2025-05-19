@@ -9,8 +9,7 @@ import { LinkArrowLeftComponent } from "../../../shared/components/link-arrow-le
   selector: 'app-search',
   imports: [SharedModule, UserImageComponent, LinkArrowLeftComponent],
   template :`
-  <section class="w-full h-[90vh] flex flex-col justify-start gap-5 p-4 items-center 
-  overflow-hidden">
+  <section class="w-full h-[90vh] flex flex-col justify-start gap-5 p-4 items-center ">
 
   <div class="w-full flex justify-start items-center gap-2 p-2">
   <app-link-arrow-left [routerLink]="['/home']"/>
@@ -56,6 +55,11 @@ import { LinkArrowLeftComponent } from "../../../shared/components/link-arrow-le
 export class SearchComponent implements OnInit{
   readonly userStore = inject(UserStore);
   searchRef = viewChild<ElementRef<HTMLElement>>('searchRef');
+
+  constructor(){
+  this.userStore.LoadUsers();
+  this.userStore.initRealTimeForUsers();
+  }
 
   ngOnInit(): void {
     const searchRef = this.searchRef()?.nativeElement;

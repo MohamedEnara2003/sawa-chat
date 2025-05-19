@@ -28,13 +28,13 @@ import { LinkComponent } from "../../../shared/components/link/link.component";
   template : `
 <section aria-label="Home Page" class="w-full  flex flex-wrap justify-evenly  mt-5 mb-12 sm:mb-0 p-2 overflow-hidden">
 
-    <div class="hidden lg:inline-flex w-full  lg:w-[30%]  " >
+    <div class="hidden lg:inline-flex w-full  lg:w-[30%] " >
     <app-profile-aside class="w-full h-full" />
     </div>
 
-    <div class="w-full md:w-[90%] lg:w-[40%] flex flex-col justify-center  gap-4 p-1  my-1">
-    <app-following-list/> 
-    <app-add-post />
+    <div class="w-full min-h-screen md:w-[90%] lg:w-[40%] grid grid-cols-1 gap-4 p-1  my-1">
+    <app-following-list    /> 
+    <app-add-post          />
     <app-post-status-links />
     @if(postStatus() === "public") {
     <app-post [posts]="postsStore.publicPosts()"  class="w-full lg:h-screen"/>
@@ -44,7 +44,7 @@ import { LinkComponent } from "../../../shared/components/link/link.component";
     }
     </div>
 
-    <div class="hidden lg:inline-flex  lg:w-[25%] h-screen bg-tint rounded-2xl shadow shadow-background p-4" >
+    <div class="hidden lg:inline-flex  lg:w-[25%] h-screen bg-tint  rounded-2xl shadow shadow-background p-4" >
     <app-notifications class="w-full h-full"/>
     </div>
     
@@ -67,5 +67,7 @@ export class HomeComponent {
     map((params) => params['postStatus'])
     )
   );
+
+
   
 }

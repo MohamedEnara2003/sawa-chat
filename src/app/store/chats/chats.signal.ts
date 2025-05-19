@@ -13,6 +13,7 @@ interface ChatState {
     chat : ChatUserData | undefined,
     isLoading : boolean ,
     error : string ,
+    isChatFormFocus : boolean ,
 };
 
 const initialState : ChatState = {
@@ -20,7 +21,8 @@ const initialState : ChatState = {
     chat : undefined ,
     vlaue : '',
     isLoading : false ,
-    error : ''
+    error : '',
+    isChatFormFocus : false ,
 };  
 
 export const ChatStore = signalStore(
@@ -62,9 +64,7 @@ export const ChatStore = signalStore(
     if(user_id && store.chats().length < 1) {
     patchState(store , ({isLoading : true}));
     chatService.getChats(user_id).pipe(
-    tap((chats) => {
-    patchState(store , ({isLoading : false , chats}));
-    }),
+    tap((chats) => patchState(store , ({isLoading : false , chats}))),
     catchError((err : Error) => {
     patchState(store , ({isLoading : false , error : err.message}));
     return of([])
@@ -80,8 +80,11 @@ export const ChatStore = signalStore(
     
     onChangeValueFiltering(vlaue : string) : void {
     patchState(store , ({vlaue}))
+    },
+
+    isChatFocus(isFoucs : boolean) : void {
+    patchState(store , ({isChatFormFocus : isFoucs}));
     }
-    
     }
     })
 )

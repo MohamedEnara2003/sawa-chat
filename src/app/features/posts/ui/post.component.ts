@@ -28,15 +28,14 @@ import { SoundEffectStore } from '../../../store/sound/sound.signal';
   template: `
   <ul class="w-full h-full flex flex-col gap-5 overflow-y-auto" style="scrollbar-width: none;"> 
   @if(postsStore.isLoading()){
-    <li>
+    <li class="min-h-[200px]">
     <app-post-loading />
     </li>
   }
   @for (post of posts(); track post) {
   @defer (on viewport) {
-  <li 
-  class="relative bg-tint flex flex-col justify-center items-center rounded-2xl py-2 text-gray-900 dark:text-white">
-    <div class="w-full flex flex-col justify-start items-center gap-2 my-5 px-4">
+  <li  class="relative bg-tint flex flex-col justify-center items-center rounded-2xl py-2">
+    <div class="w-full flex flex-col justify-start items-center gap-2 my-5 px-4 ">
     <div class="w-full flex justify-between items-center">
 
     <div class="flex flex-wrap justify-start items-center gap-3">
@@ -45,14 +44,16 @@ import { SoundEffectStore } from '../../../store/sound/sound.signal';
     <div [routerLink]="['/user-profile' , post.user_id]" class="size-10 rounded-full shadow shadow-background">
     @let userImage = post.user.avatar_url;
     <app-user-image [avatarUrl]="userImage" [isDefault]="userImage ? false : true" 
-    imageClass="size-full object-cover rounded-full"/>
+    imageClass="size-full object-cover rounded-full"
+    width="40"
+    height="40"/>
     </div>
 
     <div class="flex flex-col justify-start items-start">
-    <h1 class="text-white font-semibold capitalize text-lg">
+    <h1 class="title-h1">
     {{post.user.fullName!}}
     </h1>
-    <h4 class="text-sawa-primary text-xs lowercase font-[300] flex justify-center items-center gap-1">
+    <h4 class="text-background dark:text-sawa-primary text-xs lowercase font-[300] flex justify-center items-center gap-1">
     {{dayJs.formatTime(post.created_at || '')}}
 
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-5 text-blue-400">
@@ -65,10 +66,13 @@ import { SoundEffectStore } from '../../../store/sound/sound.signal';
     <app-post-edit-menu  [postId]="post.id!" [file_name]="post.file_name!"/>
     }
     </div>
-
-    <div class="w-full">
+    
+    @if(post.value){
+    <div class="w-full min-h-[50px]">
     <p class="text-overlay">{{post.value}}</p>
     </div>
+    }
+  
     @if(post.file_url){
     <div class="w-full aspect-[4/3] relative">
       <picture (click)="
@@ -76,11 +80,16 @@ import { SoundEffectStore } from '../../../store/sound/sound.signal';
       postsStore.openPostViewer(post.id! , true); 
       commentsStore.openContainerComments(post.id! , false)"
       class="w-full h-full rounded-box">
+        <source [srcset]="post.file_url" media="(min-width: 1024px)" type="image/webp">
+        <source [srcset]="post.file_url" media="(min-width: 768px)" type="image/webp">
         <img [src]="post.file_url"
         [alt]="'Post by ' + post.user.fullName"
         class="w-full h-full object-cover rounded-box shadow-background shadow-sm"
         loading="lazy"
-        decoding="async">
+        decoding="async"
+        width="400"
+        height="300"
+        sizes="(min-width: 1024px) 800px, (min-width: 768px) 600px, 400px">
       </picture>
     </div>
     }
@@ -95,7 +104,7 @@ import { SoundEffectStore } from '../../../store/sound/sound.signal';
   </div>
   @if(commentsStore.isLoadComments()){
   <section class="w-full h-screen fixed top-0 left-0 z-100 flex justify-center items-end">
-  <app-posts-comments [post_user_id]="post.user_id!" class="w-full h-[50vh] md:w-[70%] lg:w-1/2 z-100"/>
+  <app-posts-comments [post_user_id]="post.user_id!" class="w-full h-[50vh] md:w-[70%] lg:w-1/2 z-100 min-h-[200px]"/>
   <div (click)="commentsStore.closeContainerComments()"
   class="w-full h-full fixed top-0 left-0 z-50 bg-background opacity-60">
   </div>
@@ -103,7 +112,7 @@ import { SoundEffectStore } from '../../../store/sound/sound.signal';
   }
   </li>
   }@placeholder {
-  <li>
+  <li class="min-h-[200px]">
     <app-post-loading />
   </li>
   }
@@ -125,6 +134,9 @@ export class PostComponent {
   readonly soundEffectStore = inject(SoundEffectStore);
 
   constructor(){
+    this.postsStore.getPublicPosts();
+    this.postsStore.getFollowingPosts();
+    this.postsStore.initRealTimeForPosts();
     this.commentsStore.initRealTimeForPostComment();
   }
 

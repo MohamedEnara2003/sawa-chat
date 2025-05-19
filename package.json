@@ -24,7 +24,6 @@
     "@supabase/supabase-js": "^2.49.4",
     "@tailwindcss/postcss": "^4.1.4",
     "@types/lodash.isequal": "^4.5.8",
-    "browser-image-compression": "^2.0.2",
     "dayjs": "^1.11.13",
     "ng2-charts": "^8.0.0",
     "postcss": "^8.5.3",

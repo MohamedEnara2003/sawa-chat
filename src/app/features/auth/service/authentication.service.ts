@@ -19,7 +19,9 @@ export class AuthenticationService {
   }
   
   signUp(fullName : string, email : string , password : string) : Observable<any> {
-    const promise = authClient.signUp({email , password})
+    const promise = authClient.signUp({email , password , options : {
+    data : {fullName}
+    }})
     return from(promise);
   }
 

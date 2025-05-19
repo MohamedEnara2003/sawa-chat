@@ -1,11 +1,13 @@
 import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
-import { InMemoryScrollingOptions, provideRouter, withInMemoryScrolling, withViewTransitions } from '@angular/router';
+import { InMemoryScrollingOptions, provideRouter, withInMemoryScrolling, withPreloading, withViewTransitions } from '@angular/router';
 import { routes } from './app.routes';
 import { provideRouterStore} from '@ngrx/router-store';
 import { provideStore } from '@ngrx/store';
 import { reducers } from './store/app.store';
 import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 import { provideHttpClient, withFetch } from '@angular/common/http';
+import { provideClientHydration } from '@angular/platform-browser';
+import { SelectivePreloadingStrategy } from './core/strategies/selective-preloading-strategy';
 
 const scrollConfig: InMemoryScrollingOptions = {
   scrollPositionRestoration: 'top',
@@ -21,11 +23,13 @@ export const appConfig: ApplicationConfig = {
     provideRouter(
       routes,
       withInMemoryScrolling(scrollConfig),
-      withViewTransitions()
+      withViewTransitions(),
+      withPreloading(SelectivePreloadingStrategy)
     ),
     provideRouterStore(),
     provideStore(reducers),
     provideCharts(withDefaultRegisterables()),
-    provideHttpClient(withFetch())
+    provideHttpClient(withFetch()),
+    provideClientHydration()
   ]
 };

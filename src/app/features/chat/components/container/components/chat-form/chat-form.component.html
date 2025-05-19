@@ -25,7 +25,6 @@
         class="bg-[#212121] w-full h-[10vh] rounded-b-box text-white flex justify-evenly items-center px-3 sm:px-6" 
         (ngSubmit)="addMessage()"
         role="form">
-        
         <div class="flex justify-center items-center gap-2 sm:gap-5">
             <label for="upload" class="btn-hover cursor-pointer" aria-label="Upload image">
                 <i class="fa-solid fa-image text-lg text-sawa-primary"></i>
@@ -43,6 +42,8 @@
             type="text" 
             [ngModel]="value()" 
             (ngModelChange)="onChangeValue($event)" 
+            (focus)="messageStore.scrollChatContanierToBottom(); isFocus()"
+            (blur)="isFocus()"
             name="chatValue"  
             id="chatValue" 
             class="w-[70%] sm:w-[80%] input bg-[#333333] rounded-2xl placeholder:text-overlay focus:outline-none focus:border focus:border-sawa-primary" 
@@ -51,11 +52,11 @@
             autocomplete="off"
             maxlength="1000"/>
 
-        <button type="submit" 
-                aria-label="Send message"
+        <app-btn btnType="submit" 
+                ariaLabel="Send message"
                 [disabled]="value().length < 1 && !messageStore.previewUrl()">
-                <i class="fa-solid fa-location-arrow text-xl btn-hover"
+                <i class="fa-solid fa-paper-plane text-xl btn-hover"
                 [ngClass]="value().length < 1 && !messageStore.previewUrl() ? 'text-overlay' : 'text-sawa-primary '"></i>
-        </button>
+        </app-btn>
     </form>
 </section>

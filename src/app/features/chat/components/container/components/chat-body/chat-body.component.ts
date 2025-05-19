@@ -1,15 +1,18 @@
-import { Component, effect, ElementRef, inject, viewChild, Input } from '@angular/core';
+import { Component, effect, ElementRef, inject, viewChild} from '@angular/core';
 import { MessageStore } from '../../../../../../store/messages/message.signal';
 import { SharedModule } from '../../../../../../shared/modules/shared.module';
 import { DayJsService } from '../../../../../../core/services/day-js.service';
 import { UserStore } from '../../../../../../store/users/users.signal';
 import { ImageViewerStore } from '../../../../../../store/imageViewer/imageViewer.signal';
+import { ChatStore } from '../../../../../../store/chats/chats.signal';
+
 
 @Component({
   selector: 'app-chat-body',
-  imports: [ SharedModule],
+  imports: [SharedModule],
   template : `
-<div #chatContainer class="w-full  h-[82vh] border-1 border-tint overflow-y-auto p-2 flex flex-col gap-5"
+<div #chatContainer class="w-full  border-1 border-sawa-secondary overflow-y-auto p-2 flex flex-col gap-5"
+[ngClass]="chatStore.isChatFormFocus() ? 'h-[90vh] md:h-[80vh]' : 'h-[80vh]'"
 style="scrollbar-width: none;"
 role="log"
 aria-label="Chat messages">
@@ -49,17 +52,18 @@ export class ChatBodyComponent  {
   readonly datJs = inject(DayJsService);
   readonly messageStore = inject(MessageStore);
   readonly userStore = inject(UserStore);
+  readonly chatStore = inject(ChatStore);
   readonly imageViewer = inject(ImageViewerStore);
   chatContainer = viewChild<ElementRef<HTMLElement>>('chatContainer');
 
   constructor(){
   effect(() => {
     const chatContainer = this.chatContainer()?.nativeElement;
-    if(chatContainer ){
-    this.messageStore.getChatContanier(chatContainer);
+    if (chatContainer) {
+      this.messageStore.getChatContanier(chatContainer);
     }
   })
- 
 }
+
 
 }

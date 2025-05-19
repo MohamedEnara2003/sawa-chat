@@ -23,18 +23,18 @@ import { InteractionCountComponent } from "../components/interaction-count/inter
 ],
   template : `
   <div class="w-full flex justify-center items-center">
-  <aside aria-label="profile-aside" class="flex flex-col justify-center items-center gap-5 my-2 w-full">
+<aside aria-label="profile-aside" class="flex flex-col justify-center items-center gap-5 my-2 w-full">
   
 <header class="relative w-full rounded-2xl h-120 flex flex-col justify-center items-center
 bg-gradient-to-r dark:from-[#808080] dark:to-background from-background  to-overlay to-37%  from-0%
-after:bg-tint after:absolute  after:bottom-0 after:w-full after:rounded-2xl after:h-[65%] after:z-5">
+dark:after:bg-sawa-secondary after:bg-[#d3d3d3] after:absolute  after:bottom-0 after:w-full after:rounded-2xl after:h-[65%] after:z-5">
 
-<div class="absolute top-0 w-full h-90 rounded-box flex justify-center 
+<div class="absolute top-0 w-full h-90 rounded-box flex justify-center  
 items-start z-0 ">
 <app-profile-cover class="size-full"/>
 </div>
 
-<div class="w-full  flex flex-col justify-center  gap-2  z-20">
+<div class="w-full  flex flex-col justify-center  gap-2  z-20 ">
 
 <div class="w-full flex justify-center items-center ">
 <picture 
@@ -42,6 +42,7 @@ items-start z-0 ">
   <app-user-image [isRouteProfile]="true" imageClass="size-full object-cover rounded-2xl bg-tint"/>
 </picture>
 </div>
+
 <app-interaction-count />
 <div class="w-full flex flex-col justify-center items-center gap-1"> 
 <h2 class="text-white font-semibold capitalize line-clamp-1">{{userStore.user()?.fullName}}</h2>

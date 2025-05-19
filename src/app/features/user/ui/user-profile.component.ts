@@ -37,7 +37,7 @@ import { VideosProfileComponent } from "../components/videos-profile/videos-prof
 
     <div class="relative w-full flex flex-col  gap-5 bg-tint rounded-2xl lg:h-full p-4
     lg:overflow-y-auto" style="scrollbar-width: none;">
-    <app-link-arrow-left [routerLink]="['/home']" class=" absolute left-2 top-2 z-10 btn-hover"/>
+    <app-link-arrow-left [routerLink]="['/home']" class="absolute left-5 top-5 z-10 btn-hover"/>
     <app-user-profile-header />
     <app-profile-links [user_id]="userId()!"/>
     <app-user-profile-details class="w-full bg-background rounded-2xl p-2 "/>
@@ -84,10 +84,17 @@ export class UserProfileComponent {
   this.store.select(selectQueryParams).pipe(
   map((queryParams) => queryParams['tap'])
   )
-  )
-
+  )  
+  
   constructor(){
+  this.userStore.LoadUsers();
+  this.userStore.initRealTimeForUsers();
   effect(() => {
+    this.initUserProfile()
+  })
+  }
+
+  private initUserProfile() : void {
     const userProfile_id =  this.userId();
     const user_id = this.userStore.user_id();
     if(user_id && userProfile_id){
@@ -95,7 +102,5 @@ export class UserProfileComponent {
     this.followersStore.isUserFollowing(userProfile_id , user_id);
     this.userStore.getUserProfileByUserId(userProfile_id);
     }
-  })
   }
-
 }

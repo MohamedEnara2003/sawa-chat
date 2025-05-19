@@ -24,8 +24,6 @@ import { SharedModule } from '../../../shared/modules/shared.module';
 })
 export class ChatComponent {
   private readonly store = inject(Store);
-
-
   chatId = toSignal<string>(
   this.store.select(selectRouteParams).pipe(
   map((params) => params['chatId']!)

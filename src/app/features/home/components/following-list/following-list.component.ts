@@ -11,7 +11,8 @@ import { SharedModule } from '../../../../shared/modules/shared.module';
     
 ],
   template : `
-<swiper-container 
+  <section class="w-full h-[10vh]">
+  <swiper-container 
 aria-label="Swiper container "
 #swiperRef
 [speed]="200"
@@ -23,9 +24,11 @@ class="w-full">
     [routerLink]="['/user-profile/', following.following_id]">
     <div  class="w-12 flex flex-col justify-center items-center gap-1">
       @let userImage = following.following.avatar_url;
-      <div class="w-full h-12  rounded-2xl border-2 border-sawa-primary ">
+      <div class="w-full h-12 rounded-box border-2 border-sawa-primary">
       <app-user-image [avatarUrl]="userImage" [isDefault]="userImage ? false : true"
-      imageClass="size-full object-cover rounded-2xl hover:scale-105  duration-100  cursor-pointer"/>
+      imageClass="size-full object-cover rounded-box hover:scale-105 duration-100 cursor-pointer"
+      width="48"
+      height="48"/>
       </div>
       <h2 class="text-overlay text-[10px] line-clamp-1 capitalize font-bold">
       {{following.following.fullName}}
@@ -37,6 +40,7 @@ class="w-full">
   }
   }
   </swiper-container>
+  </section>
   `,
   schemas : [CUSTOM_ELEMENTS_SCHEMA]
 })
@@ -44,4 +48,9 @@ export class FollowingListComponent  {
   readonly followersStore = inject(FollowersStore);
 
 
+  constructor(){
+  this.followersStore.getFollowingUsers();
+  this.followersStore.getFollowers();
+  this.followersStore.initRealTimeForFollowers();
+  }
 }

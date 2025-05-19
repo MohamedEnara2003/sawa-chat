@@ -53,7 +53,7 @@ export class MessagesComponent {
   chatId = input<string>();
 
   constructor() {
-    this.chatStore.getChats();
+  this.chatStore.getChats();
   }
 }
   

@@ -5,7 +5,6 @@
 #- npm install tailwindcss @tailwindcss/postcss postcss --force
 #- npm i -D daisyui@latest
 #- npm install --save @types/lodash.isequal
-#- npm install browser-image-compression
 #- npm install dayjs
 #- npm install swiper
 

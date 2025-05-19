@@ -14,7 +14,8 @@ import { LinkComponent } from "../link/link.component";
   [ngClass]="imageClass()" class="cursor-pointer hover:opacity-90 duration-200"
   [src]="avatarUrl() ? avatarUrl() : !isDefault() && userImage ? userImage : defaultImage" 
   alt="user image"
-  [loading]="isAboveFold() ? 'eager' : 'lazy'">
+  [loading]="isAboveFold() ? 'eager' : 'lazy'"
+  [attr.fetchpriority]="isAboveFold() ? 'high' : 'low'">
   </app-link>
   `
 })

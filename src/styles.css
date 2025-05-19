@@ -2,10 +2,13 @@
 @plugin "daisyui";
 
 
-* {
+html, body {
+  touch-action: manipulation;
+}
+
+*{
   font-family: "Cairo", sans-serif;
   font-optical-sizing: auto;
-  font-style: normal;
   font-variation-settings: "slnt" 0;
   scroll-behavior: smooth;
 }
@@ -13,7 +16,7 @@
 @theme {
     --color-sawa-primary: #FFFD02;
     --color-background: #1A1A1A;
-    --color-tint: #282828;
+    --color-sawa-secondary: #282828;
     --color-overlay: #8E8E8E;
     --breakpoint-xs: 22.5rem;
   }
@@ -74,7 +77,7 @@
   @apply btn btn-neutral bg-sawa-primary text-background capitalize hover:opacity-70 duration-300;
   }
   .btn-sawa-2 {
-  @apply btn btn-neutral bg-tint text-sawa-primary capitalize hover:opacity-70 duration-300;
+  @apply btn btn-neutral bg-sawa-secondary text-sawa-primary capitalize hover:opacity-70 duration-300;
   }
   .animate-iconliked {
     animation: iconliked 0.5s  ease-in-out;
@@ -89,7 +92,7 @@
     animation: opacity-up 0.5s  ease-in-out;
   }
   .bg-tint {
-  @apply bg-gray-100 dark:bg-tint;
+  @apply bg-[#d3d3d3] dark:bg-sawa-secondary
   }
 }
 

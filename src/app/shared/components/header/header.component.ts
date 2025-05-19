@@ -18,13 +18,15 @@ import { LinkComponent } from "../link/link.component";
   @if(!hideLayout()){ 
   <section>
   <header aria-label="Header" class="w-full h-[10vh] flex justify-center items-cente shadow shadow-background ">
-        <nav class=" relative w-[95%] flex justify-between items-center mt-2">
+        <nav class=" relative w-[95%] grid grid-cols-2 md:grid-cols-3 mt-2">
+
         <app-logo routerLink="/home"/>
-        <nav class="w-100 hidden md:inline-block absolute left-1/2 -translate-x-1/2">
+
+        <nav class=" hidden md:inline-block ">
         <app-main-links class="w-full"/>
         </nav>
 
-        <div class="flex justify-center items-center gap-5">
+        <div class="flex justify-end items-center gap-5">
         <app-link role="link" aria-label="link-search" routerLink="/search" 
         linkClass="relative py-2 flex justify-center items-center btn-hover" routerLinkActive="linkActive">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" 

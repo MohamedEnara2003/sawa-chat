@@ -22,6 +22,7 @@ export class AppComponent implements OnInit{
   this.handleSoundEffect();
   })
   }
+  
   ngOnInit(): void {
   this.userStore.LoadUser();
   timer(1500).subscribe(() => this.isIntro.set(false));
@@ -30,7 +31,7 @@ export class AppComponent implements OnInit{
   handleSoundEffect( ) : void {
     const audioEle = this.audioEle()?.nativeElement;
     if(audioEle){
-    audioEle.volume = 0.2;
+    audioEle.volume = 0.8;
     }
   }
   

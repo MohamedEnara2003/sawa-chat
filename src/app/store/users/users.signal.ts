@@ -95,9 +95,10 @@ patchState(store , ({userProfile}));
 },
 
 getUserData(user_id : string) : Observable<{fullName: string, avatar_url: string;}>{
-    return usersService.getUserData(user_id);
+return usersService.getUserData(user_id);
 },
-    upLoadUserImage (file : File) : void {
+
+upLoadUserImage (file : File) : void {
     if(store.previewUrl() !== ''){
     this.removeUploadedImage();
     }

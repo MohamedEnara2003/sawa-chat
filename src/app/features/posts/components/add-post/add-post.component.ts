@@ -15,7 +15,7 @@ import { LinkComponent } from "../../../../shared/components/link/link.component
   <div class="flex justify-start items-center gap-2">
   <picture [routerLink]="['/user-profile/', userStore.user()?.user_id]" 
   class="size-8 rounded-full shadow-sm shadow-background">
-  <app-user-image imageClass="size-8 object-cover rounded-full"/>
+  <app-user-image imageClass="size-8 object-cover rounded-full" [isAboveFold]="true"/>
   </picture>
 
   <app-link [routerLink]="['/',{outlets : {'container' : 'create-post'}}]" 
@@ -37,8 +37,6 @@ import { LinkComponent } from "../../../../shared/components/link/link.component
   `
 })
 export class AddPostComponent {
-  readonly userStore = inject(UserStore) ;
-  readonly postsStore = inject(PostsStore) ;
-
-  
+  readonly userStore = inject(UserStore);
+  readonly postsStore = inject(PostsStore);
 }

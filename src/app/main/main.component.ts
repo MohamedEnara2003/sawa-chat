@@ -1,6 +1,5 @@
 import { Component, inject} from '@angular/core';
 import { SharedModule } from '../shared/modules/shared.module';
-import { FollowersStore } from '../store/followers/followers.signal';
 import { ImageViewerComponent } from "../shared/components/image-viewer/image-viewer.component";
 import { PostViewerComponent } from "../features/posts/components/post-viewer/post-viewer.component";
 import { PostsStore } from '../store/posts/posts.signal';
@@ -30,19 +29,7 @@ import { ErrorLoadUserComponent } from "../features/error/ui/error-load-user/err
   `,
 })
 export class MainComponent  {
-  private readonly followersStore = inject(FollowersStore) ;
   readonly postsStore = inject(PostsStore) ;
   readonly userStore = inject(UserStore) ;
-  
-  constructor(){
-  this.userStore.LoadUsers();
-  this.followersStore.getFollowingUsers();
-  this.followersStore.getFollowers();
-  this.postsStore.getPublicPosts();
-  this.postsStore.getFollowingPosts();
-  this.followersStore.initRealTimeForFollowers();
-  this.userStore.initRealTimeForUsers();
-  this.postsStore.initRealTimeForPosts();
-  }
 
 }
