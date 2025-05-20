@@ -10,17 +10,17 @@ import { LinkComponent } from "../../../../shared/components/link/link.component
   imports: [SharedModule, UserImageComponent, LinkComponent],
   template : `
   
-  <div class="w-full h-full flex flex-col justify-center items-center overflow-hidden gap-2 capitalize ">
+  <div class="w-full h-full flex flex-col justify-center items-center overflow-hidden gap-5 capitalize ">
 
-  <div (click)="imageViewer.getImage(userStore.user()?.avatar_url! , true)" 
-  class="size-45 md:size-50  rounded-full   border-4 border-background ">
+    <div (click)="imageViewer.getImage(userStore.user()?.avatar_url! , true)" 
+    class="size-45 md:size-50  rounded-full   border-4 border-background ">
     <app-user-image imageClass="size-full rounded-full object-cover "/>
-  </div>
+    </div>
 
+    <div class="grid grid-cols-1 justify-items-center">
     <h1 class="text-white font-semibold text-xl ">{{userStore.user()?.fullName}}</h1>
-    <h3 class="text-background dark:text-overlay text-center">
-    {{userStore.user()?.bio}}
-    </h3>
+    <h3 class="text-overlay text-center">{{userStore.user()?.bio}}</h3>
+    </div>
 
     <app-link aria-label="profile-setup-link" 
     [routerLink]="['/',{outlets : {'profile-setup' : 'user'}}]"

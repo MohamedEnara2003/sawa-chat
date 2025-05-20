@@ -7,7 +7,7 @@ import { reducers } from './store/app.store';
 import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import { provideClientHydration } from '@angular/platform-browser';
-import { SelectivePreloadingStrategy } from './core/strategies/selective-preloading-strategy';
+
 
 const scrollConfig: InMemoryScrollingOptions = {
   scrollPositionRestoration: 'top',
@@ -24,7 +24,6 @@ export const appConfig: ApplicationConfig = {
       routes,
       withInMemoryScrolling(scrollConfig),
       withViewTransitions(),
-      withPreloading(SelectivePreloadingStrategy)
     ),
     provideRouterStore(),
     provideStore(reducers),

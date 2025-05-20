@@ -1,45 +1,65 @@
-<section class=" w-full flex flex-col justify-center   gap-2">
+
+<section class="w-full flex flex-col justify-center gap-2" role="region" aria-label="Profile Image Editor">
 
     <app-edit-header EditTypeName="image" [isCancelUpload]="userStore.previewUrl() !== '' ? false : true">
-        <button cancel-upload type="button" (click)="userStore.removeUploadedImage()"
-        class=" btn-hover size-8 bg-tint rounded-full flex justify-center items-center">
-        <i class="fa-solid fa-trash-can  text-sawa-primary text-lg  "></i>
+        <button 
+            cancel-upload 
+            type="button" 
+            (click)="userStore.removeUploadedImage()"
+            class="btn-hover size-8 bg-tint rounded-full flex justify-center items-center"
+            aria-label="Remove uploaded image">
+            <i class="fa-solid fa-trash-can text-sawa-primary text-lg" aria-hidden="true"></i>
         </button>
     </app-edit-header>
+
+    <!-- Main Content Area -->
     <div class="w-full flex flex-col justify-center items-center gap-4">
-    <picture class="size-70 rounded-full flex justify-center  items-center"> 
-    @if(!userStore.isLoading()){
-        @let previewUrl = userStore.previewUrl()?.toString();
-        <app-user-image [avatarUrl]="previewUrl || userStore.user()?.avatar_url!" 
-        [imageClass]=" editType() === 'image' ?
-        'size-70 object-cover rounded-full shadow-lg shadow-background duration-500'  :
-        'size-50 object-cover rounded-full shadow-lg shadow-background duration-500'
-        "/>
-    }@else {
-    <span class="loading loading-spinner  text-sawa-primary size-40"></span>
-    }
-    </picture>
-    @if(editType() === 'image'){ 
-    <div class="w-full flex flex-col justify-center  px-5 lg:px-20">
-    @if(userStore.previewUrl() === ''){ 
-        <app-btn btnType="button" btnClass="w-full text-center capitalize">
-            <label for="upload" class="w-full  btn-neutral  btn bg-tint text-sawa-primary 
-            btn-hover duration-300">
-            <i class="fa-solid fa-plus"></i> Upload photo
-            <input (change)="onFileSelected($event)" 
-            type="file" name="upload" id="upload"  accept="image/*" 
-            class="hidden">
-            </label>
-        </app-btn>
-    }@else {
-    <app-btn btnType="button" (click)="userStore.saveImage()" 
-            [routerLink]="['/',{outlets : {'profile-setup' : 'user'}}]" [queryParams]="{editType : null}" 
-            btnClass="w-full  btn-neutral btn bg-tint text-sawa-primary capitalize
-            btn-hover duration-300" aria-label="Save profile image">
-            save image
-    </app-btn >
-    }
-</div>
-}
+        <!-- Profile Image Container -->
+        <picture class="size-70 rounded-full flex justify-center items-center" role="img" aria-label="Profile picture">
+            @if(!userStore.isLoading()){
+                @let previewUrl = userStore.previewUrl()?.toString();
+                <app-user-image 
+                    [avatarUrl]="previewUrl || userStore.user()?.avatar_url!" 
+                    [imageClass]="editType() === 'image' ? 'size-70 object-cover rounded-full shadow-lg shadow-background duration-500' : 'size-50 object-cover rounded-full shadow-lg shadow-background duration-500'"
+                    loading="lazy"
+                    decoding="async"
+                    alt="User profile picture"
+                />
+            }@else {
+                <span class="loading loading-spinner text-sawa-primary size-40" role="status" aria-label="Loading profile image"></span>
+            }
+        </picture>
+
+        <!-- Image Upload Controls -->
+        @if(editType() === 'image'){ 
+            <div class="w-full flex flex-col justify-center px-5 lg:px-20">
+                @if(userStore.previewUrl() === ''){ 
+                    <app-btn btnType="button" btnClass="w-full text-center capitalize">
+                        <label for="upload" class="w-full btn-neutral btn bg-tint text-sawa-primary btn-hover duration-300">
+                            <i class="fa-solid fa-plus" aria-hidden="true"></i> Upload photo
+                            <input 
+                                (change)="onFileSelected($event)" 
+                                type="file" 
+                                name="upload" 
+                                id="upload"  
+                                accept="image/*" 
+                                class="hidden"
+                                aria-label="Choose profile image to upload"
+                            >
+                        </label>
+                    </app-btn>
+                }@else {
+                    <app-btn 
+                        btnType="button" 
+                        (click)="userStore.saveImage()" 
+                        [routerLink]="['/',{outlets : {'profile-setup' : 'user'}}]" 
+                        [queryParams]="{editType : null}" 
+                        btnClass="w-full btn-neutral btn bg-tint text-sawa-primary capitalize btn-hover duration-300" 
+                        aria-label="Save profile image">
+                        Save image
+                    </app-btn>
+                }
+            </div>
+        }
     </div>
 </section>

@@ -8,10 +8,9 @@ import { SharedModule } from '../../../../shared/modules/shared.module';
   imports: [
     SharedModule,
     UserImageComponent,
-    
 ],
   template : `
-  <section class="w-full h-[10vh]">
+  <section class="w-full">
   <swiper-container 
 aria-label="Swiper container "
 #swiperRef

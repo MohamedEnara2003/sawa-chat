@@ -8,7 +8,7 @@ import { SoundEffectStore } from '../../../store/sound/sound.signal';
       <a role="link" aria-label="Link arrow left" 
       (click)="soundEffectStore.handlSoundEffect('sound-effects/pop.mp3')"
         class="z-10 btn-hover">
-        <i class="fa-solid fa-angle-left text-2xl"></i>
+        <i class="fa-solid fa-angle-left text-2xl text-white"></i>
       </a>
   `,
   styles: ``

@@ -19,7 +19,7 @@ import { LinkComponent } from "../../../../shared/components/link/link.component
     {{link.name}}
     @if(link.statusCount){
     <span class="absolute -top-2  badge badge-xs badge-neutral bg-transparent 
-    text-background dark:text-white border-1 border-background dark:border-white">
+    text-white border-1 border-white">
     {{link.statusCount}} 
     </span>
     }

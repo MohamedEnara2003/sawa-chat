@@ -13,7 +13,7 @@ import { userDetails } from '../../../../../core/interface/user';
   @if (item.detals) { 
   <li>
   <a aria-label="locations" class="flex justify-center items-center gap-2">
-  <h2 class="text-black dark:text-overlay font-semibold ">
+  <h2 class="text-overlay font-semibold ">
   <i [class]="item.icon"></i>
   {{item.title}}   
   </h2> 

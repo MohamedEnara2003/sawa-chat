@@ -18,7 +18,9 @@ export const ImageViewerStore = signalStore(
     return {
 
     getImage(file_url : string , isLoad : boolean) : void {
-    patchState(store ,({file_url , isLoad }));
+    if(file_url){
+     patchState(store ,({file_url , isLoad }));
+    }
     }
 
     }

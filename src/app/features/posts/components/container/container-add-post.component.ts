@@ -22,7 +22,8 @@ import { LinkComponent } from "../../../../shared/components/link/link.component
   <app-link aria-label="close-create-post" (click)="closeModle()">
   <i class="fa-solid fa-close text-xl btn-hover text-white"></i>
   </app-link>
-  <h1>{{postsStore.post() ? 'edit post' : 'create post'}} </h1>
+
+  <h1 class="title-h1">{{postsStore.post() ? 'edit post' : 'create post'}} </h1>
   
   <app-btn (click)="createAndEditPost()" btnType="button" 
   [disabled]="form.invalid && !postsStore.file_url()"
@@ -40,8 +41,8 @@ import { LinkComponent } from "../../../../shared/components/link/link.component
   <h1 class="capitalize title-h1 text-base">{{userStore.user()?.fullName}}</h1>
   </div>
 
-  <label class="select select-neutral select-xs  w-34 bg-background " >
-    <span class="label">
+  <label class="select select-neutral select-xs  w-30 bg-background" >
+    <span class="label" >
     <i class="fa-solid  text-overlay" [ngClass]="{
     'fa-earth-americas' : postPrivacy() === 'public' ,
     'fa-users' : postPrivacy() === 'followers' ,
@@ -49,7 +50,7 @@ import { LinkComponent } from "../../../../shared/components/link/link.component
     }"></i>
     </span>
     <select [ngModel]="postPrivacy()" (ngModelChange)="postPrivacy.set($event)" 
-    name="postPrivacy" class="focus:outline-none">
+    name="postPrivacy" class="focus:outline-none  text-white">
     <option value="public">Public</option>
     <option value="followers">followers</option>
   </select>

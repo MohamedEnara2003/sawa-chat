@@ -26,35 +26,43 @@ import { LinkComponent } from "../../../shared/components/link/link.component";
     LinkComponent
 ],
   template : `
-<section aria-label="Home Page" class="w-full  flex flex-wrap justify-evenly  mt-5 mb-12 sm:mb-0 p-2 overflow-hidden">
-
-    <div class="hidden lg:inline-flex w-full  lg:w-[30%] " >
+<section aria-label="Home Page" class="size-full flex justify-center  overflow-hidden">
+  <div class="size-full  flex flex-wrap justify-evenly mb-12 sm:mb-0  gap-2  p-2"> 
+    <div class="hidden lg:h-[90vh] lg:inline-flex w-full lg:w-[30%] overflow-y-auto" style="scrollbar-width: none;" >
+    @defer (on viewport) {
     <app-profile-aside class="w-full h-full" />
+    }@placeholder {
+    <div class="w-full h-[80vh] rounded-2xl bg-tint"></div>
+    }
     </div>
 
-    <div class="w-full min-h-screen md:w-[90%] lg:w-[40%] grid grid-cols-1 gap-4 p-1  my-1">
-    <app-following-list    /> 
-    <app-add-post          />
+    <article class="w-full md:w-[90%] lg:w-[40%] flex flex-col gap-5   my-1">
+    <app-add-post  />
+    <app-following-list /> 
     <app-post-status-links />
-    @if(postStatus() === "public") {
-    <app-post [posts]="postsStore.publicPosts()"  class="w-full lg:h-screen"/>
+    @if(postStatus() === "public") {  
+    <app-post [posts]="postsStore.publicPosts()"/>
     }
     @else if (postStatus() === "followers") {
-      <app-post [posts]="postsStore.followingPosts()" class="w-full lg:h-screen" />
+      <app-post [posts]="postsStore.followingPosts()" />
+    }
+    </article>
+
+    <div class="hidden lg:inline-flex  lg:w-[25%] h-[80vh]  bg-tint  
+    rounded-2xl shadow shadow-background p-4 overflow-y-auto" style="scrollbar-width: none;">
+    @defer (on viewport) {
+    <app-notifications class="w-full"/>
+    }@placeholder {
+    <div class="w-full h-full  rounded-2xl bg-tint"></div>
     }
     </div>
 
-    <div class="hidden lg:inline-flex  lg:w-[25%] h-screen bg-tint  rounded-2xl shadow shadow-background p-4" >
-    <app-notifications class="w-full h-full"/>
-    </div>
-    
-  
     <app-link [routerLink]="['/']" 
     linkClass="fixed right-2 bottom-18 sm:bottom-2 size-8 bg-sawa-primary rounded-full  cursor-pointer
     flex justify-center items-center shadow-md shadow-background border border-tint">
     <i class="fa-solid fa-angle-up text-background text-xl"></i>
     </app-link>
-    
+    </div>
   </section>
   `
 })

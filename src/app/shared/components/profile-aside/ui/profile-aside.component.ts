@@ -26,8 +26,8 @@ import { InteractionCountComponent } from "../components/interaction-count/inter
 <aside aria-label="profile-aside" class="flex flex-col justify-center items-center gap-5 my-2 w-full">
   
 <header class="relative w-full rounded-2xl h-120 flex flex-col justify-center items-center
-bg-gradient-to-r dark:from-[#808080] dark:to-background from-background  to-overlay to-37%  from-0%
-dark:after:bg-sawa-secondary after:bg-[#d3d3d3] after:absolute  after:bottom-0 after:w-full after:rounded-2xl after:h-[65%] after:z-5">
+bg-gradient-to-r from-[#808080] to-background  to-37%  from-0%
+after:bg-tint after:absolute  after:bottom-0 after:w-full after:rounded-2xl after:h-[65%] after:z-5">
 
 <div class="absolute top-0 w-full h-90 rounded-box flex justify-center  
 items-start z-0 ">
@@ -60,15 +60,18 @@ my Profile
 </app-link>
 </div>
 </header>
+
 <app-profile-details class="w-full" [details]="userStore.user()?.details!" >
 <h1 title class="title-h1">details</h1>
 </app-profile-details>
+
 @let skills = userStore.user()?.skills ;
 @if(skills){
 <app-profile-skills class="w-full" [skills]="skills">
 <h1 title class="w-full text-left  text-white font-semibold text-lg">Skills</h1>
 </app-profile-skills>
 }
+
 </aside>
 </div>
   `

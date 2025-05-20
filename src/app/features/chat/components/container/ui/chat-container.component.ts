@@ -22,7 +22,8 @@ import { ActivatedRoute } from '@angular/router';
   <app-chat-form  [chatId]="chatId()!"/>
   </div>
   }@else {
-  <div class="w-full h-full bg-tint rounded-2xl flex flex-col justify-center items-center gap-4 text-gray-900 dark:text-white" role="complementary" aria-label="Welcome message">
+  <div class="w-full h-full bg-tint rounded-2xl flex flex-col justify-center items-center gap-4" 
+  role="complementary" aria-label="Welcome message">
   <app-logo  />
   <h1 class="text-center capitalize text-white ">
   Enjoy Fast and Easy Messaging with Your Friends Right from This Platform

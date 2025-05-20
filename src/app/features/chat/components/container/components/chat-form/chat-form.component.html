@@ -22,7 +22,7 @@
         </div>
     }
     <form aria-label="Chat message form" 
-        class="bg-[#212121] w-full h-[10vh] rounded-b-box text-white flex justify-evenly items-center px-3 sm:px-6" 
+        class="bg-tint w-full h-[10vh] rounded-b-box text-white flex justify-evenly items-center px-3 sm:px-6" 
         (ngSubmit)="addMessage()"
         role="form">
         <div class="flex justify-center items-center gap-2 sm:gap-5">
@@ -53,10 +53,10 @@
             maxlength="1000"/>
 
         <app-btn btnType="submit" 
-                ariaLabel="Send message"
-                [disabled]="value().length < 1 && !messageStore.previewUrl()">
-                <i class="fa-solid fa-paper-plane text-xl btn-hover"
-                [ngClass]="value().length < 1 && !messageStore.previewUrl() ? 'text-overlay' : 'text-sawa-primary '"></i>
+        ariaLabel="Send message"
+        [disabled]="value().length < 1 && !messageStore.previewUrl()">
+        <i class="fa-solid fa-paper-plane text-xl btn-hover"
+        [ngClass]="value().length < 1 && !messageStore.previewUrl() ? 'text-overlay' : 'text-sawa-primary'"></i>
         </app-btn>
     </form>
 </section>

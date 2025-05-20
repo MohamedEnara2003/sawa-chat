@@ -53,7 +53,7 @@ import { SoundEffectStore } from '../../../store/sound/sound.signal';
     <h1 class="title-h1">
     {{post.user.fullName!}}
     </h1>
-    <h4 class="text-background dark:text-sawa-primary text-xs lowercase font-[300] flex justify-center items-center gap-1">
+    <h4 class="text-sawa-primary text-xs lowercase font-[300] flex justify-center items-center gap-1">
     {{dayJs.formatTime(post.created_at || '')}}
 
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-5 text-blue-400">

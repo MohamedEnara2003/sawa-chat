@@ -21,8 +21,9 @@ import { MessageStore } from '../../../../../store/messages/message.signal';
         <ul class="w-full h-full flex flex-col gap-4 overflow-y-auto" style="scrollbar-width: none;" role="list">
           @for (chat of chatStore.chatsFiltering(); track chat.id) {
             <li [routerLink]="['/chat/', chat.id]"
-                class="w-full flex justify-between items-center rounded-box p-2 cursor-pointer hover:bg-background duration-200"
-                [ngClass]="chatId() === chat.id ? 'bg-background' : ''"
+                class="w-full flex justify-between items-center rounded-box p-2 
+                cursor-pointer hover:bg-sawa-primary/80  hover:text-black duration-200"
+                [ngClass]="chatId() === chat.id ? 'bg-sawa-primary/80 text-black' : 'text-white'"
                 role="listitem"
                 [attr.aria-current]="chatId() === chat.id ? 'page' : null">
               <div class="flex justify-center items-center gap-4">

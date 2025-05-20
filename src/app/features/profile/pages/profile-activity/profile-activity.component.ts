@@ -7,29 +7,24 @@ import { ChartComponent } from "../../../../shared/components/chart/chart.compon
   imports: [ ChartComponent],
   template :`
     <section class="w-full flex flex-col gap-10 justify-center items-start"> 
+    
+    @for (chart of profileService.chartDataArray(); track chart) {
+    @defer (on viewport) {
     <app-chart
-    [data]="profileService.profileViewsChartData()"
-    [options]="profileService.profileViewsChartOptions()"
-    type="line"
+    [data]="chart.data"
+    [options]="chart.option"
+    [type]="chart.type"
     class="w-full">
-    <div class="text-white capitalize  absolute  top-10 left-12 text-lg">
-    <h1>profile views</h1>
-    <h5>1,132,818</h5>
-    </div>
     </app-chart>
+    }@placeholder {
+    <div class="w-full h-[50vh] flex justify-center items-center">
+      <span class="loading loading-spinner size-20 text-sawa-primary"></span>
+    </div>
+    }
+    }
 
-    <app-chart 
-    [data]="profileService.postChartData()"
-    [options]="profileService.postChartOptions()"
-    type="bar"
-    class="w-full" 
-    />
-    <app-chart 
-    [data]="profileService.followersGrowthChartData()"
-    [options]="profileService.followersGrowthChartOptions()"
-    type="bar"
-    class="w-full" 
-    />
+
+
     </section>
   `
 })

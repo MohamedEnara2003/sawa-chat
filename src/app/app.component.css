@@ -1,0 +1,30 @@
+/* Body background */
+:host {
+  display: block;
+  min-height: 100vh;
+  background-color: var(--background);
+}
+
+/* Custom scrollbar styles */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--sawa-primary);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--sawa-primary-hover, var(--sawa-primary));
+}
+
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--sawa-primary) var(--background);
+}

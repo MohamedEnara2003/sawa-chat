@@ -12,12 +12,15 @@ import { ErrorLoadUserComponent } from "../features/error/ui/error-load-user/err
   imports: [SharedModule, ImageViewerComponent, PostViewerComponent, HeaderComponent, ErrorLoadUserComponent],
   template : `
   @defer (when userStore.user()) {
-  <section> 
-  <app-header class="w-full" />
+  <section  aria-label="Main Page" class="w-full"> 
+  <app-header class="w-full h-[10vh]" />
+  <main aria-label="Main Content" role="main">
   <router-outlet name="container" />
   <router-outlet name="profile-setup"/>
   <router-outlet name="comments"/>
   <router-outlet/>
+  </main>
+
   <app-image-viewer />
   @if(postsStore.isLoadPostViewer()){ 
   <app-post-viewer/>

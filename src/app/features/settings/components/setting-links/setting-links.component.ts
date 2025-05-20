@@ -30,7 +30,7 @@ import { SharedModule } from '../../../../shared/modules/shared.module';
             <a [routerLink]="['/settings', link.id]" 
               (click)="isMenuOpen() && toggleMenu()"
               class="w-full flex items-center gap-4 p-4 px-5 rounded-lg hover:bg-sawa-primary hover:text-background
-              transition-colors duration-200">
+              transition-colors duration-200 text-white">
               @if (link.iconName) {
                 <i [class]="link.iconName" class="text-xl"></i>
               }

@@ -1,4 +1,4 @@
-import { Component, effect, ElementRef, inject, OnInit, signal, viewChild} from '@angular/core';
+import { Component, ElementRef, inject, OnInit, signal, viewChild} from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { UserStore } from './store/users/users.signal';
 import { SoundEffectStore } from './store/sound/sound.signal';
@@ -17,22 +17,10 @@ export class AppComponent implements OnInit{
   audioEle = viewChild<ElementRef<HTMLAudioElement>>('audioEle');
   isIntro = signal<boolean>(true);
 
-  constructor(){
-  effect(() => {
-  this.handleSoundEffect();
-  })
-  }
-  
+
   ngOnInit(): void {
-  this.userStore.LoadUser();
-  timer(1500).subscribe(() => this.isIntro.set(false));
+    this.userStore.LoadUser();
+    timer(1500).subscribe(() => this.isIntro.set(false));
   }
 
-  handleSoundEffect( ) : void {
-    const audioEle = this.audioEle()?.nativeElement;
-    if(audioEle){
-    audioEle.volume = 0.8;
-    }
-  }
-  
 }

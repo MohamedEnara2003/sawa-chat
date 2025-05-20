@@ -11,7 +11,8 @@ import { ChatStore } from '../../../../../../store/chats/chats.signal';
   selector: 'app-chat-body',
   imports: [SharedModule],
   template : `
-<div #chatContainer class="w-full  border-1 border-sawa-secondary overflow-y-auto p-2 flex flex-col gap-5"
+<div #chatContainer class="w-full  border-x-2 border-tint overflow-y-auto p-2 flex flex-col gap-5
+  bg-background"
 [ngClass]="chatStore.isChatFormFocus() ? 'h-[90vh] md:h-[80vh]' : 'h-[80vh]'"
 style="scrollbar-width: none;"
 role="log"
