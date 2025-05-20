@@ -137,16 +137,15 @@ export class PostComponent {
     this.postsStore.getPublicPosts();
     this.postsStore.getFollowingPosts();
     this.postsStore.initRealTimeForPosts();
-    this.commentsStore.initRealTimeForPostComment();
   }
 
   onClickBtnLike(post : UserPostData) : void {
     const post_id = post.id!;
     if(post_id)
-    if(post.isLiked ){
-      this.postsLikesStore.removePostLike(post_id) 
+    if(post.isLiked){
+    this.postsLikesStore.removePostLike(post_id) 
     }else{
-      this.postsLikesStore.addPostLike(post_id); 
+    this.postsLikesStore.addPostLike(post_id); 
     }
   }
 }

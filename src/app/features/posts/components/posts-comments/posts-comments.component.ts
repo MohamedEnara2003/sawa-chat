@@ -18,6 +18,11 @@ export class PostsCommentsComponent {
   commentValue = signal<string>('');
   commentsRef = viewChild<ElementRef<HTMLElement>>('commentsRef');
   post_user_id = input.required<string>()
+
+  constructor(){
+  this.commentsStore.initRealTimeForPostComment();
+  }
+  
   onChangeValue(value : string) : void {
   this.commentValue.set(value);
   }
