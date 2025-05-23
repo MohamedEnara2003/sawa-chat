@@ -13,6 +13,8 @@ import { SharedModule } from '../../../shared/modules/shared.module';
 import { PostsStore } from '../../../store/posts/posts.signal';
 import { PostLoadingComponent } from "../components/post-loading/post-loading.component";
 import { SoundEffectStore } from '../../../store/sound/sound.signal';
+import { PostImageComponent } from "../components/post-image/post-image.component";
+import { PostValueComponent } from "../components/post-value/post-value.component";
 
 @Component({
   selector: 'app-post',
@@ -23,8 +25,10 @@ import { SoundEffectStore } from '../../../store/sound/sound.signal';
     PostEditMenuComponent,
     BtnLikeComponent,
     PostsCommentsComponent,
-    PostLoadingComponent
-  ],
+    PostLoadingComponent,
+    PostImageComponent,
+    PostValueComponent
+],
   template: `
   <ul class="w-full h-full flex flex-col gap-5 overflow-y-auto" style="scrollbar-width: none;"> 
   @if(postsStore.isLoading()){
@@ -68,30 +72,11 @@ import { SoundEffectStore } from '../../../store/sound/sound.signal';
     </div>
     
     @if(post.value){
-    <div class="w-full min-h-[50px]">
-    <p class="text-overlay">{{post.value}}</p>
-    </div>
+    <app-post-value [postValue]="post.value!" class="w-full"/>
     }
   
     @if(post.file_url){
-    <div class="w-full aspect-[16/9] relative">
-      <picture aria-label="Post Image" role="img" (click)="
-      soundEffectStore.handlSoundEffect('sound-effects/Post.mp3');
-      postsStore.openPostViewer(post.id! , true); 
-      commentsStore.openContainerComments(post.id! , false)"
-      class="rounded-box">
-        <source [srcset]="post.file_url" media="(min-width: 1024px)" type="image/webp">
-        <source [srcset]="post.file_url" media="(min-width: 768px)" type="image/webp">
-        <img [src]="post.file_url"
-        [alt]="'Post by ' + post.user.fullName"
-        class="size-full object-contain rounded-box shadow-background shadow-sm"
-        loading="lazy"
-        decoding="async"
-        width="800"
-        height="450"
-        sizes="(min-width: 1024px) 800px, (min-width: 768px) 600px, 400px">
-      </picture>
-    </div>
+    <app-post-image [post]="post!" class="w-full"/>
     }
 
   <app-posts-interaction class="w-full" 

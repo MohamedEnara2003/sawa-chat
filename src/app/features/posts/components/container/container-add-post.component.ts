@@ -14,8 +14,10 @@ import { LinkComponent } from "../../../../shared/components/link/link.component
   imports: [UserImageComponent, SharedModule, BtnComponent, LinkComponent],
   template : `
   <section class="w-full fixed flex justify-center items-center z-100">
-  <div class="w-full  lg:w-[45%] h-[75vh] bg-tin  flex flex-col justify-start  gap-4 z-100
-  items-center bg-tint rounded-2xl border-2 border-background p-4 overflow-hidden animate-up">
+
+  <div class="w-full  lg:w-[45%] h-[75vh] overflow-y-auto flex flex-col justify-start  gap-4 z-100
+  items-center bg-tint rounded-2xl border-2 border-background p-4  animate-up"
+  style="scrollbar-width: none;">
 
   <header class="w-full border-b-1 border-b-background flex justify-between items-center pb-2
   capitalize">
@@ -59,8 +61,9 @@ import { LinkComponent } from "../../../../shared/components/link/link.component
   </div>
 
   <form [formGroup]="form" class="w-full h-full  flex flex-col justify-between items-center">
+    
   <div class="w-full  overflow-hidden duration-200 "
-  [ngClass]="postsStore.file_url() === '' ? 'h-40' : 'h-10'">
+  [ngClass]="postsStore.file_url() === '' ? 'h-40' : ''">
   <textarea #postContentRef  aria-label="post-feild" name="post-feild" formControlName="postContent"
   placeholder="Tell your friends about your thoughts.." 
   class="textarea size-full  rounded-box bg-background placeholder:text-overlay 
@@ -80,7 +83,7 @@ import { LinkComponent } from "../../../../shared/components/link/link.component
       </app-btn>
   </div>
 }@else {
-<picture aria-label="uploaded-image" class="relative w-full h-[90%] bg-background">
+<picture aria-label="uploaded-image" class="relative w-full h-[80%] bg-background">
   @if(!postsStore.isLoadingUpload()){ 
   <img [src]="postsStore.previewUrl()" alt="uploaded-image" class="size-full object-cover">
   <app-btn btnType="button"  (click)="postsStore.removeUploadedImage()"

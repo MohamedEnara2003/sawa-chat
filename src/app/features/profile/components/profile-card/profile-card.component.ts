@@ -4,14 +4,15 @@ import { SharedModule } from '../../../../shared/modules/shared.module';;
 import { UserStore } from '../../../../store/users/users.signal';
 import { ImageViewerStore } from '../../../../store/imageViewer/imageViewer.signal';
 import { LinkComponent } from "../../../../shared/components/link/link.component";
+import { LinkArrowLeftComponent } from "../../../../shared/components/link-arrow-left/link-arrow-left.component";
 
 @Component({
   selector: 'app-profile-card',
-  imports: [SharedModule, UserImageComponent, LinkComponent],
+  imports: [SharedModule, UserImageComponent, LinkComponent, LinkArrowLeftComponent],
   template : `
   
-  <div class="w-full h-full flex flex-col justify-center items-center overflow-hidden gap-5 capitalize ">
-
+  <div class="size-full relative flex flex-col justify-center items-center overflow-hidden gap-5 capitalize ">
+    <app-link-arrow-left class="absolute left-1 top-1" routerLink="/"/>
     <div (click)="imageViewer.getImage(userStore.user()?.avatar_url! , true)" 
     class="size-45 md:size-50  rounded-full   border-4 border-background ">
     <app-user-image imageClass="size-full rounded-full object-cover "/>

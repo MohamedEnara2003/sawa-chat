@@ -15,16 +15,14 @@ selector: 'app-notifications',
 imports: [SharedModule, UserImageComponent, NotificationHeaderComponent, BtnComponent],
 template : `
 
-<section class="w-full h-full flex flex-col gap-5">
+<section class="size-full flex flex-col gap-5">
 <app-notification-header />
 <ul aria-label="Container notifications" role="list"
-class="w-full h-full flex flex-col justify-start overflow-y-auto gap-4" style="scrollbar-width: none;">
+class="size-full flex flex-col justify-start overflow-y-auto gap-4" style="scrollbar-width: none;">
 @for (notification of notificationsStore.notifications(); track notification) {
 @defer (on viewport) {
-
 <li class="w-full relative border-b-2 border-b-background  shadow-lg p-2
 hover:opacity-80 duration-200 cursor-pointer">
-
 <app-btn ariaLabel="Button Remove Notification" (click)="notificationsStore.removeNotification(notification.id!)"
 btnClass="absolute   top-0 right-0 btn-hover z-10">
 <i class="fa-solid fa-close text-white text-sm"></i>
