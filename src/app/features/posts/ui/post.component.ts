@@ -74,21 +74,21 @@ import { SoundEffectStore } from '../../../store/sound/sound.signal';
     }
   
     @if(post.file_url){
-    <div class="w-full aspect-[4/3] relative">
-      <picture (click)="
+    <div class="w-full aspect-[16/9] relative">
+      <picture aria-label="Post Image" role="img" (click)="
       soundEffectStore.handlSoundEffect('sound-effects/Post.mp3');
       postsStore.openPostViewer(post.id! , true); 
       commentsStore.openContainerComments(post.id! , false)"
-      class="w-full h-full rounded-box">
+      class="rounded-box">
         <source [srcset]="post.file_url" media="(min-width: 1024px)" type="image/webp">
         <source [srcset]="post.file_url" media="(min-width: 768px)" type="image/webp">
         <img [src]="post.file_url"
         [alt]="'Post by ' + post.user.fullName"
-        class="w-full h-full object-cover rounded-box shadow-background shadow-sm"
+        class="size-full object-contain rounded-box shadow-background shadow-sm"
         loading="lazy"
         decoding="async"
-        width="400"
-        height="300"
+        width="800"
+        height="450"
         sizes="(min-width: 1024px) 800px, (min-width: 768px) 600px, 400px">
       </picture>
     </div>

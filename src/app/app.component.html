@@ -2,10 +2,10 @@
 <div class="relative w-full bg-background" role="application">
   <main class="w-full overflow-hidden" role="main">
     <router-outlet />
-    @if(soundEffectStore.isLoading()){
+   
       <audio #audioEle autoplay [src]="soundEffectStore.soundEffect_Url()" 
         type="audio/mpeg" class="hidden" aria-hidden="true"></audio>
-    }
+    
   </main>
   @if(isIntro()){
     <section class="w-full h-screen fixed top-0 left-0 bg-background 

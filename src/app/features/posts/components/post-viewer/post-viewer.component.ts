@@ -10,13 +10,12 @@ import { LinkArrowLeftComponent } from "../../../../shared/components/link-arrow
   imports: [PostComponent, PostsCommentsComponent, LinkArrowLeftComponent],
   template : `
   <section class="w-full h-screen bg-background md:bg-transparent fixed top-0 left-0 z-100 flex justify-center items-center">
-  <div class="w-full md:w-[70%] lg:w-[60%] h-full bg-tint flex flex-col z-100 overflow-y-auto 
-  min-h-[100vh]" 
+  <div class="w-full md:w-[70%] lg:w-[60%] h-full bg-tint grid grid-cols-1 z-100 overflow-y-auto " 
   style="scrollbar-width: none;"> 
     <app-post [posts]="[postsStore.post()!]">
     <app-link-arrow-left link-close-post (click)="postsStore.openPostViewer(undefined , false)"/>
     </app-post>
-    <app-posts-comments [post_user_id]="postsStore.post()?.user_id!" class="min-h-[200px]"/>
+    <app-posts-comments [post_user_id]="postsStore.post()?.user_id!" class="h-[300px]"/>
     </div>
 
     <div (click)="postsStore.openPostViewer(undefined , false)" 

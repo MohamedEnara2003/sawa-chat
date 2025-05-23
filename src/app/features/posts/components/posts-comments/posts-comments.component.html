@@ -7,6 +7,7 @@ flex flex-col justify-between items-center p-4 gap-2 ">
 <h1 class="title-h1">{{commentsStore.comments().length}} comments</h1>
 </div>
 
+
 <ul #commentsRef
 class="size-full overflow-y-auto" style="scrollbar-width: none;">
 @for (comment of commentsStore.comments(); track comment) {
@@ -29,7 +30,7 @@ class="size-full overflow-y-auto" style="scrollbar-width: none;">
     </p>
 </li>
 }@placeholder {
-    <li class="w-full h-24 flex flex-wrap justify-start items-center  p-2  gap-2 border-b-1 border-b-background">
+    <li class="w-full h-20 flex flex-wrap justify-start items-center  p-2  gap-2 border-b-1 border-b-background">
     <div class="size-8 bg-overlay animate-pulse rounded-full"></div>
     <div class="w-20 h-2 bg-overlay animate-pulse rounded-box"></div>
     <div class="w-full h-4 bg-overlay animate-pulse rounded-box"></div>

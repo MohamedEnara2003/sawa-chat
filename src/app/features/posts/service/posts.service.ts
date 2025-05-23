@@ -41,7 +41,7 @@ export class PostsService {
   const promise =  this.singleTonApi.supabase.from(this.tableName)
   .select(this.SelectionPostData)
   .eq('privacy' , 'public')
-  .order('created_at' , {ascending : false});
+  .order('created_at' , {ascending : true});
   return from(promise).pipe(map((res) => {
   if(res.error) return [] ;
   const items = res.data.map((item) =>
@@ -61,7 +61,7 @@ export class PostsService {
   .select(this.SelectionPostData)
   .in('user_id' , ids)
   .eq('privacy' , 'followers')
-  .order('created_at' , {ascending : false});
+  .order('created_at' , {ascending : true});
   return from(promise).pipe(map((res) => {
   if(res.error) return [] ;
   const items = res.data.map((item) =>

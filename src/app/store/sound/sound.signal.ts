@@ -20,7 +20,7 @@ export const SoundEffectStore = signalStore(
     return {
     handlSoundEffect(soundEffect_Url : string) : void {
     patchState(store , ({soundEffect_Url , isLoading : true}));
-    timer(300).subscribe(() => patchState(store , ({soundEffect_Url : '', isLoading : false})))
+    timer(500).subscribe(() => patchState(store , ({soundEffect_Url : '', isLoading : false})))
     },  
     }
     })

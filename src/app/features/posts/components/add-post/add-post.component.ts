@@ -9,9 +9,9 @@ import { LinkComponent } from "../../../../shared/components/link/link.component
   selector: 'app-add-post',
   imports: [SharedModule, UserImageComponent, LinkComponent],
   template : `
-  <section  class="w-full flex flex-col justify-center items-center bg-tint p-4
+  <section  class="w-full flex flex-col justify-center items-center bg-tint p-1 py-4
   rounded-2xl">
-  <div class="w-full flex justify-between items-center bg-tint px-4 ">
+  <div class="w-full flex justify-between items-center bg-tint px-2 ">
   
   <div class="flex justify-start items-center gap-2">
   <picture [routerLink]="['/user-profile/', userStore.user()?.user_id]" 

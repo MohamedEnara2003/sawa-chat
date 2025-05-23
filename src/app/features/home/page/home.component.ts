@@ -26,9 +26,9 @@ import { LinkComponent } from "../../../shared/components/link/link.component";
     LinkComponent
 ],
   template : `
-<section aria-label="Home Page" class="size-full flex justify-center  overflow-hidden">
+<section aria-label="Home Page" class="w-full lg:h-[90vh] flex justify-center  overflow-hidden">
   <div class="size-full  flex flex-wrap justify-evenly mb-12 sm:mb-0  gap-2  p-2"> 
-    <div class="hidden lg:h-[90vh] lg:inline-flex w-full lg:w-[30%] overflow-y-auto" style="scrollbar-width: none;" >
+    <div class="hidden lg:h-full  lg:inline-flex w-full lg:w-[30%] overflow-y-auto" style="scrollbar-width: none;" >
     @defer (on viewport) {
     <app-profile-aside class="w-full h-full" />
     }@placeholder {
@@ -36,7 +36,8 @@ import { LinkComponent } from "../../../shared/components/link/link.component";
     }
     </div>
 
-    <article class="w-full md:w-[90%] lg:w-[40%] flex flex-col gap-5   my-1">
+    <article class="w-full md:w-[90%] lg:w-[40%] lg:h-full lg:overflow-y-auto flex flex-col gap-5  
+    my-1" style="scrollbar-width: none;">
     <app-add-post  />
     <app-following-list /> 
     <app-post-status-links />
@@ -48,7 +49,7 @@ import { LinkComponent } from "../../../shared/components/link/link.component";
     }
     </article>
 
-    <div class="hidden lg:inline-flex  lg:w-[25%] h-[80vh]  bg-tint  
+    <div class="hidden lg:inline-flex  lg:w-[25%] lg:h-full   bg-tint  
     rounded-2xl shadow shadow-background p-4 overflow-y-auto" style="scrollbar-width: none;">
     @defer (on viewport) {
     <app-notifications class="w-full"/>
