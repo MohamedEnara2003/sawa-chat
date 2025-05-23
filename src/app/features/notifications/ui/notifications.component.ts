@@ -15,7 +15,7 @@ selector: 'app-notifications',
 imports: [SharedModule, UserImageComponent, NotificationHeaderComponent, BtnComponent],
 template : `
 
-<section class="size-full flex flex-col gap-5">
+<section class="size-full flex flex-col gap-5 p-2">
 <app-notification-header />
 <ul aria-label="Container notifications" role="list"
 class="size-full flex flex-col justify-start overflow-y-auto gap-4" style="scrollbar-width: none;">

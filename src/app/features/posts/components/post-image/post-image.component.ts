@@ -12,7 +12,7 @@ import { UserPostData } from '../../../../core/interface/posts';
       soundEffectStore.handlSoundEffect('sound-effects/Post.mp3');
       postsStore.openPostViewer(post().id! , true); 
       commentsStore.openContainerComments(post()?.id! , false)"
-      class="rounded-box w-full">
+      class="rounded-box w-full hover:opacity-90 duration-200 transition-opacity">
         <source [srcset]="post().file_url" media="(min-width: 1024px)" type="image/webp">
         <source [srcset]="post().file_url" media="(min-width: 768px)" type="image/webp">
         <img [src]="post().file_url"

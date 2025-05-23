@@ -10,7 +10,9 @@
         <h1 class="title-h1 text-2xl line-clamp-2">{{userStore.userProfile()?.fullName}}</h1>
     </div>
 
-    <app-interaction-count />
+    @if(userStore.user_id() === userStore.userProfile()?.user_id){
+        <app-interaction-count />
+    }
 
     <div class="flex flex-wrap justify-center items-center gap-2 md:gap-5 ">
             @let isMyProfile = userStore.user()?.user_id === userStore.userProfile()?.user_id;

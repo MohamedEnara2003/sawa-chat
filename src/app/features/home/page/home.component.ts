@@ -26,48 +26,44 @@ import { LinkComponent } from "../../../shared/components/link/link.component";
     LinkComponent
 ],
   template : `
-<section aria-label="Home Page" class="w-full lg:h-[90vh] flex justify-center  overflow-hidden">
-  <div class="size-full flex justify-center items-center   mb-12 sm:mb-0  gap-5   "> 
-
-    <aside class="hidden lg:h-full  lg:inline-block w-full lg:w-[30%] overflow-y-auto p-4" 
+  <section class="w-full lg:h-[90vh]">
+  <div class="size-full flex justify-evenly items-center gap-2 p-2">
+  <aside class="hidden lg:h-full  lg:inline-block w-full lg:w-[30%] overflow-y-auto " 
     style="scrollbar-width: none;" >
     @defer (on viewport) {
     <app-profile-aside class="w-full h-full" />
     }@placeholder {
     <div class="w-full h-[80vh] rounded-2xl bg-tint"></div>
     }
-    </aside>
-
-    <article class="w-full md:w-[90%] lg:w-[40%] lg:h-full lg:overflow-y-auto 
-    grid grid-cols-1 justify-items-center-safe  gap-5  
-    my-1" style="scrollbar-width: none;">
-    <app-add-post  class="w-full"/>
-    <app-following-list class="w-full"/> 
-    <app-post-status-links class="w-full"/>
+  </aside>
+  <article class="w-full md:w-[90%] lg:w-[40%] lg:h-full lg:overflow-y-auto 
+    flex flex-col   gap-5 " style="scrollbar-width: none;">
+    <app-add-post />
+    <app-following-list /> 
+    <app-post-status-links />
     @if(postStatus() === "public") {  
     <app-post [posts]="postsStore.publicPosts()"/>
     }
     @else if (postStatus() === "followers") {
     <app-post [posts]="postsStore.followingPosts()" />
     }
-    </article>
-
-    <div class="hidden lg:inline-flex  lg:w-[25%] lg:h-[95%]   bg-tint  
-    rounded-t-2xl shadow shadow-background p-4 overflow-y-auto" style="scrollbar-width: none;">
+  </article>
+  <aside class="hidden lg:inline-flex  lg:w-[25%] lg:h-[95%]   bg-tint  
+    rounded-t-2xl shadow shadow-background  overflow-y-auto" style="scrollbar-width: none;">
     @defer (on viewport) {
     <app-notifications class="w-full"/>
     }@placeholder {
     <div class="w-full h-full  rounded-2xl bg-tint"></div>
     }
+  </aside>
     </div>
-
     <app-link [routerLink]="['/']" 
     linkClass="fixed right-2 bottom-18 sm:bottom-2 size-8 bg-sawa-primary rounded-full  cursor-pointer
     flex justify-center items-center shadow-md shadow-background border border-tint">
     <i class="fa-solid fa-angle-up text-background text-xl"></i>
     </app-link>
-    </div>
   </section>
+ 
   `
 })
 export class HomeComponent {
@@ -79,7 +75,4 @@ export class HomeComponent {
     map((params) => params['postStatus'])
     )
   );
-
-
-  
 }
